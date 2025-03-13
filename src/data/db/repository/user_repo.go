@@ -34,8 +34,19 @@ func (r *UserRepository) Create(user *models.User) error {
 	if exists {
 		return &service_errors.ServiceError{EndUserMessage: service_errors.UsernameExists}
 	}
+	roleId, err := r.getDefaultRole()
+	if err != nil {
+		log.Printf("Caller:%s Level:%s Msg:%s", constants.Postgres, constants.DefaultRoleName, err.Error())
+		return err
+	}
 	tx := r.db.Begin()
 	err = tx.Create(&user).Error
+	if err != nil {
+		tx.Rollback()
+		log.Printf("Caller:%s Level:%s Msg:%s", constants.Postgres, constants.Rollback, err.Error())
+		return err
+	}
+	err = tx.Create(&models.UserRole{RoleId: roleId, UserId: user.Id}).Error
 	if err != nil {
 		tx.Rollback()
 		log.Printf("Caller:%s Level:%s Msg:%s", constants.Postgres, constants.Rollback, err.Error())
@@ -84,4 +95,15 @@ func (r *UserRepository) existsByUsername(username string) (bool, error) {
 		return false, err
 	}
 	return exists, nil
+}
+
+func (r *UserRepository) getDefaultRole() (roleId int, err error) {
+
+	if err = r.db.Model(&models.Role{}).
+		Select("id").
+		Where("name = ?", constants.DefaultRoleName).
+		First(&roleId).Error; err != nil {
+		return 0, err
+	}
+	return roleId, nil
 }
