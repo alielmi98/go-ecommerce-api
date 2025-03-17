@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 
+	"github.com/alielmi98/go-ecommerce-api/api"
 	"github.com/alielmi98/go-ecommerce-api/config"
 	"github.com/alielmi98/go-ecommerce-api/constants"
 	"github.com/alielmi98/go-ecommerce-api/data/cache"
@@ -26,5 +27,6 @@ func main() {
 	}
 
 	migrations.Up_1()
+	api.InitServer(cfg)
 
 }

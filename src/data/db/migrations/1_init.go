@@ -22,8 +22,10 @@ func Up_1() {
 func createTables(database *gorm.DB) {
 	tables := []interface{}{}
 
-	// User
+	// Account
 	tables = addNewTable(database, models.User{}, tables)
+	tables = addNewTable(database, models.Role{}, tables)
+	tables = addNewTable(database, models.UserRole{}, tables)
 
 	// Basic
 

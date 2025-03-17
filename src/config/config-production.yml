@@ -9,7 +9,7 @@ postgres:
   port: 5432
   user: postgres
   password: admin
-  dbName: car_sale_db
+  dbName: ecommerce
   sslMode: disable
   maxIdleConns: 15
   maxOpenConns: 100
