@@ -17,4 +17,6 @@ const (
 	MobileNumberKey        string = "MobileNumber"
 	RolesKey               string = "Roles"
 	ExpireTimeKey          string = "Exp"
+
+	RefreshTokenCookieName string = "refresh_token"
 )

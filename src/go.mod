@@ -5,6 +5,7 @@ go 1.22.2
 require (
 	github.com/gin-gonic/gin v1.10.0
 	github.com/go-redis/redis/v7 v7.4.1
+	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/spf13/viper v1.19.0
 	github.com/swaggo/files v1.0.1
 	github.com/swaggo/gin-swagger v1.6.0

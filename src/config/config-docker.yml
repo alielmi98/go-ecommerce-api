@@ -2,6 +2,7 @@ server:
   internalPort: 5000
   externalPort: 0
   runMode: release
+  domin: localhost
 cors:
   allowOrigins: "*"
 postgres:
@@ -32,10 +33,6 @@ password:
   maxLength: 64
   includeUppercase: true
   includeLowercase: true
-otp:
-  expireTime: 120
-  digits: 6
-  limiter: 100
 jwt:
   secret: "mySecretKey"
   refreshSecret: "mySecretKey"

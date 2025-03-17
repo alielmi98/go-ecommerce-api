@@ -15,7 +15,6 @@ type Config struct {
 	Redis    RedisConfig
 	Password PasswordConfig
 	Cors     CorsConfig
-	Otp      OtpConfig
 	JWT      JWTConfig
 }
 
@@ -23,6 +22,7 @@ type ServerConfig struct {
 	InternalPort string
 	ExternalPort string
 	RunMode      string
+	Domin        string
 }
 
 type PostgresConfig struct {
@@ -61,12 +61,6 @@ type PasswordConfig struct {
 
 type CorsConfig struct {
 	AllowOrigins string
-}
-
-type OtpConfig struct {
-	ExpireTime time.Duration
-	Digits     int
-	Limiter    time.Duration
 }
 
 type JWTConfig struct {
