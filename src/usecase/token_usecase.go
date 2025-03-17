@@ -57,8 +57,13 @@ func (s *TokenUsecase) GenerateToken(token *tokenDto) (*dto.TokenDetail, error) 
 	}
 
 	rtc := jwt.MapClaims{}
-
 	rtc[constants.UserIdKey] = token.UserId
+	rtc[constants.FirstNameKey] = token.FirstName
+	rtc[constants.LastNameKey] = token.LastName
+	rtc[constants.UsernameKey] = token.Username
+	rtc[constants.EmailKey] = token.Email
+	rtc[constants.MobileNumberKey] = token.MobileNumber
+	rtc[constants.RolesKey] = token.Roles
 	rtc[constants.ExpireTimeKey] = td.RefreshTokenExpireTime
 
 	rt := jwt.NewWithClaims(jwt.SigningMethodHS256, rtc)

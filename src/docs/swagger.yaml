@@ -1,4 +1,16 @@
 definitions:
+  github_com_alielmi98_go-ecommerce-api_api_dto.LoginByUsernameRequest:
+    properties:
+      password:
+        minLength: 6
+        type: string
+      username:
+        minLength: 5
+        type: string
+    required:
+    - password
+    - username
+    type: object
   github_com_alielmi98_go-ecommerce-api_api_dto.RegisterUserByUsernameRequest:
     properties:
       email:
@@ -58,6 +70,36 @@ definitions:
 info:
   contact: {}
 paths:
+  /v1/account/login-by-username:
+    post:
+      consumes:
+      - application/json
+      description: LoginByUsername
+      parameters:
+      - description: LoginByUsernameRequest
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.LoginByUsernameRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+        "400":
+          description: Failed
+          schema:
+            $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+        "401":
+          description: Failed
+          schema:
+            $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+      summary: LoginByUsername
+      tags:
+      - Account
   /v1/account/register-by-username:
     post:
       consumes:

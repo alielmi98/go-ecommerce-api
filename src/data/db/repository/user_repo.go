@@ -61,7 +61,10 @@ func (r *UserRepository) FindByUsername(username string) (*models.User, error) {
 	err := r.db.
 		Model(&models.User{}).
 		Where("username = ?", username).
-		First(&user).Error
+		Preload("UserRoles", func(tx *gorm.DB) *gorm.DB {
+			return tx.Preload("Role")
+		}).
+		Find(&user).Error
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, &service_errors.ServiceError{EndUserMessage: service_errors.UsernameOrPasswordInvalid}

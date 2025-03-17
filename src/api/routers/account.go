@@ -11,5 +11,6 @@ func Account(router *gin.RouterGroup, cfg *config.Config) {
 	h := handlers.NewAccountHandler(cfg)
 
 	router.POST("/register-by-username", h.Create)
+	router.POST("/login-by-username", h.LoginByUsername)
 
 }

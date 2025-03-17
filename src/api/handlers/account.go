@@ -46,3 +46,30 @@ func (h *AccountHandler) Create(c *gin.Context) {
 	}
 	c.JSON(http.StatusCreated, helper.GenerateBaseResponse("User created", true, helper.Success))
 }
+
+// LoginByUsername godoc
+// @Summary LoginByUsername
+// @Description LoginByUsername
+// @Tags Account
+// @Accept  json
+// @Produce  json
+// @Param Request body dto.LoginByUsernameRequest true "LoginByUsernameRequest"
+// @Success 200 {object} helper.BaseHttpResponse "Success"
+// @Failure 400 {object} helper.BaseHttpResponse "Failed"
+// @Failure 401 {object} helper.BaseHttpResponse "Failed"
+// @Router /v1/account/login-by-username [post]
+func (h *AccountHandler) LoginByUsername(c *gin.Context) {
+	var req dto.LoginByUsernameRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.AbortWithStatusJSON(http.StatusBadRequest,
+			helper.GenerateBaseResponseWithValidationError(nil, false, helper.ValidationError, err))
+		return
+	}
+	td, err := h.usecase.LoginByUsername(&req)
+	if err != nil {
+		c.AbortWithStatusJSON(helper.TranslateErrorToStatusCode(err),
+			helper.GenerateBaseResponseWithError(nil, false, helper.InternalError, err))
+		return
+	}
+	c.JSON(http.StatusOK, helper.GenerateBaseResponse(td, true, helper.Success))
+}
