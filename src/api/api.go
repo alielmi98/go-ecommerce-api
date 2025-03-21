@@ -33,6 +33,9 @@ func RegisterRoutes(r *gin.Engine, cfg *config.Config) {
 		//Account
 		account := v1.Group("/account")
 		routers.Account(account, cfg)
+		//Token
+		token := v1.Group("/token")
+		routers.Token(token, cfg)
 
 	}
 

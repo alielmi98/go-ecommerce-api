@@ -6,6 +6,7 @@ import (
 	"github.com/alielmi98/go-ecommerce-api/api/dto"
 	"github.com/alielmi98/go-ecommerce-api/api/helper"
 	"github.com/alielmi98/go-ecommerce-api/config"
+	"github.com/alielmi98/go-ecommerce-api/constants"
 	"github.com/alielmi98/go-ecommerce-api/usecase"
 	"github.com/gin-gonic/gin"
 )
@@ -13,11 +14,15 @@ import (
 // AccountHandler ...
 type AccountHandler struct {
 	usecase *usecase.UserUsecase
+	cfg     *config.Config
 }
 
 // NewAccountHandler ...
 func NewAccountHandler(cfg *config.Config) *AccountHandler {
-	return &AccountHandler{usecase: usecase.NewUserUsecase(cfg)}
+	return &AccountHandler{
+		usecase: usecase.NewUserUsecase(cfg),
+		cfg:     cfg,
+	}
 }
 
 // RegisterByUsername godoc
@@ -71,5 +76,9 @@ func (h *AccountHandler) LoginByUsername(c *gin.Context) {
 			helper.GenerateBaseResponseWithError(nil, false, helper.InternalError, err))
 		return
 	}
+
+	// Set the refresh token in a cookie
+	c.SetCookie(constants.RefreshTokenCookieName, td.RefreshToken, int(h.cfg.JWT.RefreshTokenExpireDuration*60), "/", h.cfg.Server.Domin, true, true)
+
 	c.JSON(http.StatusOK, helper.GenerateBaseResponse(td, true, helper.Success))
 }
