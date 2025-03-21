@@ -8,6 +8,7 @@ const (
 	TokenExpired        = "token expired"
 	TokenInvalid        = "token invalid"
 	InvalidRefreshToken = "invalid refresh token"
+	InvalidRolesFormat  = "invalid roles format"
 	// User
 	EmailExists               = "Email exists"
 	UsernameExists            = "Username exists"

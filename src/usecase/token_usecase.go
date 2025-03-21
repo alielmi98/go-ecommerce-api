@@ -118,6 +118,20 @@ func (s *TokenUsecase) RefreshToken(c *gin.Context) (*dto.TokenDetail, error) {
 		return nil, err
 	}
 
+	// Convert roles to []string
+	rolesInterface, ok := claims[constants.RolesKey].([]interface{})
+	if !ok {
+		return nil, &service_errors.ServiceError{EndUserMessage: service_errors.InvalidRolesFormat}
+	}
+
+	roles := make([]string, len(rolesInterface))
+	for i, role := range rolesInterface {
+		roles[i], ok = role.(string)
+		if !ok {
+			return nil, &service_errors.ServiceError{EndUserMessage: service_errors.InvalidRolesFormat}
+		}
+	}
+
 	tokenDto := tokenDto{
 		UserId:       int(claims[constants.UserIdKey].(float64)),
 		FirstName:    claims[constants.FirstNameKey].(string),
@@ -125,7 +139,7 @@ func (s *TokenUsecase) RefreshToken(c *gin.Context) (*dto.TokenDetail, error) {
 		Username:     claims[constants.UsernameKey].(string),
 		MobileNumber: claims[constants.MobileNumberKey].(string),
 		Email:        claims[constants.EmailKey].(string),
-		Roles:        claims[constants.RolesKey].([]string),
+		Roles:        roles,
 	}
 	newTokenDetail, err := s.GenerateToken(&tokenDto)
 	if err != nil {
