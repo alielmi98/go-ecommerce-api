@@ -1,4 +1,20 @@
 definitions:
+  github_com_alielmi98_go-ecommerce-api_api_dto.CategoryResponse:
+    properties:
+      description:
+        type: string
+      name:
+        type: string
+    type: object
+  github_com_alielmi98_go-ecommerce-api_api_dto.CreateCategoryRequest:
+    properties:
+      description:
+        type: string
+      name:
+        type: string
+    required:
+    - name
+    type: object
   github_com_alielmi98_go-ecommerce-api_api_dto.LoginByUsernameRequest:
     properties:
       password:
@@ -130,6 +146,37 @@ paths:
       summary: RegisterByUsername
       tags:
       - Account
+  /v1/category/:
+    post:
+      consumes:
+      - application/json
+      description: Create a Category
+      parameters:
+      - description: Create a Category
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.CreateCategoryRequest'
+      responses:
+        "201":
+          description: Category response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.CategoryResponse'
+              type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Create a Category
+      tags:
+      - Category
   /v1/token/refresh-token:
     get:
       consumes:

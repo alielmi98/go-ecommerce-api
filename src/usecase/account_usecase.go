@@ -6,8 +6,8 @@ import (
 	"github.com/alielmi98/go-ecommerce-api/api/dto"
 	"github.com/alielmi98/go-ecommerce-api/config"
 	"github.com/alielmi98/go-ecommerce-api/constants"
-	"github.com/alielmi98/go-ecommerce-api/data/db/repository"
-	"github.com/alielmi98/go-ecommerce-api/data/models"
+	"github.com/alielmi98/go-ecommerce-api/domin/models"
+	"github.com/alielmi98/go-ecommerce-api/infra/db/repository"
 	"github.com/alielmi98/go-ecommerce-api/pkg/service_errors"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -46,7 +46,7 @@ func (s *UserUsecase) RegisterByUsername(req *dto.RegisterUserByUsernameRequest)
 
 }
 
-// LoginByUsername ...
+// LoginByUsername
 func (s *UserUsecase) LoginByUsername(req *dto.LoginByUsernameRequest) (*dto.TokenDetail, error) {
 	user, err := s.repo.FindByUsername(req.Username)
 	if err != nil {

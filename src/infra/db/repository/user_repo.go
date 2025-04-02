@@ -5,8 +5,8 @@ import (
 	"log"
 
 	"github.com/alielmi98/go-ecommerce-api/constants"
-	"github.com/alielmi98/go-ecommerce-api/data/db"
-	"github.com/alielmi98/go-ecommerce-api/data/models"
+	"github.com/alielmi98/go-ecommerce-api/domin/models"
+	"github.com/alielmi98/go-ecommerce-api/infra/db"
 	"github.com/alielmi98/go-ecommerce-api/pkg/service_errors"
 	"gorm.io/gorm"
 )

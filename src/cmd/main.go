@@ -6,9 +6,9 @@ import (
 	"github.com/alielmi98/go-ecommerce-api/api"
 	"github.com/alielmi98/go-ecommerce-api/config"
 	"github.com/alielmi98/go-ecommerce-api/constants"
-	"github.com/alielmi98/go-ecommerce-api/data/cache"
-	"github.com/alielmi98/go-ecommerce-api/data/db"
-	"github.com/alielmi98/go-ecommerce-api/data/db/migrations"
+	"github.com/alielmi98/go-ecommerce-api/infra/cache"
+	"github.com/alielmi98/go-ecommerce-api/infra/db"
+	"github.com/alielmi98/go-ecommerce-api/infra/db/migrations"
 )
 
 func main() {
