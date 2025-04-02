@@ -1,6 +1,7 @@
 package dto
 
-// Create
+import "github.com/alielmi98/go-ecommerce-api/usecase/dto"
+
 type CreateProductRequest struct {
 	Name        string  `json:"name" binding:"required"`
 	Description string  `json:"description"`
@@ -11,20 +12,6 @@ type CreateProductRequest struct {
 	Slug        string  `json:"slug"`
 }
 
-type CreateProductImageRequest struct {
-	ProductId int    `json:"product_id" binding:"required"`
-	ImageUrl  string `json:"image_url" binding:"required"`
-	IsMain    bool   `json:"is_main"`
-}
-
-type CreateProductReviewRequest struct {
-	ProductId int    `json:"product_id" binding:"required"`
-	Rating    int    `json:"rating" binding:"required"`
-	Comment   string `json:"comment"`
-	UserId    int    `json:"user_id" binding:"required"`
-}
-
-// Update
 type UpdateProductRequest struct {
 	Name        string  `json:"name"`
 	Description string  `json:"description"`
@@ -35,20 +22,6 @@ type UpdateProductRequest struct {
 	Slug        string  `json:"slug"`
 }
 
-type UpdateProductImageRequest struct {
-	ProductId int    `json:"product_id"`
-	ImageUrl  string `json:"image_url"`
-	IsMain    bool   `json:"is_main"`
-}
-
-type UpdateProductReviewRequest struct {
-	ProductId int    `json:"product_id"`
-	Rating    int    `json:"rating"`
-	Comment   string `json:"comment"`
-	UserId    int    `json:"user_id"`
-}
-
-// Response
 type ProductResponse struct {
 	Name         string                  `json:"name"`
 	Description  string                  `json:"description"`
@@ -64,15 +37,43 @@ type ProductResponse struct {
 	Category     CategoryResponse        `json:"category"`
 }
 
-type ProductImageResponse struct {
-	ProductId int    `json:"product_id"`
-	ImageUrl  string `json:"image_url"`
-	IsMain    bool   `json:"is_main"`
+func ToProductResponse(from ProductResponse, images []ProductImageResponse, reviews []ProductReviewResponse, category CategoryResponse) ProductResponse {
+	return ProductResponse{
+		Name:         from.Name,
+		Description:  from.Description,
+		Price:        from.Price,
+		Stock:        from.Stock,
+		CategoryId:   from.CategoryId,
+		Status:       from.Status,
+		Slug:         from.Slug,
+		AvrageRating: from.AvrageRating,
+		CountViews:   from.CountViews,
+		Images:       images,
+		Reviews:      reviews,
+		Category:     category,
+	}
 }
 
-type ProductReviewResponse struct {
-	ProductId int    `json:"product_id"`
-	Rating    int    `json:"rating"`
-	Comment   string `json:"comment"`
-	UserId    int    `json:"user_id"`
+func ToProductCreateRequest(from CreateProductRequest) dto.CreateProduct {
+	return dto.CreateProduct{
+		Name:        from.Name,
+		Description: from.Description,
+		Price:       from.Price,
+		Stock:       from.Stock,
+		CategoryId:  from.CategoryId,
+		Status:      from.Status,
+		Slug:        from.Slug,
+	}
+}
+
+func ToProductUpdateRequest(from UpdateProductRequest) dto.UpdateProduct {
+	return dto.UpdateProduct{
+		Name:        from.Name,
+		Description: from.Description,
+		Price:       from.Price,
+		Stock:       from.Stock,
+		CategoryId:  from.CategoryId,
+		Status:      from.Status,
+		Slug:        from.Slug,
+	}
 }
