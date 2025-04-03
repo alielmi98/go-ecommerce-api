@@ -12,3 +12,8 @@ func GetCategoryRepository(cfg *config.Config) contractRepository.CategoryReposi
 	var preloads []db.PreloadEntity = []db.PreloadEntity{{Entity: "Products"}}
 	return infraRepository.NewBaseRepository[model.Category](preloads)
 }
+
+func GetFileRepository(cfg *config.Config) contractRepository.FileRepository {
+	var preloads []db.PreloadEntity = []db.PreloadEntity{}
+	return infraRepository.NewBaseRepository[model.File](preloads)
+}

@@ -29,3 +29,7 @@ type ProductImageRepository interface {
 type ProductReviewRepository interface {
 	BaseRepository[model.ProductReview]
 }
+
+type FileRepository interface {
+	BaseRepository[model.File]
+}
