@@ -105,3 +105,32 @@ func Delete(c *gin.Context, usecaseDelete func(ctx context.Context, id int) erro
 	}
 	c.JSON(http.StatusOK, helper.GenerateBaseResponse(nil, true, 0))
 }
+
+// Get an entity
+// TUOutput: Usecase function output
+// TResponse: Http response body that mapped from TUOutput with TResponse := mapper(TUOutput)
+// responseMapper: this function map usecase output to endpoint output
+// usecaseGet: usecase Get method
+func GetById[TUOutput any, TResponse any](c *gin.Context,
+	responseMapper func(req TUOutput) (res TResponse),
+	usecaseGet func(c context.Context, id int) (TUOutput, error)) {
+	id, _ := strconv.Atoi(c.Params.ByName("id"))
+	if id == 0 {
+		c.AbortWithStatusJSON(http.StatusNotFound,
+			helper.GenerateBaseResponse(nil, false, helper.ValidationError))
+		return
+	}
+
+	// call use case method
+	usecaseResult, err := usecaseGet(c, id)
+	if err != nil {
+		c.AbortWithStatusJSON(helper.TranslateErrorToStatusCode(err),
+			helper.GenerateBaseResponseWithError(nil, false, helper.InternalError, err))
+		return
+	}
+
+	// map usecase response to http response
+	response := responseMapper(usecaseResult)
+
+	c.JSON(http.StatusOK, helper.GenerateBaseResponse(response, true, 0))
+}

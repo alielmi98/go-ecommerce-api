@@ -12,5 +12,6 @@ func Category(r *gin.RouterGroup, cfg *config.Config) {
 	r.POST("/", h.Create)
 	r.PUT("/:id", h.Update)
 	r.DELETE("/:id", h.Delete)
+	r.GET("/:id", h.GetById)
 
 }

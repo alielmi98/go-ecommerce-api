@@ -65,3 +65,18 @@ func (h *CategoryHandler) Update(c *gin.Context) {
 func (h *CategoryHandler) Delete(c *gin.Context) {
 	Delete(c, h.usecase.Delete)
 }
+
+// GetCategory godoc
+// @Summary Get a Category
+// @Description Get a Category
+// @Tags Category
+// @Accept json
+// @produces json
+// @Param id path int true "Id"
+// @Success 200 {object} helper.BaseHttpResponse{result=dto.CategoryResponse} "Category response"
+// @Failure 400 {object} helper.BaseHttpResponse "Bad request"
+// @Router /v1/category/{id} [get]
+// @Security AuthBearer
+func (h *CategoryHandler) GetById(c *gin.Context) {
+	GetById(c, dto.ToCategoryResponse, h.usecase.GetById)
+}

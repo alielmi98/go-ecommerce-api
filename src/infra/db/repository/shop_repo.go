@@ -17,9 +17,10 @@ const softDeleteExp string = "id = ? and deleted_by is null"
 
 type BaseRepository[TEntity any] struct {
 	database *gorm.DB
+	preloads []db.PreloadEntity
 }
 
-func NewBaseRepository[TEntity any]() *BaseRepository[TEntity] {
+func NewBaseRepository[TEntity any](preloads []db.PreloadEntity) *BaseRepository[TEntity] {
 	return &BaseRepository[TEntity]{
 		database: db.GetDb(),
 	}
@@ -95,4 +96,17 @@ func (r BaseRepository[TEntity]) Delete(ctx context.Context, id int) error {
 	}
 	tx.Commit()
 	return nil
+}
+
+func (r BaseRepository[TEntity]) GetById(ctx context.Context, id int) (TEntity, error) {
+	model := new(TEntity)
+	db := db.Preload(r.database, r.preloads)
+	err := db.
+		Where(softDeleteExp, id).
+		First(model).
+		Error
+	if err != nil {
+		return *model, err
+	}
+	return *model, nil
 }

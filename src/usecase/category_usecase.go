@@ -33,3 +33,8 @@ func (u *CatecoryUsecase) Update(ctx context.Context, id int, req dto.UpdateCate
 func (u *CatecoryUsecase) Delete(ctx context.Context, id int) error {
 	return u.base.Delete(ctx, id)
 }
+
+// GetById
+func (u *CatecoryUsecase) GetById(ctx context.Context, id int) (dto.ResponseCategory, error) {
+	return u.base.GetById(ctx, id)
+}

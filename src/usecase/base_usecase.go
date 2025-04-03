@@ -48,3 +48,12 @@ func (u *BaseUsecase[TEntity, TCreate, TUpdate, TResponse]) Update(ctx context.C
 func (u *BaseUsecase[TEntity, TCreate, TUpdate, TResponse]) Delete(ctx context.Context, id int) error {
 	return u.repository.Delete(ctx, id)
 }
+
+func (u *BaseUsecase[TEntity, TCreate, TUpdate, TResponse]) GetById(ctx context.Context, id int) (TResponse, error) {
+	var response TResponse
+	entity, err := u.repository.GetById(ctx, id)
+	if err != nil {
+		return response, err
+	}
+	return common.TypeConverter[TResponse](entity)
+}
