@@ -39,8 +39,9 @@ type Category struct {
 type ProductImage struct {
 	BaseModel
 	ProductId int     `gorm:"type:int;not null"`
-	ImageUrl  string  `gorm:"type:string;size:255;not null"`
 	Product   Product `gorm:"foreignKey:ProductId;constraint:OnUpdate:NO ACTION;OnDelete:NO ACTION"`
+	Image     File    `gorm:"foreignKey:ImageId;constraint:OnUpdate:NO ACTION;OnDelete:NO ACTION"`
+	ImageId   int     `gorm:"uniqueIndex:idx_ProductId_ProductImageId;not null"`
 	IsMain    bool    `gorm:"type:boolean;default:false"`
 }
 
@@ -52,6 +53,14 @@ type ProductReview struct {
 	Product   Product `gorm:"foreignKey:ProductId;constraint:OnUpdate:NO ACTION;OnDelete:NO ACTION"`
 	UserId    int     `gorm:"type:int;not null"`
 	User      User    `gorm:"foreignKey:UserId;constraint:OnUpdate:NO ACTION;OnDelete:NO ACTION"`
+}
+
+type File struct {
+	BaseModel
+	Name        string `gorm:"size:100;type:string;not null"`
+	Directory   string `gorm:"size:100;type:string;not null"`
+	Description string `gorm:"size:500;type:string;not null"`
+	MimeType    string `gorm:"size:20;type:string;not null"`
 }
 
 // BeforeSave is a GORM hook that runs before saving a product
