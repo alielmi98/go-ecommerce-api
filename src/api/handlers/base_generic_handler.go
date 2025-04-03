@@ -6,6 +6,8 @@ import (
 	"strconv"
 
 	"github.com/alielmi98/go-ecommerce-api/api/helper"
+	"github.com/alielmi98/go-ecommerce-api/domin/filter"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -131,6 +133,50 @@ func GetById[TUOutput any, TResponse any](c *gin.Context,
 
 	// map usecase response to http response
 	response := responseMapper(usecaseResult)
+
+	c.JSON(http.StatusOK, helper.GenerateBaseResponse(response, true, 0))
+}
+
+// Get entities by filter
+// TUOutput: Usecase function output
+// TResponse: Http response body that mapped from TUOutput with TResponse := mapper(TUOutput)
+// responseMapper: this function map usecase output to endpoint output
+// usecaseList: usecase GetByFilter method
+func GetByFilter[TUOutput any, TResponse any](c *gin.Context,
+	responseMapper func(req TUOutput) (res TResponse),
+	usecaseList func(c context.Context, req filter.PaginationInputWithFilter) (*filter.PagedList[TUOutput], error)) {
+
+	req := new(filter.PaginationInputWithFilter)
+	err := c.ShouldBindJSON(&req)
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusBadRequest,
+			helper.GenerateBaseResponseWithValidationError(nil, false, helper.ValidationError, err))
+		return
+	}
+
+	// call use case method
+	usecaseResult, err := usecaseList(c, *req)
+	if err != nil {
+		c.AbortWithStatusJSON(helper.TranslateErrorToStatusCode(err),
+			helper.GenerateBaseResponseWithError(nil, false, helper.InternalError, err))
+		return
+	}
+	response := filter.PagedList[TResponse]{
+		PageNumber:      usecaseResult.PageNumber,
+		PageSize:        usecaseResult.PageSize,
+		TotalRows:       usecaseResult.TotalRows,
+		TotalPages:      usecaseResult.TotalPages,
+		HasPreviousPage: usecaseResult.HasPreviousPage,
+		HasNextPage:     usecaseResult.HasNextPage,
+	}
+
+	// map usecase response to http response
+	items := []TResponse{}
+	for _, item := range *usecaseResult.Items {
+
+		items = append(items, responseMapper(item))
+	}
+	response.Items = &items
 
 	c.JSON(http.StatusOK, helper.GenerateBaseResponse(response, true, 0))
 }

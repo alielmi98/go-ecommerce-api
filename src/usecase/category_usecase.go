@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/alielmi98/go-ecommerce-api/config"
+	"github.com/alielmi98/go-ecommerce-api/domin/filter"
 	model "github.com/alielmi98/go-ecommerce-api/domin/models"
 	"github.com/alielmi98/go-ecommerce-api/domin/repository"
 	"github.com/alielmi98/go-ecommerce-api/usecase/dto"
@@ -37,4 +38,10 @@ func (u *CatecoryUsecase) Delete(ctx context.Context, id int) error {
 // GetById
 func (u *CatecoryUsecase) GetById(ctx context.Context, id int) (dto.ResponseCategory, error) {
 	return u.base.GetById(ctx, id)
+}
+
+// GetByFilter
+
+func (s *CatecoryUsecase) GetByFilter(ctx context.Context, req filter.PaginationInputWithFilter) (*filter.PagedList[dto.ResponseCategory], error) {
+	return s.base.GetByFilter(ctx, req)
 }

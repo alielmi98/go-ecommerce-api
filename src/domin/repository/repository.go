@@ -3,6 +3,7 @@ package repository
 import (
 	"context"
 
+	"github.com/alielmi98/go-ecommerce-api/domin/filter"
 	model "github.com/alielmi98/go-ecommerce-api/domin/models"
 )
 
@@ -11,6 +12,7 @@ type BaseRepository[TEntity any] interface {
 	Update(ctx context.Context, id int, entity map[string]interface{}) (TEntity, error)
 	Delete(ctx context.Context, id int) error
 	GetById(ctx context.Context, id int) (TEntity, error)
+	GetByFilter(ctx context.Context, req filter.PaginationInputWithFilter) (int64, *[]TEntity, error)
 }
 type ProductRepository interface {
 	BaseRepository[model.Product]

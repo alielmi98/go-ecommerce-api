@@ -90,6 +90,61 @@ definitions:
     - CustomRecovery
     - InternalError
     - InvalidInputError
+  github_com_alielmi98_go-ecommerce-api_domin_filter.Filter:
+    properties:
+      filterType:
+        description: text number
+        type: string
+      from:
+        type: string
+      to:
+        type: string
+      type:
+        description: contains notContains equals notEqual startsWith lessThan lessThanOrEqual
+          greaterThan greaterThanOrEqual inRange endsWith
+        type: string
+    type: object
+  github_com_alielmi98_go-ecommerce-api_domin_filter.PagedList-github_com_alielmi98_go-ecommerce-api_api_dto_CategoryResponse:
+    properties:
+      hasNextPage:
+        type: boolean
+      hasPreviousPage:
+        type: boolean
+      items:
+        items:
+          $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.CategoryResponse'
+        type: array
+      pageNumber:
+        type: integer
+      pageSize:
+        type: integer
+      totalPages:
+        type: integer
+      totalRows:
+        type: integer
+    type: object
+  github_com_alielmi98_go-ecommerce-api_domin_filter.PaginationInputWithFilter:
+    properties:
+      filter:
+        additionalProperties:
+          $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_domin_filter.Filter'
+        type: object
+      pageNumber:
+        type: integer
+      pageSize:
+        type: integer
+      sort:
+        items:
+          $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_domin_filter.Sort'
+        type: array
+    type: object
+  github_com_alielmi98_go-ecommerce-api_domin_filter.Sort:
+    properties:
+      colId:
+        type: string
+      sort:
+        type: string
+    type: object
 info:
   contact: {}
 paths:
@@ -276,6 +331,37 @@ paths:
       security:
       - AuthBearer: []
       summary: Update a Category
+      tags:
+      - Category
+  /v1/category/get-by-filter:
+    post:
+      consumes:
+      - application/json
+      description: Get Categories
+      parameters:
+      - description: Request
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_domin_filter.PaginationInputWithFilter'
+      responses:
+        "200":
+          description: Category response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_domin_filter.PagedList-github_com_alielmi98_go-ecommerce-api_api_dto_CategoryResponse'
+              type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Get Categories
       tags:
       - Category
   /v1/token/refresh-token:

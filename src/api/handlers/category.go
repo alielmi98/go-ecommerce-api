@@ -5,6 +5,7 @@ import (
 	_ "github.com/alielmi98/go-ecommerce-api/api/helper"
 	"github.com/alielmi98/go-ecommerce-api/config"
 	"github.com/alielmi98/go-ecommerce-api/dependency"
+	_ "github.com/alielmi98/go-ecommerce-api/domin/filter"
 	"github.com/alielmi98/go-ecommerce-api/usecase"
 
 	"github.com/gin-gonic/gin"
@@ -79,4 +80,19 @@ func (h *CategoryHandler) Delete(c *gin.Context) {
 // @Security AuthBearer
 func (h *CategoryHandler) GetById(c *gin.Context) {
 	GetById(c, dto.ToCategoryResponse, h.usecase.GetById)
+}
+
+// GetCategories godoc
+// @Summary Get Categories
+// @Description Get Categories
+// @Tags Category
+// @Accept json
+// @produces json
+// @Param Request body filter.PaginationInputWithFilter true "Request"
+// @Success 200 {object} helper.BaseHttpResponse{result=filter.PagedList[dto.CategoryResponse]} "Category response"
+// @Failure 400 {object} helper.BaseHttpResponse "Bad request"
+// @Router /v1/category/get-by-filter [post]
+// @Security AuthBearer
+func (h *CategoryHandler) GetByFilter(c *gin.Context) {
+	GetByFilter(c, dto.ToCategoryResponse, h.usecase.GetByFilter)
 }

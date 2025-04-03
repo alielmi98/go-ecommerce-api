@@ -8,6 +8,7 @@ import (
 
 	"github.com/alielmi98/go-ecommerce-api/common"
 	"github.com/alielmi98/go-ecommerce-api/constants"
+	"github.com/alielmi98/go-ecommerce-api/domin/filter"
 	"github.com/alielmi98/go-ecommerce-api/infra/db"
 	"github.com/alielmi98/go-ecommerce-api/pkg/service_errors"
 	"gorm.io/gorm"
@@ -109,4 +110,33 @@ func (r BaseRepository[TEntity]) GetById(ctx context.Context, id int) (TEntity, 
 		return *model, err
 	}
 	return *model, nil
+}
+
+func (r BaseRepository[TEntity]) GetByFilter(ctx context.Context, req filter.PaginationInputWithFilter) (int64, *[]TEntity, error) {
+	model := new(TEntity)
+	var items *[]TEntity
+
+	database := db.Preload(r.database, r.preloads)
+	query := db.GenerateDynamicQuery[TEntity](&req.DynamicFilter)
+	sort := db.GenerateDynamicSort[TEntity](&req.DynamicFilter)
+	var totalRows int64 = 0
+
+	database.
+		Model(model).
+		Where(query).
+		Count(&totalRows)
+
+	err := database.
+		Where(query).
+		Offset(req.GetOffset()).
+		Limit(req.GetPageSize()).
+		Order(sort).
+		Find(&items).
+		Error
+
+	if err != nil {
+		return 0, &[]TEntity{}, err
+	}
+	return totalRows, items, err
+
 }

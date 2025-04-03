@@ -6,6 +6,7 @@ import (
 	"github.com/alielmi98/go-ecommerce-api/common"
 	"github.com/alielmi98/go-ecommerce-api/config"
 
+	"github.com/alielmi98/go-ecommerce-api/domin/filter"
 	"github.com/alielmi98/go-ecommerce-api/domin/repository"
 )
 
@@ -56,4 +57,14 @@ func (u *BaseUsecase[TEntity, TCreate, TUpdate, TResponse]) GetById(ctx context.
 		return response, err
 	}
 	return common.TypeConverter[TResponse](entity)
+}
+
+func (u *BaseUsecase[TEntity, TCreate, TUpdate, TResponse]) GetByFilter(ctx context.Context, req filter.PaginationInputWithFilter) (*filter.PagedList[TResponse], error) {
+	var response *filter.PagedList[TResponse]
+	count, entities, err := u.repository.GetByFilter(ctx, req)
+	if err != nil {
+		return response, err
+	}
+
+	return filter.Paginate[TEntity, TResponse](count, entities, req.PageNumber, int64(req.PageSize))
 }
