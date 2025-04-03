@@ -31,3 +31,20 @@ func (u *BaseUsecase[TEntity, TCreate, TUpdate, TResponse]) Create(ctx context.C
 	response, _ = common.TypeConverter[TResponse](entity)
 	return response, nil
 }
+
+func (u *BaseUsecase[TEntity, TCreate, TUpdate, TResponse]) Update(ctx context.Context, id int, req TUpdate) (TResponse, error) {
+	var response TResponse
+	updateMap, _ := common.TypeConverter[map[string]interface{}](req)
+
+	entity, err := u.repository.Update(ctx, id, updateMap)
+	if err != nil {
+		return response, err
+	}
+
+	response, _ = common.TypeConverter[TResponse](entity)
+	return response, nil
+}
+
+func (u *BaseUsecase[TEntity, TCreate, TUpdate, TResponse]) Delete(ctx context.Context, id int) error {
+	return u.repository.Delete(ctx, id)
+}

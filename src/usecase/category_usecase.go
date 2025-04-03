@@ -23,3 +23,13 @@ func NewCategoryUsecase(cfg *config.Config, repository repository.CategoryReposi
 func (u *CatecoryUsecase) Create(ctx context.Context, req dto.CreateCategory) (dto.ResponseCategory, error) {
 	return u.base.Create(ctx, req)
 }
+
+// Update
+func (u *CatecoryUsecase) Update(ctx context.Context, id int, req dto.UpdateCategory) (dto.ResponseCategory, error) {
+	return u.base.Update(ctx, id, req)
+}
+
+// Delete
+func (u *CatecoryUsecase) Delete(ctx context.Context, id int) error {
+	return u.base.Delete(ctx, id)
+}

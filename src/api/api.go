@@ -38,7 +38,7 @@ func RegisterRoutes(r *gin.Engine, cfg *config.Config) {
 		routers.Token(token, cfg)
 		//Shop
 		//category
-		category := v1.Group("/category")
+		category := v1.Group("/category", middlewares.Authentication(cfg))
 		routers.Category(category, cfg)
 
 	}

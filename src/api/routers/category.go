@@ -10,5 +10,7 @@ func Category(r *gin.RouterGroup, cfg *config.Config) {
 	h := handlers.NewCategoryHandler(cfg)
 
 	r.POST("/", h.Create)
+	r.PUT("/:id", h.Update)
+	r.DELETE("/:id", h.Delete)
 
 }
