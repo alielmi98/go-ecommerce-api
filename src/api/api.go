@@ -38,10 +38,10 @@ func RegisterRoutes(r *gin.Engine, cfg *config.Config) {
 		routers.Token(token, cfg)
 		//Shop
 		//category
-		categories := v1.Group("/categories", middlewares.Authentication(cfg))
+		categories := v1.Group("/categories", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
 		routers.Category(categories, cfg)
 		//file
-		files := v1.Group("/files", middlewares.Authentication(cfg))
+		files := v1.Group("/files", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
 		routers.File(files, cfg)
 
 	}
