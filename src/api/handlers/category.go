@@ -12,7 +12,7 @@ import (
 )
 
 type CategoryHandler struct {
-	usecase *usecase.CatecoryUsecase
+	usecase *usecase.CategoryUsecase
 }
 
 func NewCategoryHandler(cfg *config.Config) *CategoryHandler {

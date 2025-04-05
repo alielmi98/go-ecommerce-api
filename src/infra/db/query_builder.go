@@ -86,7 +86,7 @@ func GenerateDynamicSort[T any](filter *filter.DynamicFilter) string {
 // Preload
 func Preload(db *gorm.DB, preloads []PreloadEntity) *gorm.DB {
 	for _, item := range preloads {
-		db = db.Preload(item.Entity)
+		db = db.Preload(item.Entity, "deleted_at IS NULL")
 	}
 	return db
 }

@@ -10,38 +10,38 @@ import (
 	"github.com/alielmi98/go-ecommerce-api/usecase/dto"
 )
 
-type CatecoryUsecase struct {
+type CategoryUsecase struct {
 	base *BaseUsecase[model.Category, dto.CreateCategory, dto.UpdateCategory, dto.ResponseCategory]
 }
 
-func NewCategoryUsecase(cfg *config.Config, repository repository.CategoryRepository) *CatecoryUsecase {
-	return &CatecoryUsecase{
+func NewCategoryUsecase(cfg *config.Config, repository repository.CategoryRepository) *CategoryUsecase {
+	return &CategoryUsecase{
 		base: NewBaseUsecase[model.Category, dto.CreateCategory, dto.UpdateCategory, dto.ResponseCategory](cfg, repository),
 	}
 }
 
 // Create
-func (u *CatecoryUsecase) Create(ctx context.Context, req dto.CreateCategory) (dto.ResponseCategory, error) {
+func (u *CategoryUsecase) Create(ctx context.Context, req dto.CreateCategory) (dto.ResponseCategory, error) {
 	return u.base.Create(ctx, req)
 }
 
 // Update
-func (u *CatecoryUsecase) Update(ctx context.Context, id int, req dto.UpdateCategory) (dto.ResponseCategory, error) {
+func (u *CategoryUsecase) Update(ctx context.Context, id int, req dto.UpdateCategory) (dto.ResponseCategory, error) {
 	return u.base.Update(ctx, id, req)
 }
 
 // Delete
-func (u *CatecoryUsecase) Delete(ctx context.Context, id int) error {
+func (u *CategoryUsecase) Delete(ctx context.Context, id int) error {
 	return u.base.Delete(ctx, id)
 }
 
 // GetById
-func (u *CatecoryUsecase) GetById(ctx context.Context, id int) (dto.ResponseCategory, error) {
+func (u *CategoryUsecase) GetById(ctx context.Context, id int) (dto.ResponseCategory, error) {
 	return u.base.GetById(ctx, id)
 }
 
 // GetByFilter
 
-func (s *CatecoryUsecase) GetByFilter(ctx context.Context, req filter.PaginationInputWithFilter) (*filter.PagedList[dto.ResponseCategory], error) {
+func (s *CategoryUsecase) GetByFilter(ctx context.Context, req filter.PaginationInputWithFilter) (*filter.PagedList[dto.ResponseCategory], error) {
 	return s.base.GetByFilter(ctx, req)
 }

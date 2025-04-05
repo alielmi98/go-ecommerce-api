@@ -43,6 +43,9 @@ func RegisterRoutes(r *gin.Engine, cfg *config.Config) {
 		//file
 		files := v1.Group("/files", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
 		routers.File(files, cfg)
+		//product
+		product := v1.Group("/products", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
+		routers.Product(product, cfg)
 
 	}
 

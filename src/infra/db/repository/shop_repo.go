@@ -24,6 +24,7 @@ type BaseRepository[TEntity any] struct {
 func NewBaseRepository[TEntity any](preloads []db.PreloadEntity) *BaseRepository[TEntity] {
 	return &BaseRepository[TEntity]{
 		database: db.GetDb(),
+		preloads: preloads,
 	}
 }
 
@@ -101,8 +102,8 @@ func (r BaseRepository[TEntity]) Delete(ctx context.Context, id int) error {
 
 func (r BaseRepository[TEntity]) GetById(ctx context.Context, id int) (TEntity, error) {
 	model := new(TEntity)
-	db := db.Preload(r.database, r.preloads)
-	err := db.
+	database := db.Preload(r.database, r.preloads)
+	err := database.
 		Where(softDeleteExp, id).
 		First(model).
 		Error

@@ -17,3 +17,8 @@ func GetFileRepository(cfg *config.Config) contractRepository.FileRepository {
 	var preloads []db.PreloadEntity = []db.PreloadEntity{}
 	return infraRepository.NewBaseRepository[model.File](preloads)
 }
+
+func GetProductRepository(cfg *config.Config) contractRepository.ProductRepository {
+	var preloads []db.PreloadEntity = []db.PreloadEntity{{Entity: "Images"}, {Entity: "Reviews"}, {Entity: "Category"}}
+	return infraRepository.NewBaseRepository[model.Product](preloads)
+}

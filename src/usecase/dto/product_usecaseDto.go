@@ -1,16 +1,21 @@
 package dto
 
 type ResponseProduct struct {
-	ID          int
-	Name        string
-	Description string
-	Price       float64
-	Stock       int
-	CategoryID  int
-	Category    string
-	CreatedAt   string
-	UpdatedAt   string
-	DeletedAt   string
+	Id           int
+	Name         string
+	Description  string
+	Price        float64
+	Stock        int
+	Slug         string
+	Status       string
+	CategoryId   int
+	Category     ResponseCategory
+	AvrageRating float64
+	CountViews   int
+	Images       []ResponseProductImage
+	Reviews      []ResponseProductReview
+	CreatedAt    string
+	UpdatedAt    string
 }
 
 type CreateProduct struct {

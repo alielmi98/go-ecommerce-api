@@ -15,6 +15,29 @@ definitions:
     required:
     - name
     type: object
+  github_com_alielmi98_go-ecommerce-api_api_dto.CreateProductRequest:
+    properties:
+      category_id:
+        type: integer
+      description:
+        type: string
+      name:
+        type: string
+      price:
+        type: number
+      slug:
+        type: string
+      status:
+        type: string
+      stock:
+        type: integer
+    required:
+    - category_id
+    - name
+    - price
+    - status
+    - stock
+    type: object
   github_com_alielmi98_go-ecommerce-api_api_dto.FileResponse:
     properties:
       description:
@@ -39,6 +62,65 @@ definitions:
     required:
     - password
     - username
+    type: object
+  github_com_alielmi98_go-ecommerce-api_api_dto.ProductImageResponse:
+    properties:
+      id:
+        description: This field is not used in the request, but it's included for
+          consistency with the response
+        type: integer
+      image_url:
+        type: string
+      is_main:
+        type: boolean
+      product_id:
+        type: integer
+    type: object
+  github_com_alielmi98_go-ecommerce-api_api_dto.ProductResponse:
+    properties:
+      avrage_rating:
+        type: number
+      category:
+        $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.CategoryResponse'
+      category_id:
+        type: integer
+      count_views:
+        type: integer
+      created_at:
+        type: string
+      description:
+        type: string
+      images:
+        items:
+          $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.ProductImageResponse'
+        type: array
+      name:
+        type: string
+      price:
+        type: number
+      reviews:
+        items:
+          $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.ProductReviewResponse'
+        type: array
+      slug:
+        type: string
+      status:
+        type: string
+      stock:
+        type: integer
+      updated_at:
+        type: string
+    type: object
+  github_com_alielmi98_go-ecommerce-api_api_dto.ProductReviewResponse:
+    properties:
+      comment:
+        type: string
+      product_id:
+        type: integer
+      rating:
+        type: integer
+      user_id:
+        type: integer
     type: object
   github_com_alielmi98_go-ecommerce-api_api_dto.RegisterUserByUsernameRequest:
     properties:
@@ -74,6 +156,23 @@ definitions:
     properties:
       description:
         type: string
+    type: object
+  github_com_alielmi98_go-ecommerce-api_api_dto.UpdateProductRequest:
+    properties:
+      category_id:
+        type: integer
+      description:
+        type: string
+      name:
+        type: string
+      price:
+        type: number
+      slug:
+        type: string
+      status:
+        type: string
+      stock:
+        type: integer
     type: object
   github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse:
     properties:
@@ -150,6 +249,25 @@ definitions:
       items:
         items:
           $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.FileResponse'
+        type: array
+      pageNumber:
+        type: integer
+      pageSize:
+        type: integer
+      totalPages:
+        type: integer
+      totalRows:
+        type: integer
+    type: object
+  github_com_alielmi98_go-ecommerce-api_domin_filter.PagedList-github_com_alielmi98_go-ecommerce-api_api_dto_ProductResponse:
+    properties:
+      hasNextPage:
+        type: boolean
+      hasPreviousPage:
+        type: boolean
+      items:
+        items:
+          $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.ProductResponse'
         type: array
       pageNumber:
         type: integer
@@ -555,6 +673,162 @@ paths:
       summary: Get Files
       tags:
       - Files
+  /v1/products/:
+    post:
+      consumes:
+      - application/json
+      description: Create a Product
+      parameters:
+      - description: Create a Product
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.CreateProductRequest'
+      responses:
+        "201":
+          description: Product response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.ProductResponse'
+              type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Create a Product
+      tags:
+      - Product
+  /v1/products/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a Product
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: Product response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.ProductResponse'
+              type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Delete a Product
+      tags:
+      - Product
+    get:
+      consumes:
+      - application/json
+      description: Get a Product
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: Product response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.ProductResponse'
+              type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Get a Product
+      tags:
+      - Product
+    put:
+      consumes:
+      - application/json
+      description: Update a Product
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Update a Product
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.UpdateProductRequest'
+      responses:
+        "200":
+          description: Product response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.ProductResponse'
+              type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Update a Product
+      tags:
+      - Product
+  /v1/products/get-by-filter:
+    post:
+      consumes:
+      - application/json
+      description: Get products
+      parameters:
+      - description: Request
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_domin_filter.PaginationInputWithFilter'
+      responses:
+        "200":
+          description: Product response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_domin_filter.PagedList-github_com_alielmi98_go-ecommerce-api_api_dto_ProductResponse'
+              type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Get products
+      tags:
+      - Product
   /v1/token/refresh-token:
     get:
       consumes:

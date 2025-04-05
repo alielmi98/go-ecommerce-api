@@ -35,9 +35,13 @@ type ProductResponse struct {
 	Images       []ProductImageResponse  `json:"images"`
 	Reviews      []ProductReviewResponse `json:"reviews"`
 	Category     CategoryResponse        `json:"category"`
+	CreatedAt    string                  `json:"created_at"`
+	UpdatedAt    string                  `json:"updated_at"`
 }
 
-func ToProductResponse(from ProductResponse, images []ProductImageResponse, reviews []ProductReviewResponse, category CategoryResponse) ProductResponse {
+func ToProductResponse(from dto.ResponseProduct) ProductResponse {
+	images := []ProductImageResponse{}
+	reviews := []ProductReviewResponse{}
 	return ProductResponse{
 		Name:         from.Name,
 		Description:  from.Description,
@@ -50,11 +54,11 @@ func ToProductResponse(from ProductResponse, images []ProductImageResponse, revi
 		CountViews:   from.CountViews,
 		Images:       images,
 		Reviews:      reviews,
-		Category:     category,
+		Category:     ToCategoryResponse(from.Category),
 	}
 }
 
-func ToProductCreateRequest(from CreateProductRequest) dto.CreateProduct {
+func ToCreateProduct(from CreateProductRequest) dto.CreateProduct {
 	return dto.CreateProduct{
 		Name:        from.Name,
 		Description: from.Description,
@@ -66,7 +70,7 @@ func ToProductCreateRequest(from CreateProductRequest) dto.CreateProduct {
 	}
 }
 
-func ToProductUpdateRequest(from UpdateProductRequest) dto.UpdateProduct {
+func ToUpdateProduct(from UpdateProductRequest) dto.UpdateProduct {
 	return dto.UpdateProduct{
 		Name:        from.Name,
 		Description: from.Description,
