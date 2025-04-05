@@ -44,6 +44,7 @@ func createTables(database *gorm.DB) {
 		log.Printf("Caller:%s Level:%s Msg:%s", constants.Postgres, constants.Migration, err.Error())
 	}
 	log.Printf("Caller:%s Level:%s Msg:%s", constants.Postgres, constants.Migration, "tables created")
+
 }
 
 func addNewTable(database *gorm.DB, model interface{}, tables []interface{}) []interface{} {

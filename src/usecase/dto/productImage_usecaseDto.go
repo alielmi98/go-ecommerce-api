@@ -1,20 +1,21 @@
 package dto
 
 type ResponseProductImage struct {
-	ProductImageId int
-	ProductId      int
-	ImageUrl       string
-	IsMain         bool
-}
-
-type CreateProductImage struct {
+	Id        int
+	ImageId   int
 	ProductId int
 	ImageUrl  string
 	IsMain    bool
 }
 
+type CreateProductImage struct {
+	ProductId int
+	ImageId   int
+	IsMain    bool
+}
+
 type UpdateProductImage struct {
 	ProductId int
-	ImageUrl  string
+	ImageId   int
 	IsMain    bool
 }

@@ -1,6 +1,10 @@
 package dto
 
-import "github.com/alielmi98/go-ecommerce-api/usecase/dto"
+import (
+	"sync"
+
+	"github.com/alielmi98/go-ecommerce-api/usecase/dto"
+)
 
 type CreateProductRequest struct {
 	Name        string  `json:"name" binding:"required"`
@@ -42,6 +46,26 @@ type ProductResponse struct {
 func ToProductResponse(from dto.ResponseProduct) ProductResponse {
 	images := []ProductImageResponse{}
 	reviews := []ProductReviewResponse{}
+
+	var wg sync.WaitGroup
+	wg.Add(2)
+
+	go func() {
+		for _, item := range from.Images {
+			images = append(images, ToProductImageResponse(item))
+		}
+		wg.Done()
+	}()
+
+	go func() {
+		for _, item := range from.Reviews {
+			reviews = append(reviews, ToProductReviewResponse(item))
+		}
+		wg.Done()
+	}()
+
+	wg.Wait()
+
 	return ProductResponse{
 		Name:         from.Name,
 		Description:  from.Description,

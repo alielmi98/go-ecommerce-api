@@ -15,6 +15,275 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/v1/Product-images/": {
+            "post": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Create a ProductImage",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ProductImage"
+                ],
+                "summary": "Create a ProductImage",
+                "parameters": [
+                    {
+                        "description": "Create a ProductImage",
+                        "name": "Request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.CreateProductImageRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "ProductImage response",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.ProductImageResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/Product-images/get-by-filter": {
+            "post": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Get ProductImages",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ProductImage"
+                ],
+                "summary": "Get ProductImages",
+                "parameters": [
+                    {
+                        "description": "Request",
+                        "name": "Request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_domin_filter.PaginationInputWithFilter"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ProductImage response",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_domin_filter.PagedList-github_com_alielmi98_go-ecommerce-api_api_dto_ProductImageResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/Product-images/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Get a ProductImage",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ProductImage"
+                ],
+                "summary": "Get a ProductImage",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ProductImage response",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.ProductImageResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Update a ProductImage",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ProductImage"
+                ],
+                "summary": "Update a ProductImage",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update a ProductImage",
+                        "name": "Request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.UpdateProductImageRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ProductImage response",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.ProductImageResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Delete a ProductImage",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ProductImage"
+                ],
+                "summary": "Delete a ProductImage",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ProductImage response",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.ProductImageResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/v1/account/login-by-username": {
             "post": {
                 "description": "LoginByUsername",
@@ -968,6 +1237,24 @@ const docTemplate = `{
                 }
             }
         },
+        "github_com_alielmi98_go-ecommerce-api_api_dto.CreateProductImageRequest": {
+            "type": "object",
+            "required": [
+                "image_id",
+                "product_id"
+            ],
+            "properties": {
+                "image_id": {
+                    "type": "integer"
+                },
+                "is_main": {
+                    "type": "boolean"
+                },
+                "product_id": {
+                    "type": "integer"
+                }
+            }
+        },
         "github_com_alielmi98_go-ecommerce-api_api_dto.CreateProductRequest": {
             "type": "object",
             "required": [
@@ -1045,8 +1332,8 @@ const docTemplate = `{
                     "description": "This field is not used in the request, but it's included for consistency with the response",
                     "type": "integer"
                 },
-                "image_url": {
-                    "type": "string"
+                "image_id": {
+                    "type": "integer"
                 },
                 "is_main": {
                     "type": "boolean"
@@ -1173,6 +1460,20 @@ const docTemplate = `{
             "properties": {
                 "description": {
                     "type": "string"
+                }
+            }
+        },
+        "github_com_alielmi98_go-ecommerce-api_api_dto.UpdateProductImageRequest": {
+            "type": "object",
+            "properties": {
+                "image_id": {
+                    "type": "integer"
+                },
+                "is_main": {
+                    "type": "boolean"
+                },
+                "product_id": {
+                    "type": "integer"
                 }
             }
         },
@@ -1303,6 +1604,35 @@ const docTemplate = `{
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.FileResponse"
+                    }
+                },
+                "pageNumber": {
+                    "type": "integer"
+                },
+                "pageSize": {
+                    "type": "integer"
+                },
+                "totalPages": {
+                    "type": "integer"
+                },
+                "totalRows": {
+                    "type": "integer"
+                }
+            }
+        },
+        "github_com_alielmi98_go-ecommerce-api_domin_filter.PagedList-github_com_alielmi98_go-ecommerce-api_api_dto_ProductImageResponse": {
+            "type": "object",
+            "properties": {
+                "hasNextPage": {
+                    "type": "boolean"
+                },
+                "hasPreviousPage": {
+                    "type": "boolean"
+                },
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.ProductImageResponse"
                     }
                 },
                 "pageNumber": {

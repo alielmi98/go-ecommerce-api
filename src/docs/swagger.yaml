@@ -15,6 +15,18 @@ definitions:
     required:
     - name
     type: object
+  github_com_alielmi98_go-ecommerce-api_api_dto.CreateProductImageRequest:
+    properties:
+      image_id:
+        type: integer
+      is_main:
+        type: boolean
+      product_id:
+        type: integer
+    required:
+    - image_id
+    - product_id
+    type: object
   github_com_alielmi98_go-ecommerce-api_api_dto.CreateProductRequest:
     properties:
       category_id:
@@ -69,8 +81,8 @@ definitions:
         description: This field is not used in the request, but it's included for
           consistency with the response
         type: integer
-      image_url:
-        type: string
+      image_id:
+        type: integer
       is_main:
         type: boolean
       product_id:
@@ -156,6 +168,15 @@ definitions:
     properties:
       description:
         type: string
+    type: object
+  github_com_alielmi98_go-ecommerce-api_api_dto.UpdateProductImageRequest:
+    properties:
+      image_id:
+        type: integer
+      is_main:
+        type: boolean
+      product_id:
+        type: integer
     type: object
   github_com_alielmi98_go-ecommerce-api_api_dto.UpdateProductRequest:
     properties:
@@ -259,6 +280,25 @@ definitions:
       totalRows:
         type: integer
     type: object
+  github_com_alielmi98_go-ecommerce-api_domin_filter.PagedList-github_com_alielmi98_go-ecommerce-api_api_dto_ProductImageResponse:
+    properties:
+      hasNextPage:
+        type: boolean
+      hasPreviousPage:
+        type: boolean
+      items:
+        items:
+          $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.ProductImageResponse'
+        type: array
+      pageNumber:
+        type: integer
+      pageSize:
+        type: integer
+      totalPages:
+        type: integer
+      totalRows:
+        type: integer
+    type: object
   github_com_alielmi98_go-ecommerce-api_domin_filter.PagedList-github_com_alielmi98_go-ecommerce-api_api_dto_ProductResponse:
     properties:
       hasNextPage:
@@ -303,6 +343,162 @@ definitions:
 info:
   contact: {}
 paths:
+  /v1/Product-images/:
+    post:
+      consumes:
+      - application/json
+      description: Create a ProductImage
+      parameters:
+      - description: Create a ProductImage
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.CreateProductImageRequest'
+      responses:
+        "201":
+          description: ProductImage response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.ProductImageResponse'
+              type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Create a ProductImage
+      tags:
+      - ProductImage
+  /v1/Product-images/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a ProductImage
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: ProductImage response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.ProductImageResponse'
+              type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Delete a ProductImage
+      tags:
+      - ProductImage
+    get:
+      consumes:
+      - application/json
+      description: Get a ProductImage
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: ProductImage response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.ProductImageResponse'
+              type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Get a ProductImage
+      tags:
+      - ProductImage
+    put:
+      consumes:
+      - application/json
+      description: Update a ProductImage
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Update a ProductImage
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.UpdateProductImageRequest'
+      responses:
+        "200":
+          description: ProductImage response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.ProductImageResponse'
+              type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Update a ProductImage
+      tags:
+      - ProductImage
+  /v1/Product-images/get-by-filter:
+    post:
+      consumes:
+      - application/json
+      description: Get ProductImages
+      parameters:
+      - description: Request
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_domin_filter.PaginationInputWithFilter'
+      responses:
+        "200":
+          description: ProductImage response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_domin_filter.PagedList-github_com_alielmi98_go-ecommerce-api_api_dto_ProductImageResponse'
+              type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Get ProductImages
+      tags:
+      - ProductImage
   /v1/account/login-by-username:
     post:
       consumes:
