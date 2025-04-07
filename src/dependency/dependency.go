@@ -27,3 +27,8 @@ func GetProductImageRepository(cfg *config.Config) contractRepository.ProductIma
 	var preloads []db.PreloadEntity = []db.PreloadEntity{{Entity: "Image"}, {Entity: "Product"}}
 	return infraRepository.NewBaseRepository[model.ProductImage](preloads)
 }
+
+func GetProductReviewRepository(cfg *config.Config) contractRepository.ProductReviewRepository {
+	var preloads []db.PreloadEntity = []db.PreloadEntity{{Entity: "Product"}}
+	return infraRepository.NewBaseRepository[model.ProductReview](preloads)
+}

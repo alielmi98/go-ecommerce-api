@@ -36,7 +36,7 @@ func ToCreateProductImage(from CreateProductImageRequest) dto.CreateProductImage
 		IsMain:    from.IsMain,
 	}
 }
-func ToUpdateProductImage(from dto.UpdateProductImage) dto.UpdateProductImage {
+func ToUpdateProductImage(from UpdateProductImageRequest) dto.UpdateProductImage {
 	return dto.UpdateProductImage{
 		ProductId: from.ProductId,
 		ImageId:   from.ImageId,

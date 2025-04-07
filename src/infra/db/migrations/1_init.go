@@ -32,12 +32,12 @@ func createTables(database *gorm.DB) {
 	tables = addNewTable(database, models.Category{}, tables)
 	// Product
 	tables = addNewTable(database, models.Product{}, tables)
+	// File
+	tables = addNewTable(database, models.File{}, tables)
 	// ProductImage
 	tables = addNewTable(database, models.ProductImage{}, tables)
 	// ProductReview
 	tables = addNewTable(database, models.ProductReview{}, tables)
-	// File
-	tables = addNewTable(database, models.File{}, tables)
 
 	err := database.Migrator().CreateTable(tables...)
 	if err != nil {

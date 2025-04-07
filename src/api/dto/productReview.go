@@ -31,7 +31,7 @@ func ToProductReviewResponse(from dto.ResponseProductReview) ProductReviewRespon
 		UserId:    from.UserId,
 	}
 }
-func ToCreateProductReview(from dto.CreateProductReview) dto.CreateProductReview {
+func ToCreateProductReview(from CreateProductReviewRequest) dto.CreateProductReview {
 	return dto.CreateProductReview{
 		ProductId: from.ProductId,
 		Rating:    from.Rating,
@@ -39,7 +39,7 @@ func ToCreateProductReview(from dto.CreateProductReview) dto.CreateProductReview
 		UserId:    from.UserId,
 	}
 }
-func ToUpdateProductReview(from dto.UpdateProductReview) dto.UpdateProductReview {
+func ToUpdateProductReview(from UpdateProductReviewRequest) dto.UpdateProductReview {
 	return dto.UpdateProductReview{
 		ProductId: from.ProductId,
 		Rating:    from.Rating,
