@@ -42,7 +42,7 @@ type ProductImage struct {
 	Product   Product `gorm:"foreignKey:ProductId;constraint:OnUpdate:NO ACTION;OnDelete:NO ACTION"`
 	Image     File    `gorm:"foreignKey:ImageId;constraint:OnUpdate:NO ACTION;OnDelete:NO ACTION"`
 	ImageId   int     `gorm:"uniqueIndex:idx_ProductId_ProductImageId;not null"`
-	IsMain    bool    `gorm:"type:boolean;default:false"`
+	IsMain    bool    `gorm:"type:boolean;default:false;uniqueIndex:idx_ProductId_IsMain"`
 }
 
 type ProductReview struct {
@@ -67,6 +67,18 @@ type File struct {
 func (p *Product) BeforeSave(tx *gorm.DB) (err error) {
 	if strings.Contains(p.Slug, " ") {
 		return errors.New("slug cannot contain spaces")
+	}
+	return nil
+}
+
+func (p *ProductImage) BeforeSave(tx *gorm.DB) (err error) {
+	if p.IsMain {
+		err := tx.Model(&ProductImage{}).
+			Where("product_id = ? AND is_main = ? AND id != ?", p.ProductId, true, p.Id).
+			Update("is_main", false).Error
+		if err != nil {
+			return err
+		}
 	}
 	return nil
 }

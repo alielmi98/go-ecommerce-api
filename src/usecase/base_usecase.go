@@ -35,14 +35,14 @@ func (u *BaseUsecase[TEntity, TCreate, TUpdate, TResponse]) Create(ctx context.C
 
 func (u *BaseUsecase[TEntity, TCreate, TUpdate, TResponse]) Update(ctx context.Context, id int, req TUpdate) (TResponse, error) {
 	var response TResponse
-	updateMap, _ := common.TypeConverter[map[string]interface{}](req)
 
-	entity, err := u.repository.Update(ctx, id, updateMap)
+	entity, _ := common.TypeConverter[TEntity](req)
+	updatedEntity, err := u.repository.Update(ctx, id, entity)
 	if err != nil {
 		return response, err
 	}
 
-	response, _ = common.TypeConverter[TResponse](entity)
+	response, _ = common.TypeConverter[TResponse](updatedEntity)
 	return response, nil
 }
 

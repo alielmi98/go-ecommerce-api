@@ -44,7 +44,14 @@ func createTables(database *gorm.DB) {
 		log.Printf("Caller:%s Level:%s Msg:%s", constants.Postgres, constants.Migration, err.Error())
 	}
 	log.Printf("Caller:%s Level:%s Msg:%s", constants.Postgres, constants.Migration, "tables created")
-
+	err = database.Exec(`
+        CREATE UNIQUE INDEX idx_ProductId_IsMain 
+        ON product_images (product_id, is_main) 
+        WHERE is_main = true;
+    `).Error
+	if err != nil {
+		log.Printf("Caller:%s Level:%s Msg:%s", constants.Postgres, constants.Migration, err.Error())
+	}
 }
 
 func addNewTable(database *gorm.DB, model interface{}, tables []interface{}) []interface{} {

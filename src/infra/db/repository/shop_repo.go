@@ -6,7 +6,6 @@ import (
 	"log"
 	"time"
 
-	"github.com/alielmi98/go-ecommerce-api/common"
 	"github.com/alielmi98/go-ecommerce-api/constants"
 	"github.com/alielmi98/go-ecommerce-api/domin/filter"
 	"github.com/alielmi98/go-ecommerce-api/infra/db"
@@ -42,37 +41,28 @@ func (r BaseRepository[TEntity]) Create(ctx context.Context, entity TEntity) (TE
 	return entity, nil
 }
 
-func (r BaseRepository[TEntity]) Update(ctx context.Context, id int, entity map[string]interface{}) (TEntity, error) {
-	snakeMap := map[string]interface{}{}
-	for k, v := range entity {
-		snakeMap[common.ToSnakeCase(k)] = v
-	}
-
-	snakeMap["modified_by"] = &sql.NullInt64{Int64: int64(ctx.Value(constants.UserIdKey).(float64)), Valid: true}
-	snakeMap["modified_at"] = sql.NullTime{Valid: true, Time: time.Now().UTC()}
+func (r BaseRepository[TEntity]) Update(ctx context.Context, id int, entity TEntity) (TEntity, error) {
 	model := new(TEntity)
-	tx := r.database.WithContext(ctx).Begin()
 
-	result := tx.Model(model).
-		Where(softDeleteExp, id).
-		Updates(snakeMap)
-
-	if result.Error != nil {
-		tx.Rollback()
-		log.Printf("Caller:%s Level:%s Msg:%s", constants.Postgres, constants.Update, result.Error.Error())
-		return *model, result.Error
+	// بارگذاری رکورد فعلی از دیتابیس
+	err := r.database.WithContext(ctx).Where(softDeleteExp, id).First(model).Error
+	if err != nil {
+		log.Printf("Caller:%s Level:%s Msg:%s", constants.Postgres, constants.Update, err.Error())
+		return *model, err
 	}
 
-	if result.RowsAffected == 0 {
+	*model = entity
+
+	tx := r.database.WithContext(ctx).Begin()
+	if err := tx.Model(model).Where("id = ?", id).Updates(model).Error; err != nil {
 		tx.Rollback()
-		log.Printf("Caller:%s Level:%s Msg:%s", constants.Postgres, constants.Update, service_errors.RecordNotFound)
-		return *model, &service_errors.ServiceError{EndUserMessage: service_errors.RecordNotFound}
+		log.Printf("Caller:%s Level:%s Msg:%s", constants.Postgres, constants.Update, err.Error())
+		return *model, err
 	}
 
 	tx.Commit()
 	return *model, nil
 }
-
 func (r BaseRepository[TEntity]) Delete(ctx context.Context, id int) error {
 	tx := r.database.WithContext(ctx).Begin()
 
