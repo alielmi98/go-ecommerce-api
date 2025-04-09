@@ -73,20 +73,10 @@ func (p *Product) BeforeSave(tx *gorm.DB) (err error) {
 
 // BeforeSave is a GORM hook that ensures only one main image exists per product
 func (p *ProductImage) BeforeSave(tx *gorm.DB) (err error) {
-	// recover the product image data from the context
-	data := tx.Statement.Context.Value("product_image_data")
-	if data != nil {
-		// transform the data to a map for easier access
-		productImageData := data.(map[string]interface{})
-		p.Id = productImageData["id"].(int)
-		p.ProductId = productImageData["product_id"].(int)
-		p.IsMain = productImageData["is_main"].(bool)
-	}
-
 	// if the image is marked as main, ensure no other images are marked as main for the same product
 	if p.IsMain {
 		err := tx.Model(&ProductImage{}).
-			Where("product_id = ? AND is_main = ? AND id != ?", p.ProductId, true, p.Id).
+			Where("product_id = ? AND is_main = ? ", p.ProductId, true).
 			Update("is_main", false).Error
 		if err != nil {
 			return err

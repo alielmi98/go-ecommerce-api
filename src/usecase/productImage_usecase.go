@@ -27,13 +27,7 @@ func (u *ProductImageUsecase) Create(ctx context.Context, req dto.CreateProductI
 
 // Update an existing product image
 func (u *ProductImageUsecase) Update(ctx context.Context, id int, req dto.UpdateProductImage) (dto.ResponseProductImage, error) {
-	// Add product image data to context for use in BeforeSave hook
-	ctx = context.WithValue(ctx, "product_image_data", map[string]interface{}{
-		"id":         id,
-		"product_id": req.ProductId,
-		"is_main":    req.IsMain,
-	})
-
+	// Pass request to Update method
 	return u.base.Update(ctx, id, req)
 }
 
