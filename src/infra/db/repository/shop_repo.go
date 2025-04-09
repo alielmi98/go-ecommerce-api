@@ -44,7 +44,6 @@ func (r BaseRepository[TEntity]) Create(ctx context.Context, entity TEntity) (TE
 func (r BaseRepository[TEntity]) Update(ctx context.Context, id int, entity TEntity) (TEntity, error) {
 	model := new(TEntity)
 
-	// بارگذاری رکورد فعلی از دیتابیس
 	err := r.database.WithContext(ctx).Where(softDeleteExp, id).First(model).Error
 	if err != nil {
 		log.Printf("Caller:%s Level:%s Msg:%s", constants.Postgres, constants.Update, err.Error())

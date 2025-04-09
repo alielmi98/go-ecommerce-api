@@ -192,6 +192,9 @@ definitions:
         type: boolean
       product_id:
         type: integer
+    required:
+    - is_main
+    - product_id
     type: object
   github_com_alielmi98_go-ecommerce-api_api_dto.UpdateProductRequest:
     properties:

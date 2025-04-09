@@ -9,9 +9,9 @@ type CreateProductImageRequest struct {
 }
 
 type UpdateProductImageRequest struct {
-	ProductId int  `json:"product_id"`
+	ProductId int  `json:"product_id" binding:"required"`
 	ImageId   int  `json:"image_id"`
-	IsMain    bool `json:"is_main"`
+	IsMain    bool `json:"is_main" binding:"required"`
 }
 
 type ProductImageResponse struct {

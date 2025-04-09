@@ -1756,6 +1756,10 @@ const docTemplate = `{
         },
         "github_com_alielmi98_go-ecommerce-api_api_dto.UpdateProductImageRequest": {
             "type": "object",
+            "required": [
+                "is_main",
+                "product_id"
+            ],
             "properties": {
                 "image_id": {
                     "type": "integer"

@@ -20,28 +20,34 @@ func NewProductImageUsecase(cfg *config.Config, repository repository.ProductIma
 	}
 }
 
-// Create
+// Create a new product image
 func (u *ProductImageUsecase) Create(ctx context.Context, req dto.CreateProductImage) (dto.ResponseProductImage, error) {
 	return u.base.Create(ctx, req)
 }
 
-// Update
+// Update an existing product image
 func (u *ProductImageUsecase) Update(ctx context.Context, id int, req dto.UpdateProductImage) (dto.ResponseProductImage, error) {
+	// Add product image data to context for use in BeforeSave hook
+	ctx = context.WithValue(ctx, "product_image_data", map[string]interface{}{
+		"id":         id,
+		"product_id": req.ProductId,
+		"is_main":    req.IsMain,
+	})
+
 	return u.base.Update(ctx, id, req)
 }
 
-// Delete
+// Delete a product image by ID
 func (u *ProductImageUsecase) Delete(ctx context.Context, id int) error {
 	return u.base.Delete(ctx, id)
 }
 
-// GetById
+// Get a product image by ID
 func (u *ProductImageUsecase) GetById(ctx context.Context, id int) (dto.ResponseProductImage, error) {
 	return u.base.GetById(ctx, id)
 }
 
-// GetByFilter
-
+// Get product images with filters
 func (s *ProductImageUsecase) GetByFilter(ctx context.Context, req filter.PaginationInputWithFilter) (*filter.PagedList[dto.ResponseProductImage], error) {
 	return s.base.GetByFilter(ctx, req)
 }
