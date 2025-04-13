@@ -42,7 +42,7 @@ func NewFileHandler(cfg *config.Config) *FileHandler {
 // @Param file formData file true "Create a file"
 // @Success 201 {object} helper.BaseHttpResponse{result=dto.FileResponse} "File response"
 // @Failure 400 {object} helper.BaseHttpResponse "Bad request"
-// @Router /v1/files/ [post]
+// @Router /v1/admin/files/ [post]
 // @Security AuthBearer
 func (h *FileHandler) Create(c *gin.Context) {
 	upload := dto.UploadFileRequest{}
@@ -83,7 +83,7 @@ func (h *FileHandler) Create(c *gin.Context) {
 // @Param Request body dto.UpdateFileRequest true "Update a file"
 // @Success 200 {object} helper.BaseHttpResponse{result=dto.FileResponse} "File response"
 // @Failure 400 {object} helper.BaseHttpResponse "Bad request"
-// @Router /v1/files/{id} [put]
+// @Router /v1/admin/files/{id} [put]
 // @Security AuthBearer
 func (h *FileHandler) Update(c *gin.Context) {
 	Update(c, dto.ToUpdateFile, dto.ToFileResponse, h.usecase.Update)
@@ -98,7 +98,7 @@ func (h *FileHandler) Update(c *gin.Context) {
 // @Param id path int true "Id"
 // @Success 200 {object} helper.BaseHttpResponse "response"
 // @Failure 400 {object} helper.BaseHttpResponse "Bad request"
-// @Router /v1/files/{id} [delete]
+// @Router /v1/admin/files/{id} [delete]
 // @Security AuthBearer
 func (h *FileHandler) Delete(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Params.ByName("id"))
@@ -141,7 +141,7 @@ func (h *FileHandler) Delete(c *gin.Context) {
 // @Param id path int true "Id"
 // @Success 200 {object} helper.BaseHttpResponse{result=dto.FileResponse} "File response"
 // @Failure 400 {object} helper.BaseHttpResponse "Bad request"
-// @Router /v1/files/{id} [get]
+// @Router /v1/admin/files/{id} [get]
 // @Security AuthBearer
 func (h *FileHandler) GetById(c *gin.Context) {
 	GetById(c, dto.ToFileResponse, h.usecase.GetById)
@@ -156,7 +156,7 @@ func (h *FileHandler) GetById(c *gin.Context) {
 // @Param Request body filter.PaginationInputWithFilter true "Request"
 // @Success 200 {object} helper.BaseHttpResponse{result=filter.PagedList[dto.FileResponse]} "File response"
 // @Failure 400 {object} helper.BaseHttpResponse "Bad request"
-// @Router /v1/files/get-by-filter [post]
+// @Router /v1/admin/files/get-by-filter [post]
 // @Security AuthBearer
 func (h *FileHandler) GetByFilter(c *gin.Context) {
 	GetByFilter(c, dto.ToFileResponse, h.usecase.GetByFilter)

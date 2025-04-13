@@ -36,22 +36,28 @@ func RegisterRoutes(r *gin.Engine, cfg *config.Config) {
 		//Token
 		token := v1.Group("/token")
 		routers.Token(token, cfg)
-		//Shop
-		//category
-		categories := v1.Group("/categories", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
-		routers.Category(categories, cfg)
-		//file
-		files := v1.Group("/files", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
-		routers.File(files, cfg)
-		//product
-		products := v1.Group("/products", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
-		routers.Product(products, cfg)
-		//productImage
-		productImages := v1.Group("/product-images", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
-		routers.ProductImage(productImages, cfg)
-		//productReview
-		productReview := v1.Group("/product-reviews", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
-		routers.ProductReview(productReview, cfg)
+
+		//Admin Panel Routers
+		admin := v1.Group("/admin")
+		{
+
+			//category
+			categories := admin.Group("/categories", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
+			routers.Category(categories, cfg)
+			//file
+			files := admin.Group("/files", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
+			routers.File(files, cfg)
+			//product
+			products := admin.Group("/products", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
+			routers.Product(products, cfg)
+			//productImage
+			productImages := admin.Group("/product-images", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
+			routers.ProductImage(productImages, cfg)
+			//productReview
+			productReview := admin.Group("/product-reviews", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
+			routers.ProductReview(productReview, cfg)
+
+		}
 
 	}
 

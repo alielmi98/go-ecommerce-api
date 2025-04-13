@@ -451,7 +451,7 @@ paths:
       summary: RegisterByUsername
       tags:
       - Account
-  /v1/categories/:
+  /v1/admin/categories/:
     post:
       consumes:
       - application/json
@@ -482,7 +482,7 @@ paths:
       summary: Create a Category
       tags:
       - Category
-  /v1/categories/{id}:
+  /v1/admin/categories/{id}:
     delete:
       consumes:
       - application/json
@@ -576,7 +576,7 @@ paths:
       summary: Update a Category
       tags:
       - Category
-  /v1/categories/get-by-filter:
+  /v1/admin/categories/get-by-filter:
     post:
       consumes:
       - application/json
@@ -607,7 +607,7 @@ paths:
       summary: Get Categories
       tags:
       - Category
-  /v1/files/:
+  /v1/admin/files/:
     post:
       consumes:
       - application/x-www-form-urlencoded
@@ -641,7 +641,7 @@ paths:
       summary: Create a file
       tags:
       - Files
-  /v1/files/{id}:
+  /v1/admin/files/{id}:
     delete:
       consumes:
       - application/json
@@ -730,7 +730,7 @@ paths:
       summary: Update a file
       tags:
       - Files
-  /v1/files/get-by-filter:
+  /v1/admin/files/get-by-filter:
     post:
       consumes:
       - application/json
@@ -761,7 +761,7 @@ paths:
       summary: Get Files
       tags:
       - Files
-  /v1/product-images/:
+  /v1/admin/product-images/:
     post:
       consumes:
       - application/json
@@ -792,7 +792,7 @@ paths:
       summary: Create a ProductImage
       tags:
       - ProductImage
-  /v1/product-images/{id}:
+  /v1/admin/product-images/{id}:
     delete:
       consumes:
       - application/json
@@ -886,7 +886,7 @@ paths:
       summary: Update a ProductImage
       tags:
       - ProductImage
-  /v1/product-images/get-by-filter:
+  /v1/admin/product-images/get-by-filter:
     post:
       consumes:
       - application/json
@@ -917,7 +917,7 @@ paths:
       summary: Get ProductImages
       tags:
       - ProductImage
-  /v1/product-reviews/:
+  /v1/admin/product-reviews/:
     post:
       consumes:
       - application/json
@@ -948,7 +948,7 @@ paths:
       summary: Create a ProductReview
       tags:
       - ProductReview
-  /v1/product-reviews/{id}:
+  /v1/admin/product-reviews/{id}:
     delete:
       consumes:
       - application/json
@@ -1042,7 +1042,7 @@ paths:
       summary: Update a ProductReview
       tags:
       - ProductReview
-  /v1/product-reviews/get-by-filter:
+  /v1/admin/product-reviews/get-by-filter:
     post:
       consumes:
       - application/json
@@ -1073,7 +1073,7 @@ paths:
       summary: Get ProductReviews
       tags:
       - ProductReview
-  /v1/products/:
+  /v1/admin/products/:
     post:
       consumes:
       - application/json
@@ -1104,7 +1104,7 @@ paths:
       summary: Create a Product
       tags:
       - Product
-  /v1/products/{id}:
+  /v1/admin/products/{id}:
     delete:
       consumes:
       - application/json
@@ -1198,7 +1198,7 @@ paths:
       summary: Update a Product
       tags:
       - Product
-  /v1/products/get-by-filter:
+  /v1/admin/products/get-by-filter:
     post:
       consumes:
       - application/json

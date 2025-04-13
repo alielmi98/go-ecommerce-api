@@ -30,7 +30,7 @@ func NewProductHandler(cfg *config.Config) *ProductHandler {
 // @Param Request body dto.CreateProductRequest true "Create a Product"
 // @Success 201 {object} helper.BaseHttpResponse{result=dto.ProductResponse} "Product response"
 // @Failure 400 {object} helper.BaseHttpResponse "Bad request"
-// @Router /v1/products/ [post]
+// @Router /v1/admin/products/ [post]
 // @Security AuthBearer
 func (h *ProductHandler) Create(c *gin.Context) {
 	Create(c, dto.ToCreateProduct, dto.ToProductResponse, h.usecase.Create)
@@ -46,7 +46,7 @@ func (h *ProductHandler) Create(c *gin.Context) {
 // @Param Request body dto.UpdateProductRequest true "Update a Product"
 // @Success 200 {object} helper.BaseHttpResponse{result=dto.ProductResponse} "Product response"
 // @Failure 400 {object} helper.BaseHttpResponse "Bad request"
-// @Router /v1/products/{id} [put]
+// @Router /v1/admin/products/{id} [put]
 // @Security AuthBearer
 func (h *ProductHandler) Update(c *gin.Context) {
 	Update(c, dto.ToUpdateProduct, dto.ToProductResponse, h.usecase.Update)
@@ -61,7 +61,7 @@ func (h *ProductHandler) Update(c *gin.Context) {
 // @Param id path int true "Id"
 // @Success 200 {object} helper.BaseHttpResponse{result=dto.ProductResponse} "Product response"
 // @Failure 400 {object} helper.BaseHttpResponse "Bad request"
-// @Router /v1/products/{id} [delete]
+// @Router /v1/admin/products/{id} [delete]
 // @Security AuthBearer
 func (h *ProductHandler) Delete(c *gin.Context) {
 	Delete(c, h.usecase.Delete)
@@ -76,7 +76,7 @@ func (h *ProductHandler) Delete(c *gin.Context) {
 // @Param id path int true "Id"
 // @Success 200 {object} helper.BaseHttpResponse{result=dto.ProductResponse} "Product response"
 // @Failure 400 {object} helper.BaseHttpResponse "Bad request"
-// @Router /v1/products/{id} [get]
+// @Router /v1/admin/products/{id} [get]
 // @Security AuthBearer
 func (h *ProductHandler) GetById(c *gin.Context) {
 	GetById(c, dto.ToProductResponse, h.usecase.GetById)
@@ -91,7 +91,7 @@ func (h *ProductHandler) GetById(c *gin.Context) {
 // @Param Request body filter.PaginationInputWithFilter true "Request"
 // @Success 200 {object} helper.BaseHttpResponse{result=filter.PagedList[dto.ProductResponse]} "Product response"
 // @Failure 400 {object} helper.BaseHttpResponse "Bad request"
-// @Router /v1/products/get-by-filter [post]
+// @Router /v1/admin/products/get-by-filter [post]
 // @Security AuthBearer
 func (h *ProductHandler) GetByFilter(c *gin.Context) {
 	GetByFilter(c, dto.ToProductResponse, h.usecase.GetByFilter)

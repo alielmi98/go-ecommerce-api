@@ -107,7 +107,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/categories/": {
+        "/v1/admin/categories/": {
             "post": {
                 "security": [
                     {
@@ -161,7 +161,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/categories/get-by-filter": {
+        "/v1/admin/categories/get-by-filter": {
             "post": {
                 "security": [
                     {
@@ -215,7 +215,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/categories/{id}": {
+        "/v1/admin/categories/{id}": {
             "get": {
                 "security": [
                     {
@@ -376,7 +376,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/files/": {
+        "/v1/admin/files/": {
             "post": {
                 "security": [
                     {
@@ -434,7 +434,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/files/get-by-filter": {
+        "/v1/admin/files/get-by-filter": {
             "post": {
                 "security": [
                     {
@@ -488,7 +488,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/files/{id}": {
+        "/v1/admin/files/{id}": {
             "get": {
                 "security": [
                     {
@@ -637,7 +637,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/product-images/": {
+        "/v1/admin/product-images/": {
             "post": {
                 "security": [
                     {
@@ -691,7 +691,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/product-images/get-by-filter": {
+        "/v1/admin/product-images/get-by-filter": {
             "post": {
                 "security": [
                     {
@@ -745,7 +745,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/product-images/{id}": {
+        "/v1/admin/product-images/{id}": {
             "get": {
                 "security": [
                     {
@@ -906,7 +906,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/product-reviews/": {
+        "/v1/admin/product-reviews/": {
             "post": {
                 "security": [
                     {
@@ -960,7 +960,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/product-reviews/get-by-filter": {
+        "/v1/admin/product-reviews/get-by-filter": {
             "post": {
                 "security": [
                     {
@@ -1014,7 +1014,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/product-reviews/{id}": {
+        "/v1/admin/product-reviews/{id}": {
             "get": {
                 "security": [
                     {
@@ -1175,7 +1175,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/products/": {
+        "/v1/admin/products/": {
             "post": {
                 "security": [
                     {
@@ -1229,7 +1229,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/products/get-by-filter": {
+        "/v1/admin/products/get-by-filter": {
             "post": {
                 "security": [
                     {
@@ -1283,7 +1283,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/products/{id}": {
+        "/v1/admin/products/{id}": {
             "get": {
                 "security": [
                     {
