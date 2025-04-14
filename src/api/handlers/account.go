@@ -7,6 +7,7 @@ import (
 	"github.com/alielmi98/go-ecommerce-api/api/helper"
 	"github.com/alielmi98/go-ecommerce-api/config"
 	"github.com/alielmi98/go-ecommerce-api/constants"
+	"github.com/alielmi98/go-ecommerce-api/dependency"
 	"github.com/alielmi98/go-ecommerce-api/usecase"
 	"github.com/gin-gonic/gin"
 )
@@ -20,7 +21,7 @@ type AccountHandler struct {
 // NewAccountHandler ...
 func NewAccountHandler(cfg *config.Config) *AccountHandler {
 	return &AccountHandler{
-		usecase: usecase.NewUserUsecase(cfg),
+		usecase: usecase.NewUserUsecase(cfg, dependency.GetUserRepository(cfg)),
 		cfg:     cfg,
 	}
 }

@@ -7,21 +7,21 @@ import (
 	"github.com/alielmi98/go-ecommerce-api/config"
 	"github.com/alielmi98/go-ecommerce-api/constants"
 	"github.com/alielmi98/go-ecommerce-api/domin/models"
-	"github.com/alielmi98/go-ecommerce-api/infra/db/repository"
+	"github.com/alielmi98/go-ecommerce-api/domin/repository"
 	"github.com/alielmi98/go-ecommerce-api/pkg/service_errors"
 	"golang.org/x/crypto/bcrypt"
 )
 
 type UserUsecase struct {
 	cfg          *config.Config
-	repo         *repository.UserRepository
+	repo         repository.UserRepository
 	tokenUsecase *TokenUsecase
 }
 
-func NewUserUsecase(cfg *config.Config) *UserUsecase {
+func NewUserUsecase(cfg *config.Config, repository repository.UserRepository) *UserUsecase {
 	return &UserUsecase{
 		cfg:          cfg,
-		repo:         repository.NewUserRepository(),
+		repo:         repository,
 		tokenUsecase: NewTokenUsecase(cfg),
 	}
 }

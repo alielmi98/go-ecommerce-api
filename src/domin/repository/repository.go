@@ -33,3 +33,11 @@ type ProductReviewRepository interface {
 type FileRepository interface {
 	BaseRepository[model.File]
 }
+type UserRepository interface {
+	Create(user *model.User) error
+	FindByUsername(username string) (*model.User, error)
+}
+
+type RoleRepository interface {
+	BaseRepository[model.Role]
+}

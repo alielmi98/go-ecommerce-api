@@ -11,15 +11,15 @@ import (
 	"gorm.io/gorm"
 )
 
-type UserRepository struct {
-	db *gorm.DB
+type PostgresUserRepository struct {
+	*BaseRepository[models.User]
 }
 
-func NewUserRepository() *UserRepository {
-	return &UserRepository{db: db.GetDb()}
+func NewUserRepository() *PostgresUserRepository {
+	var preloads []db.PreloadEntity = []db.PreloadEntity{}
+	return &PostgresUserRepository{BaseRepository: NewBaseRepository[models.User](preloads)}
 }
-
-func (r *UserRepository) Create(user *models.User) error {
+func (r *PostgresUserRepository) Create(user *models.User) error {
 	exists, err := r.existsByEmail(user.Email)
 	if err != nil {
 		return err
@@ -39,7 +39,7 @@ func (r *UserRepository) Create(user *models.User) error {
 		log.Printf("Caller:%s Level:%s Msg:%s", constants.Postgres, constants.DefaultRoleName, err.Error())
 		return err
 	}
-	tx := r.db.Begin()
+	tx := r.database.Begin()
 	err = tx.Create(&user).Error
 	if err != nil {
 		tx.Rollback()
@@ -56,9 +56,9 @@ func (r *UserRepository) Create(user *models.User) error {
 	return nil
 }
 
-func (r *UserRepository) FindByUsername(username string) (*models.User, error) {
+func (r *PostgresUserRepository) FindByUsername(username string) (*models.User, error) {
 	var user models.User
-	err := r.db.
+	err := r.database.
 		Model(&models.User{}).
 		Where("username = ?", username).
 		Preload("UserRoles", func(tx *gorm.DB) *gorm.DB {
@@ -74,9 +74,9 @@ func (r *UserRepository) FindByUsername(username string) (*models.User, error) {
 	return &user, nil
 }
 
-func (r *UserRepository) existsByEmail(email string) (bool, error) {
+func (r *PostgresUserRepository) existsByEmail(email string) (bool, error) {
 	var exists bool
-	if err := r.db.Model(&models.User{}).
+	if err := r.database.Model(&models.User{}).
 		Select("count(*) > 0").
 		Where("email = ?", email).
 		Find(&exists).
@@ -87,9 +87,9 @@ func (r *UserRepository) existsByEmail(email string) (bool, error) {
 	return exists, nil
 }
 
-func (r *UserRepository) existsByUsername(username string) (bool, error) {
+func (r *PostgresUserRepository) existsByUsername(username string) (bool, error) {
 	var exists bool
-	if err := r.db.Model(&models.User{}).
+	if err := r.database.Model(&models.User{}).
 		Select("count(*) > 0").
 		Where("username = ?", username).
 		Find(&exists).
@@ -100,9 +100,9 @@ func (r *UserRepository) existsByUsername(username string) (bool, error) {
 	return exists, nil
 }
 
-func (r *UserRepository) getDefaultRole() (roleId int, err error) {
+func (r *PostgresUserRepository) getDefaultRole() (roleId int, err error) {
 
-	if err = r.db.Model(&models.Role{}).
+	if err = r.database.Model(&models.Role{}).
 		Select("id").
 		Where("name = ?", constants.DefaultRoleName).
 		First(&roleId).Error; err != nil {
