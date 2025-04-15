@@ -30,7 +30,7 @@ func NewProductReviewHandler(cfg *config.Config) *ProductReviewHandler {
 // @Param Request body dto.CreateProductReviewRequest true "Create a ProductReview"
 // @Success 201 {object} helper.BaseHttpResponse{result=dto.ProductReviewResponse} "ProductReview response"
 // @Failure 400 {object} helper.BaseHttpResponse "Bad request"
-// @Router /v1/admin/product-reviews/ [post]
+// @Router /v1/shop/product-reviews/ [post]
 // @Security AuthBearer
 func (h *ProductReviewHandler) Create(c *gin.Context) {
 	Create(c, dto.ToCreateProductReview, dto.ToProductReviewResponse, h.usecase.Create)
@@ -46,7 +46,7 @@ func (h *ProductReviewHandler) Create(c *gin.Context) {
 // @Param Request body dto.UpdateProductReviewRequest true "Update a ProductReview"
 // @Success 200 {object} helper.BaseHttpResponse{result=dto.ProductReviewResponse} "ProductReview response"
 // @Failure 400 {object} helper.BaseHttpResponse "Bad request"
-// @Router /v1/admin/product-reviews/{id} [put]
+// @Router /v1/shop/product-reviews/{id} [put]
 // @Security AuthBearer
 func (h *ProductReviewHandler) Update(c *gin.Context) {
 	Update(c, dto.ToUpdateProductReview, dto.ToProductReviewResponse, h.usecase.Update)
@@ -61,7 +61,7 @@ func (h *ProductReviewHandler) Update(c *gin.Context) {
 // @Param id path int true "Id"
 // @Success 200 {object} helper.BaseHttpResponse{result=dto.ProductReviewResponse} "ProductReview response"
 // @Failure 400 {object} helper.BaseHttpResponse "Bad request"
-// @Router /v1/admin/product-reviews/{id} [delete]
+// @Router /v1/shop/product-reviews/{id} [delete]
 // @Security AuthBearer
 func (h *ProductReviewHandler) Delete(c *gin.Context) {
 	Delete(c, h.usecase.Delete)
@@ -76,7 +76,7 @@ func (h *ProductReviewHandler) Delete(c *gin.Context) {
 // @Param id path int true "Id"
 // @Success 200 {object} helper.BaseHttpResponse{result=dto.ProductReviewResponse} "ProductReview response"
 // @Failure 400 {object} helper.BaseHttpResponse "Bad request"
-// @Router /v1/admin/product-reviews/{id} [get]
+// @Router /v1/shop/product-reviews/{id} [get]
 // @Security AuthBearer
 func (h *ProductReviewHandler) GetById(c *gin.Context) {
 	GetById(c, dto.ToProductReviewResponse, h.usecase.GetById)
@@ -91,7 +91,7 @@ func (h *ProductReviewHandler) GetById(c *gin.Context) {
 // @Param Request body filter.PaginationInputWithFilter true "Request"
 // @Success 200 {object} helper.BaseHttpResponse{result=filter.PagedList[dto.ProductReviewResponse]} "ProductReview response"
 // @Failure 400 {object} helper.BaseHttpResponse "Bad request"
-// @Router /v1/admin/product-reviews/get-by-filter [post]
+// @Router /v1/shop/product-reviews/get-by-filter [post]
 // @Security AuthBearer
 func (h *ProductReviewHandler) GetByFilter(c *gin.Context) {
 	GetByFilter(c, dto.ToProductReviewResponse, h.usecase.GetByFilter)

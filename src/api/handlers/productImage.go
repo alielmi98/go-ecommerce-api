@@ -30,7 +30,7 @@ func NewProductImageHandler(cfg *config.Config) *ProductImageHandler {
 // @Param Request body dto.CreateProductImageRequest true "Create a ProductImage"
 // @Success 201 {object} helper.BaseHttpResponse{result=dto.ProductImageResponse} "ProductImage response"
 // @Failure 400 {object} helper.BaseHttpResponse "Bad request"
-// @Router /v1/admin/product-images/ [post]
+// @Router /v1/shop/product-images/ [post]
 // @Security AuthBearer
 func (h *ProductImageHandler) Create(c *gin.Context) {
 	Create(c, dto.ToCreateProductImage, dto.ToProductImageResponse, h.usecase.Create)
@@ -46,7 +46,7 @@ func (h *ProductImageHandler) Create(c *gin.Context) {
 // @Param Request body dto.UpdateProductImageRequest true "Update a ProductImage"
 // @Success 200 {object} helper.BaseHttpResponse{result=dto.ProductImageResponse} "ProductImage response"
 // @Failure 400 {object} helper.BaseHttpResponse "Bad request"
-// @Router /v1/admin/product-images/{id} [put]
+// @Router /v1/shop/product-images/{id} [put]
 // @Security AuthBearer
 func (h *ProductImageHandler) Update(c *gin.Context) {
 	Update(c, dto.ToUpdateProductImage, dto.ToProductImageResponse, h.usecase.Update)
@@ -61,7 +61,7 @@ func (h *ProductImageHandler) Update(c *gin.Context) {
 // @Param id path int true "Id"
 // @Success 200 {object} helper.BaseHttpResponse{result=dto.ProductImageResponse} "ProductImage response"
 // @Failure 400 {object} helper.BaseHttpResponse "Bad request"
-// @Router /v1/admin/product-images/{id} [delete]
+// @Router /v1/shop/product-images/{id} [delete]
 // @Security AuthBearer
 func (h *ProductImageHandler) Delete(c *gin.Context) {
 	Delete(c, h.usecase.Delete)
@@ -76,7 +76,7 @@ func (h *ProductImageHandler) Delete(c *gin.Context) {
 // @Param id path int true "Id"
 // @Success 200 {object} helper.BaseHttpResponse{result=dto.ProductImageResponse} "ProductImage response"
 // @Failure 400 {object} helper.BaseHttpResponse "Bad request"
-// @Router /v1/admin/product-images/{id} [get]
+// @Router /v1/shop/product-images/{id} [get]
 // @Security AuthBearer
 func (h *ProductImageHandler) GetById(c *gin.Context) {
 	GetById(c, dto.ToProductImageResponse, h.usecase.GetById)
@@ -91,7 +91,7 @@ func (h *ProductImageHandler) GetById(c *gin.Context) {
 // @Param Request body filter.PaginationInputWithFilter true "Request"
 // @Success 200 {object} helper.BaseHttpResponse{result=filter.PagedList[dto.ProductImageResponse]} "ProductImage response"
 // @Failure 400 {object} helper.BaseHttpResponse "Bad request"
-// @Router /v1/admin/product-images/get-by-filter [post]
+// @Router /v1/shop/product-images/get-by-filter [post]
 // @Security AuthBearer
 func (h *ProductImageHandler) GetByFilter(c *gin.Context) {
 	GetByFilter(c, dto.ToProductImageResponse, h.usecase.GetByFilter)

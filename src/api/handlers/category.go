@@ -30,7 +30,7 @@ func NewCategoryHandler(cfg *config.Config) *CategoryHandler {
 // @Param Request body dto.CreateCategoryRequest true "Create a Category"
 // @Success 201 {object} helper.BaseHttpResponse{result=dto.CategoryResponse} "Category response"
 // @Failure 400 {object} helper.BaseHttpResponse "Bad request"
-// @Router /v1/admin/categories/ [post]
+// @Router /v1/shop/categories/ [post]
 // @Security AuthBearer
 func (h *CategoryHandler) Create(c *gin.Context) {
 	Create(c, dto.ToCreateCategory, dto.ToCategoryResponse, h.usecase.Create)
@@ -46,7 +46,7 @@ func (h *CategoryHandler) Create(c *gin.Context) {
 // @Param Request body dto.UpdateCategoryRequest true "Update a Category"
 // @Success 200 {object} helper.BaseHttpResponse{result=dto.CategoryResponse} "Category response"
 // @Failure 400 {object} helper.BaseHttpResponse "Bad request"
-// @Router /v1/admin/categories/{id} [put]
+// @Router /v1/shop/categories/{id} [put]
 // @Security AuthBearer
 func (h *CategoryHandler) Update(c *gin.Context) {
 	Update(c, dto.ToUpdateCategory, dto.ToCategoryResponse, h.usecase.Update)
@@ -61,7 +61,7 @@ func (h *CategoryHandler) Update(c *gin.Context) {
 // @Param id path int true "Id"
 // @Success 200 {object} helper.BaseHttpResponse{result=dto.CategoryResponse} "Category response"
 // @Failure 400 {object} helper.BaseHttpResponse "Bad request"
-// @Router /v1/admin/categories/{id} [delete]
+// @Router /v1/shop/categories/{id} [delete]
 // @Security AuthBearer
 func (h *CategoryHandler) Delete(c *gin.Context) {
 	Delete(c, h.usecase.Delete)
@@ -76,7 +76,7 @@ func (h *CategoryHandler) Delete(c *gin.Context) {
 // @Param id path int true "Id"
 // @Success 200 {object} helper.BaseHttpResponse{result=dto.CategoryResponse} "Category response"
 // @Failure 400 {object} helper.BaseHttpResponse "Bad request"
-// @Router /v1/admin/categories/{id} [get]
+// @Router /v1/shop/categories/{id} [get]
 // @Security AuthBearer
 func (h *CategoryHandler) GetById(c *gin.Context) {
 	GetById(c, dto.ToCategoryResponse, h.usecase.GetById)
@@ -91,7 +91,7 @@ func (h *CategoryHandler) GetById(c *gin.Context) {
 // @Param Request body filter.PaginationInputWithFilter true "Request"
 // @Success 200 {object} helper.BaseHttpResponse{result=filter.PagedList[dto.CategoryResponse]} "Category response"
 // @Failure 400 {object} helper.BaseHttpResponse "Bad request"
-// @Router /v1/admin/categories/get-by-filter [post]
+// @Router /v1/shop/categories/get-by-filter [post]
 // @Security AuthBearer
 func (h *CategoryHandler) GetByFilter(c *gin.Context) {
 	GetByFilter(c, dto.ToCategoryResponse, h.usecase.GetByFilter)
