@@ -42,19 +42,19 @@ func RegisterRoutes(r *gin.Engine, cfg *config.Config) {
 		{
 
 			//category
-			categories := shop.Group("/categories", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
+			categories := shop.Group("/categories")
 			routers.Category(categories, cfg)
 			//file
-			files := shop.Group("/files", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
+			files := shop.Group("/files")
 			routers.File(files, cfg)
 			//product
-			products := shop.Group("/products", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
+			products := shop.Group("/products")
 			routers.Product(products, cfg)
 			//productImage
-			productImages := shop.Group("/product-images", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
+			productImages := shop.Group("/product-images")
 			routers.ProductImage(productImages, cfg)
 			//productReview
-			productReview := shop.Group("/product-reviews", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
+			productReview := shop.Group("/product-reviews")
 			routers.ProductReview(productReview, cfg)
 
 		}
