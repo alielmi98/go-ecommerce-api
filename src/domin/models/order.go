@@ -13,19 +13,13 @@ type Cart struct {
 // Payment represents a payment in the system.
 type Payment struct {
 	BaseModel
-	Amount        float64 `gorm:"type:float;not null"`
-	Status        string  `gorm:"type:string;size:50;not null"`
-	PaymentId     string  `gorm:"type:string;size:100;not null"`
-	CreatedAt     string  `gorm:"type:string;size:50;not null"`
-	UpdatedAt     string  `gorm:"type:string;size:50;not null"`
-	UserId        int     `gorm:"type:int;not null"`
-	User          User    `gorm:"foreignKey:UserId;constraint:OnUpdate:NO ACTION;OnDelete:NO ACTION"`
-	OrderId       int     `gorm:"type:int;not null"`
-	Order         Cart    `gorm:"foreignKey:OrderId;constraint:OnUpdate:NO ACTION;OnDelete:NO ACTION"`
-	PaymentMethod string  `gorm:"type:string;size:50;not null"`
-	PaymentStatus string  `gorm:"type:string;size:50;not null"`
-	PaymentDate   string  `gorm:"type:string;size:50;not null"`
-	TransactionId string  `gorm:"type:string;size:100;not null"`
+	Amount    float64 `gorm:"type:float;not null"`
+	Status    string  `gorm:"type:string;size:50;not null"`
+	PaymentId string  `gorm:"type:string;size:100;not null"`
+	UserId    int     `gorm:"type:int;not null"`
+	User      User    `gorm:"foreignKey:UserId;constraint:OnUpdate:NO ACTION;OnDelete:NO ACTION"`
+	OrderId   int     `gorm:"type:int;not null"`
+	Order     Cart    `gorm:"foreignKey:OrderId;constraint:OnUpdate:NO ACTION;OnDelete:NO ACTION"`
 }
 
 // Order represents an order in the system.
