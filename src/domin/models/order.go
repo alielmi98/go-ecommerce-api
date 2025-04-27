@@ -3,7 +3,7 @@ package models
 // Cart represents a shopping cart in the system.
 type Cart struct {
 	BaseModel
-	UserId     int        `gorm:"type:int;not null"`
+	UserId     int        `gorm:"type:int;not null;uniqueIndex"`
 	User       User       `gorm:"foreignKey:UserId;constraint:OnUpdate:NO ACTION;OnDelete:NO ACTION"`
 	CartItems  []CartItem `gorm:"foreignKey:CartId;constraint:OnUpdate:NO ACTION;OnDelete:NO ACTION"`
 	TotalPrice float64    `gorm:"type:float;default:0"`

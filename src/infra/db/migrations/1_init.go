@@ -42,8 +42,10 @@ func createTables(database *gorm.DB) {
 	///order///
 	// Cart
 	tables = addNewTable(database, models.Cart{}, tables)
+	tables = addNewTable(database, models.CartItem{}, tables)
 	// Order
 	tables = addNewTable(database, models.Order{}, tables)
+	tables = addNewTable(database, models.OrderItem{}, tables)
 	// Payment
 	tables = addNewTable(database, models.Payment{}, tables)
 
