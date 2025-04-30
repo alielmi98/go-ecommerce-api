@@ -105,7 +105,5 @@ type CreateCartItem struct {
 }
 
 type UpdateCartItem struct {
-	ProductId int
-	Quantity  int
-	UnitPrice float64
+	Quantity int
 }

@@ -52,3 +52,18 @@ func (u *CartItemUsecase) Create(ctx context.Context, req dto.CreateCartItem) (d
 	return u.base.Create(ctx, req)
 
 }
+
+// Update a cart item
+func (u *CartItemUsecase) Update(ctx context.Context, id int, req dto.UpdateCartItem) (dto.ResponseCartItem, error) {
+	return u.base.Update(ctx, id, req)
+}
+
+// Delete a cart item
+func (u *CartItemUsecase) Delete(ctx context.Context, id int) error {
+	return u.base.Delete(ctx, id)
+}
+
+// GetCartItemsByUserId retrieves all cart items for a specific user
+func (u *CartItemUsecase) GetById(ctx context.Context, id int) (dto.ResponseCartItem, error) {
+	return u.base.GetById(ctx, id)
+}
