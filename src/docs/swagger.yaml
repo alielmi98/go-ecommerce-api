@@ -1,10 +1,29 @@
 definitions:
+  github_com_alielmi98_go-ecommerce-api_api_dto.CartItemResponse:
+    properties:
+      product_id:
+        type: integer
+      quantity:
+        type: integer
+      unit_price:
+        type: number
+    type: object
   github_com_alielmi98_go-ecommerce-api_api_dto.CategoryResponse:
     properties:
       description:
         type: string
       name:
         type: string
+    type: object
+  github_com_alielmi98_go-ecommerce-api_api_dto.CreateCartItem:
+    properties:
+      product_id:
+        type: integer
+      quantity:
+        type: integer
+    required:
+    - product_id
+    - quantity
     type: object
   github_com_alielmi98_go-ecommerce-api_api_dto.CreateCategoryRequest:
     properties:
@@ -451,6 +470,37 @@ paths:
       summary: RegisterByUsername
       tags:
       - Account
+  /v1/shop/cart-items/:
+    post:
+      consumes:
+      - application/json
+      description: Create a Category
+      parameters:
+      - description: Create a CartItem
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.CreateCartItem'
+      responses:
+        "201":
+          description: CartItem response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.CartItemResponse'
+              type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Create a CartItem
+      tags:
+      - CartItem
   /v1/shop/categories/:
     post:
       consumes:

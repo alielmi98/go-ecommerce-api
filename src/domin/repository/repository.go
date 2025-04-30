@@ -33,6 +33,32 @@ type ProductReviewRepository interface {
 type FileRepository interface {
 	BaseRepository[model.File]
 }
+
+// Order
+type CartRepository interface {
+	BaseRepository[model.Cart]
+}
+
+type CartItemRepository interface {
+	BaseRepository[model.CartItem]
+
+	GetCartByUserId(ctx context.Context, userId int) (*model.Cart, error)
+	GetCartItemProduct(ctx context.Context, productId int) (*model.Product, error)
+}
+
+type OrderRepository interface {
+	BaseRepository[model.Order]
+}
+
+type OrderItemRepository interface {
+	BaseRepository[model.OrderItem]
+}
+
+type PaymentRepository interface {
+	BaseRepository[model.Payment]
+}
+
+// Account
 type UserRepository interface {
 	Create(user *model.User) error
 	FindByUsername(username string) (*model.User, error)

@@ -57,6 +57,10 @@ func RegisterRoutes(r *gin.Engine, cfg *config.Config) {
 			productReview := shop.Group("/product-reviews")
 			routers.ProductReview(productReview, cfg)
 
+			//cartItem
+			cartItem := shop.Group("/cart-items")
+			routers.CartItem(cartItem, cfg)
+
 		}
 
 	}

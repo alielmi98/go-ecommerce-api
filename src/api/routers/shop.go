@@ -10,9 +10,9 @@ import (
 func Category(r *gin.RouterGroup, cfg *config.Config) {
 	h := handlers.NewCategoryHandler(cfg)
 
-	r.POST("/", h.Create, middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
-	r.PUT("/:id", h.Update, middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
-	r.DELETE("/:id", h.Delete, middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
+	r.POST("/", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}), h.Create)
+	r.PUT("/:id", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}), h.Update)
+	r.DELETE("/:id", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}), h.Delete)
 	r.GET("/:id", h.GetById)
 	r.POST("/get-by-filter", h.GetByFilter)
 
@@ -21,9 +21,9 @@ func Category(r *gin.RouterGroup, cfg *config.Config) {
 func Product(r *gin.RouterGroup, cfg *config.Config) {
 	h := handlers.NewProductHandler(cfg)
 
-	r.POST("/", h.Create, middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
-	r.PUT("/:id", h.Update, middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
-	r.DELETE("/:id", h.Delete, middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
+	r.POST("/", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}), h.Create)
+	r.PUT("/:id", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}), h.Update)
+	r.DELETE("/:id", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}), h.Delete)
 	r.GET("/:id", h.GetById)
 	r.POST("/get-by-filter", h.GetByFilter)
 
@@ -32,18 +32,18 @@ func Product(r *gin.RouterGroup, cfg *config.Config) {
 func File(r *gin.RouterGroup, cfg *config.Config) {
 	h := handlers.NewFileHandler(cfg)
 
-	r.POST("/", h.Create, middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
-	r.PUT("/:id", h.Update, middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
-	r.DELETE("/:id", h.Delete, middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
-	r.GET("/:id", h.GetById, middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
-	r.POST("/get-by-filter", h.GetByFilter, middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
+	r.POST("/", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}), h.Create)
+	r.PUT("/:id", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}), h.Update)
+	r.DELETE("/:id", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}), h.Delete)
+	r.GET("/:id", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}), h.GetById)
+	r.POST("/get-by-filter", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}), h.GetByFilter)
 }
 func ProductImage(r *gin.RouterGroup, cfg *config.Config) {
 	h := handlers.NewProductImageHandler(cfg)
 
-	r.POST("/", h.Create, middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
-	r.PUT("/:id", h.Update, middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
-	r.DELETE("/:id", h.Delete, middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
+	r.POST("/", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}), h.Create)
+	r.PUT("/:id", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}), h.Update)
+	r.DELETE("/:id", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}), h.Delete)
 	r.GET("/:id", h.GetById)
 	r.POST("/get-by-filter", h.GetByFilter)
 
@@ -52,9 +52,9 @@ func ProductImage(r *gin.RouterGroup, cfg *config.Config) {
 func ProductReview(r *gin.RouterGroup, cfg *config.Config) {
 	h := handlers.NewProductReviewHandler(cfg)
 
-	r.POST("/", h.Create, middlewares.Authentication(cfg))
-	r.PUT("/:id", h.Update, middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
-	r.DELETE("/:id", h.Delete, middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
+	r.POST("/", middlewares.Authentication(cfg), h.Create)
+	r.PUT("/:id", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}), h.Update)
+	r.DELETE("/:id", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}), h.Delete)
 	r.GET("/:id", h.GetById)
 	r.POST("/get-by-filter", h.GetByFilter)
 

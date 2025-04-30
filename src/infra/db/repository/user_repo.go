@@ -52,6 +52,14 @@ func (r *PostgresUserRepository) Create(user *models.User) error {
 		log.Printf("Caller:%s Level:%s Msg:%s", constants.Postgres, constants.Rollback, err.Error())
 		return err
 	}
+
+	cart := &models.Cart{
+		UserId: user.Id,
+	}
+	if err := tx.Create(cart).Error; err != nil {
+		tx.Rollback()
+		return err
+	}
 	tx.Commit()
 	return nil
 }

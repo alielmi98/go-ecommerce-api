@@ -96,6 +96,60 @@
                 }
             }
         },
+        "/v1/shop/cart-items/": {
+            "post": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Create a Category",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "CartItem"
+                ],
+                "summary": "Create a CartItem",
+                "parameters": [
+                    {
+                        "description": "Create a CartItem",
+                        "name": "Request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.CreateCartItem"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "CartItem response",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.CartItemResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/v1/shop/categories/": {
             "post": {
                 "security": [
@@ -1470,6 +1524,20 @@
         }
     },
     "definitions": {
+        "github_com_alielmi98_go-ecommerce-api_api_dto.CartItemResponse": {
+            "type": "object",
+            "properties": {
+                "product_id": {
+                    "type": "integer"
+                },
+                "quantity": {
+                    "type": "integer"
+                },
+                "unit_price": {
+                    "type": "number"
+                }
+            }
+        },
         "github_com_alielmi98_go-ecommerce-api_api_dto.CategoryResponse": {
             "type": "object",
             "properties": {
@@ -1478,6 +1546,21 @@
                 },
                 "name": {
                     "type": "string"
+                }
+            }
+        },
+        "github_com_alielmi98_go-ecommerce-api_api_dto.CreateCartItem": {
+            "type": "object",
+            "required": [
+                "product_id",
+                "quantity"
+            ],
+            "properties": {
+                "product_id": {
+                    "type": "integer"
+                },
+                "quantity": {
+                    "type": "integer"
                 }
             }
         },

@@ -84,15 +84,7 @@ type ResponseCart struct {
 	Products   []ResponseCartItem
 }
 
-type CreateCart struct {
-	UserId     int
-	TotalPrice float64
-	TotalItems int
-	Products   []ResponseCartItem
-}
-
 type UpdateCart struct {
-	UserId     int
 	TotalPrice float64
 	TotalItems int
 	Products   []ResponseCartItem
@@ -101,11 +93,13 @@ type UpdateCart struct {
 type ResponseCartItem struct {
 	ProductId int
 	Quantity  int
+	CartId    int
 	UnitPrice float64
 }
 
 type CreateCartItem struct {
 	ProductId int
+	CartId    int
 	Quantity  int
 	UnitPrice float64
 }
