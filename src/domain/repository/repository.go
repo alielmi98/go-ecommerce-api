@@ -3,8 +3,8 @@ package repository
 import (
 	"context"
 
-	"github.com/alielmi98/go-ecommerce-api/domin/filter"
-	model "github.com/alielmi98/go-ecommerce-api/domin/models"
+	"github.com/alielmi98/go-ecommerce-api/domain/filter"
+	model "github.com/alielmi98/go-ecommerce-api/domain/models"
 )
 
 type BaseRepository[TEntity any] interface {

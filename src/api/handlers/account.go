@@ -79,7 +79,7 @@ func (h *AccountHandler) LoginByUsername(c *gin.Context) {
 	}
 
 	// Set the refresh token in a cookie
-	c.SetCookie(constants.RefreshTokenCookieName, td.RefreshToken, int(h.cfg.JWT.RefreshTokenExpireDuration*60), "/", h.cfg.Server.Domin, true, true)
+	c.SetCookie(constants.RefreshTokenCookieName, td.RefreshToken, int(h.cfg.JWT.RefreshTokenExpireDuration*60), "/", h.cfg.Server.Domain, true, true)
 
 	c.JSON(http.StatusOK, helper.GenerateBaseResponse(td, true, helper.Success))
 }

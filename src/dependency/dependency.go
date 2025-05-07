@@ -2,8 +2,8 @@ package dependency
 
 import (
 	"github.com/alielmi98/go-ecommerce-api/config"
-	model "github.com/alielmi98/go-ecommerce-api/domin/models"
-	contractRepository "github.com/alielmi98/go-ecommerce-api/domin/repository"
+	model "github.com/alielmi98/go-ecommerce-api/domain/models"
+	contractRepository "github.com/alielmi98/go-ecommerce-api/domain/repository"
 	"github.com/alielmi98/go-ecommerce-api/infra/db"
 	infraRepository "github.com/alielmi98/go-ecommerce-api/infra/db/repository"
 )

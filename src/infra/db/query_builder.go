@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	"github.com/alielmi98/go-ecommerce-api/common"
-	"github.com/alielmi98/go-ecommerce-api/domin/filter"
+	"github.com/alielmi98/go-ecommerce-api/domain/filter"
 	"gorm.io/gorm"
 )
 

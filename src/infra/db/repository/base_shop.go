@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/alielmi98/go-ecommerce-api/constants"
-	"github.com/alielmi98/go-ecommerce-api/domin/filter"
+	"github.com/alielmi98/go-ecommerce-api/domain/filter"
 	"github.com/alielmi98/go-ecommerce-api/infra/db"
 	"github.com/alielmi98/go-ecommerce-api/pkg/service_errors"
 	"gorm.io/gorm"

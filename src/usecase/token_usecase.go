@@ -146,7 +146,7 @@ func (s *TokenUsecase) RefreshToken(c *gin.Context) (*dto.TokenDetail, error) {
 		return nil, err
 	}
 
-	c.SetCookie(constants.RefreshTokenCookieName, newTokenDetail.RefreshToken, int(s.cfg.JWT.RefreshTokenExpireDuration*60), "/", s.cfg.Server.Domin, true, true)
+	c.SetCookie(constants.RefreshTokenCookieName, newTokenDetail.RefreshToken, int(s.cfg.JWT.RefreshTokenExpireDuration*60), "/", s.cfg.Server.Domain, true, true)
 
 	return newTokenDetail, nil
 }

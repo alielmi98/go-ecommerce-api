@@ -12,7 +12,7 @@ import (
 
 	"github.com/alielmi98/go-ecommerce-api/constants"
 	"github.com/alielmi98/go-ecommerce-api/dependency"
-	_ "github.com/alielmi98/go-ecommerce-api/domin/filter"
+	_ "github.com/alielmi98/go-ecommerce-api/domain/filter"
 	"github.com/alielmi98/go-ecommerce-api/usecase"
 
 	"github.com/alielmi98/go-ecommerce-api/api/dto"

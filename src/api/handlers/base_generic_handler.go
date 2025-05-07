@@ -6,7 +6,7 @@ import (
 	"strconv"
 
 	"github.com/alielmi98/go-ecommerce-api/api/helper"
-	"github.com/alielmi98/go-ecommerce-api/domin/filter"
+	"github.com/alielmi98/go-ecommerce-api/domain/filter"
 
 	"github.com/gin-gonic/gin"
 )

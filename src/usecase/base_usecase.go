@@ -6,8 +6,8 @@ import (
 	"github.com/alielmi98/go-ecommerce-api/common"
 	"github.com/alielmi98/go-ecommerce-api/config"
 
-	"github.com/alielmi98/go-ecommerce-api/domin/filter"
-	"github.com/alielmi98/go-ecommerce-api/domin/repository"
+	"github.com/alielmi98/go-ecommerce-api/domain/filter"
+	"github.com/alielmi98/go-ecommerce-api/domain/repository"
 )
 
 type BaseUsecase[TEntity any, TCreate any, TUpdate any, TResponse any] struct {

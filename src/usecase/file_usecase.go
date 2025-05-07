@@ -4,9 +4,9 @@ import (
 	"context"
 
 	"github.com/alielmi98/go-ecommerce-api/config"
-	"github.com/alielmi98/go-ecommerce-api/domin/filter"
-	model "github.com/alielmi98/go-ecommerce-api/domin/models"
-	"github.com/alielmi98/go-ecommerce-api/domin/repository"
+	"github.com/alielmi98/go-ecommerce-api/domain/filter"
+	model "github.com/alielmi98/go-ecommerce-api/domain/models"
+	"github.com/alielmi98/go-ecommerce-api/domain/repository"
 	"github.com/alielmi98/go-ecommerce-api/usecase/dto"
 )
 
