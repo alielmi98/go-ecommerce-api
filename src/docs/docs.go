@@ -416,7 +416,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_domin_filter.PaginationInputWithFilter"
+                            "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_domain_filter.PaginationInputWithFilter"
                         }
                     }
                 ],
@@ -432,7 +432,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "result": {
-                                            "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_domin_filter.PagedList-github_com_alielmi98_go-ecommerce-api_api_dto_CategoryResponse"
+                                            "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_domain_filter.PagedList-github_com_alielmi98_go-ecommerce-api_api_dto_CategoryResponse"
                                         }
                                     }
                                 }
@@ -689,7 +689,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_domin_filter.PaginationInputWithFilter"
+                            "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_domain_filter.PaginationInputWithFilter"
                         }
                     }
                 ],
@@ -705,7 +705,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "result": {
-                                            "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_domin_filter.PagedList-github_com_alielmi98_go-ecommerce-api_api_dto_FileResponse"
+                                            "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_domain_filter.PagedList-github_com_alielmi98_go-ecommerce-api_api_dto_FileResponse"
                                         }
                                     }
                                 }
@@ -946,7 +946,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_domin_filter.PaginationInputWithFilter"
+                            "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_domain_filter.PaginationInputWithFilter"
                         }
                     }
                 ],
@@ -962,7 +962,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "result": {
-                                            "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_domin_filter.PagedList-github_com_alielmi98_go-ecommerce-api_api_dto_ProductImageResponse"
+                                            "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_domain_filter.PagedList-github_com_alielmi98_go-ecommerce-api_api_dto_ProductImageResponse"
                                         }
                                     }
                                 }
@@ -1215,7 +1215,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_domin_filter.PaginationInputWithFilter"
+                            "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_domain_filter.PaginationInputWithFilter"
                         }
                     }
                 ],
@@ -1231,7 +1231,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "result": {
-                                            "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_domin_filter.PagedList-github_com_alielmi98_go-ecommerce-api_api_dto_ProductReviewResponse"
+                                            "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_domain_filter.PagedList-github_com_alielmi98_go-ecommerce-api_api_dto_ProductReviewResponse"
                                         }
                                     }
                                 }
@@ -1484,7 +1484,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_domin_filter.PaginationInputWithFilter"
+                            "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_domain_filter.PaginationInputWithFilter"
                         }
                     }
                 ],
@@ -1500,7 +1500,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "result": {
-                                            "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_domin_filter.PagedList-github_com_alielmi98_go-ecommerce-api_api_dto_ProductResponse"
+                                            "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_domain_filter.PagedList-github_com_alielmi98_go-ecommerce-api_api_dto_ProductResponse"
                                         }
                                     }
                                 }
@@ -2128,7 +2128,7 @@ const docTemplate = `{
                 "InvalidInputError"
             ]
         },
-        "github_com_alielmi98_go-ecommerce-api_domin_filter.Filter": {
+        "github_com_alielmi98_go-ecommerce-api_domain_filter.Filter": {
             "type": "object",
             "properties": {
                 "filterType": {
@@ -2147,7 +2147,7 @@ const docTemplate = `{
                 }
             }
         },
-        "github_com_alielmi98_go-ecommerce-api_domin_filter.PagedList-github_com_alielmi98_go-ecommerce-api_api_dto_CategoryResponse": {
+        "github_com_alielmi98_go-ecommerce-api_domain_filter.PagedList-github_com_alielmi98_go-ecommerce-api_api_dto_CategoryResponse": {
             "type": "object",
             "properties": {
                 "hasNextPage": {
@@ -2176,7 +2176,7 @@ const docTemplate = `{
                 }
             }
         },
-        "github_com_alielmi98_go-ecommerce-api_domin_filter.PagedList-github_com_alielmi98_go-ecommerce-api_api_dto_FileResponse": {
+        "github_com_alielmi98_go-ecommerce-api_domain_filter.PagedList-github_com_alielmi98_go-ecommerce-api_api_dto_FileResponse": {
             "type": "object",
             "properties": {
                 "hasNextPage": {
@@ -2205,7 +2205,7 @@ const docTemplate = `{
                 }
             }
         },
-        "github_com_alielmi98_go-ecommerce-api_domin_filter.PagedList-github_com_alielmi98_go-ecommerce-api_api_dto_ProductImageResponse": {
+        "github_com_alielmi98_go-ecommerce-api_domain_filter.PagedList-github_com_alielmi98_go-ecommerce-api_api_dto_ProductImageResponse": {
             "type": "object",
             "properties": {
                 "hasNextPage": {
@@ -2234,7 +2234,7 @@ const docTemplate = `{
                 }
             }
         },
-        "github_com_alielmi98_go-ecommerce-api_domin_filter.PagedList-github_com_alielmi98_go-ecommerce-api_api_dto_ProductResponse": {
+        "github_com_alielmi98_go-ecommerce-api_domain_filter.PagedList-github_com_alielmi98_go-ecommerce-api_api_dto_ProductResponse": {
             "type": "object",
             "properties": {
                 "hasNextPage": {
@@ -2263,7 +2263,7 @@ const docTemplate = `{
                 }
             }
         },
-        "github_com_alielmi98_go-ecommerce-api_domin_filter.PagedList-github_com_alielmi98_go-ecommerce-api_api_dto_ProductReviewResponse": {
+        "github_com_alielmi98_go-ecommerce-api_domain_filter.PagedList-github_com_alielmi98_go-ecommerce-api_api_dto_ProductReviewResponse": {
             "type": "object",
             "properties": {
                 "hasNextPage": {
@@ -2292,13 +2292,13 @@ const docTemplate = `{
                 }
             }
         },
-        "github_com_alielmi98_go-ecommerce-api_domin_filter.PaginationInputWithFilter": {
+        "github_com_alielmi98_go-ecommerce-api_domain_filter.PaginationInputWithFilter": {
             "type": "object",
             "properties": {
                 "filter": {
                     "type": "object",
                     "additionalProperties": {
-                        "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_domin_filter.Filter"
+                        "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_domain_filter.Filter"
                     }
                 },
                 "pageNumber": {
@@ -2310,12 +2310,12 @@ const docTemplate = `{
                 "sort": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_domin_filter.Sort"
+                        "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_domain_filter.Sort"
                     }
                 }
             }
         },
-        "github_com_alielmi98_go-ecommerce-api_domin_filter.Sort": {
+        "github_com_alielmi98_go-ecommerce-api_domain_filter.Sort": {
             "type": "object",
             "properties": {
                 "colId": {

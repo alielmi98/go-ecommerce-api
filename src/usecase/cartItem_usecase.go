@@ -67,3 +67,8 @@ func (u *CartItemUsecase) Delete(ctx context.Context, id int) error {
 func (u *CartItemUsecase) GetById(ctx context.Context, id int) (dto.ResponseCartItem, error) {
 	return u.base.GetById(ctx, id)
 }
+
+// UpdateCartItemsPrice updates the UnitPrice of CartItems for a specific product.
+func (u *CartItemUsecase) UpdateCartItemsPrice(ctx context.Context, productId int, newPrice float64) error {
+	return u.repo.UpdateCartItemsPrice(ctx, productId, newPrice)
+}

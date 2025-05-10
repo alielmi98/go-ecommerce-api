@@ -45,3 +45,12 @@ func (r *PostgresCartItemRepository) GetCartItemProduct(ctx context.Context, pro
 	}
 	return &product, nil
 }
+
+// UpdateCartItemsPrice updates the UnitPrice of CartItems for a specific product.
+func (r *PostgresCartItemRepository) UpdateCartItemsPrice(ctx context.Context, productId int, newPrice float64) error {
+	var cartItems []models.CartItem
+	result := r.database.Model(&cartItems).
+		Where("product_id = ?", productId).
+		Update("unit_price", newPrice)
+	return result.Error
+}

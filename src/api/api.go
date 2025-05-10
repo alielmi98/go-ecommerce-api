@@ -9,6 +9,7 @@ import (
 	"github.com/alielmi98/go-ecommerce-api/config"
 	"github.com/alielmi98/go-ecommerce-api/constants"
 	"github.com/alielmi98/go-ecommerce-api/docs"
+	"github.com/alielmi98/go-ecommerce-api/events"
 
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
@@ -19,13 +20,15 @@ func InitServer(cfg *config.Config) {
 	r := gin.New()
 
 	r.Use(middlewares.Cors(cfg))
-	RegisterRoutes(r, cfg)
+	dispatcher := events.NewEventDispatcher()
+	RegisterRoutes(r, cfg, dispatcher)
 	RegisterSwagger(r, cfg)
 	log.Printf("Caller:%s Level:%s Msg:%s", constants.General, constants.Startup, "Started")
 	r.Run(fmt.Sprintf(":%s", cfg.Server.InternalPort))
+
 }
 
-func RegisterRoutes(r *gin.Engine, cfg *config.Config) {
+func RegisterRoutes(r *gin.Engine, cfg *config.Config, dispatcher *events.EventDispatcher) {
 	api := r.Group("/api")
 
 	v1 := api.Group("/v1")
@@ -49,7 +52,7 @@ func RegisterRoutes(r *gin.Engine, cfg *config.Config) {
 			routers.File(files, cfg)
 			//product
 			products := shop.Group("/products")
-			routers.Product(products, cfg)
+			routers.Product(products, cfg, dispatcher)
 			//productImage
 			productImages := shop.Group("/product-images")
 			routers.ProductImage(productImages, cfg)
@@ -59,7 +62,7 @@ func RegisterRoutes(r *gin.Engine, cfg *config.Config) {
 
 			//cartItem
 			cartItem := shop.Group("/cart-items")
-			routers.CartItem(cartItem, cfg)
+			routers.CartItem(cartItem, cfg, dispatcher)
 
 		}
 

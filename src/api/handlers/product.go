@@ -6,6 +6,7 @@ import (
 	"github.com/alielmi98/go-ecommerce-api/config"
 	"github.com/alielmi98/go-ecommerce-api/dependency"
 	_ "github.com/alielmi98/go-ecommerce-api/domain/filter"
+	"github.com/alielmi98/go-ecommerce-api/events"
 	"github.com/alielmi98/go-ecommerce-api/usecase"
 
 	"github.com/gin-gonic/gin"
@@ -15,9 +16,9 @@ type ProductHandler struct {
 	usecase *usecase.ProductUsecase
 }
 
-func NewProductHandler(cfg *config.Config) *ProductHandler {
+func NewProductHandler(cfg *config.Config, dipatcher *events.EventDispatcher) *ProductHandler {
 	return &ProductHandler{
-		usecase: usecase.NewProductUsecase(cfg, dependency.GetProductRepository(cfg)),
+		usecase: usecase.NewProductUsecase(cfg, dependency.GetProductRepository(cfg), dipatcher),
 	}
 }
 

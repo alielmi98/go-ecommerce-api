@@ -7,16 +7,19 @@ import (
 	"github.com/alielmi98/go-ecommerce-api/domain/filter"
 	model "github.com/alielmi98/go-ecommerce-api/domain/models"
 	"github.com/alielmi98/go-ecommerce-api/domain/repository"
+	"github.com/alielmi98/go-ecommerce-api/events"
 	"github.com/alielmi98/go-ecommerce-api/usecase/dto"
 )
 
 type ProductUsecase struct {
-	base *BaseUsecase[model.Product, dto.CreateProduct, dto.UpdateProduct, dto.ResponseProduct]
+	base       *BaseUsecase[model.Product, dto.CreateProduct, dto.UpdateProduct, dto.ResponseProduct]
+	dispatcher *events.EventDispatcher
 }
 
-func NewProductUsecase(cfg *config.Config, repository repository.ProductRepository) *ProductUsecase {
+func NewProductUsecase(cfg *config.Config, repository repository.ProductRepository, dispatcher *events.EventDispatcher) *ProductUsecase {
 	return &ProductUsecase{
-		base: NewBaseUsecase[model.Product, dto.CreateProduct, dto.UpdateProduct, dto.ResponseProduct](cfg, repository),
+		base:       NewBaseUsecase[model.Product, dto.CreateProduct, dto.UpdateProduct, dto.ResponseProduct](cfg, repository),
+		dispatcher: dispatcher,
 	}
 }
 
@@ -27,7 +30,28 @@ func (u *ProductUsecase) Create(ctx context.Context, req dto.CreateProduct) (dto
 
 // Update
 func (u *ProductUsecase) Update(ctx context.Context, id int, req dto.UpdateProduct) (dto.ResponseProduct, error) {
-	return u.base.Update(ctx, id, req)
+
+	if req.Price != 0 {
+		currentProduct, err := u.base.repository.GetById(ctx, id)
+		if err != nil {
+			return dto.ResponseProduct{}, err
+		}
+		// check if the price has changed
+		if currentProduct.Price != req.Price {
+			// dispatch the event
+			event := events.ProductPriceChangedEvent{
+				ProductID: id,
+				NewPrice:  req.Price,
+			}
+			u.dispatcher.Dispatch("ProductPriceChanged", event)
+		}
+	}
+
+	updatedProduct, err := u.base.Update(ctx, id, req)
+	if err != nil {
+		return dto.ResponseProduct{}, err
+	}
+	return updatedProduct, nil
 }
 
 // Delete

@@ -283,7 +283,7 @@ definitions:
     - CustomRecovery
     - InternalError
     - InvalidInputError
-  github_com_alielmi98_go-ecommerce-api_domin_filter.Filter:
+  github_com_alielmi98_go-ecommerce-api_domain_filter.Filter:
     properties:
       filterType:
         description: text number
@@ -297,7 +297,7 @@ definitions:
           greaterThan greaterThanOrEqual inRange endsWith
         type: string
     type: object
-  github_com_alielmi98_go-ecommerce-api_domin_filter.PagedList-github_com_alielmi98_go-ecommerce-api_api_dto_CategoryResponse:
+  github_com_alielmi98_go-ecommerce-api_domain_filter.PagedList-github_com_alielmi98_go-ecommerce-api_api_dto_CategoryResponse:
     properties:
       hasNextPage:
         type: boolean
@@ -316,7 +316,7 @@ definitions:
       totalRows:
         type: integer
     type: object
-  github_com_alielmi98_go-ecommerce-api_domin_filter.PagedList-github_com_alielmi98_go-ecommerce-api_api_dto_FileResponse:
+  github_com_alielmi98_go-ecommerce-api_domain_filter.PagedList-github_com_alielmi98_go-ecommerce-api_api_dto_FileResponse:
     properties:
       hasNextPage:
         type: boolean
@@ -335,7 +335,7 @@ definitions:
       totalRows:
         type: integer
     type: object
-  github_com_alielmi98_go-ecommerce-api_domin_filter.PagedList-github_com_alielmi98_go-ecommerce-api_api_dto_ProductImageResponse:
+  github_com_alielmi98_go-ecommerce-api_domain_filter.PagedList-github_com_alielmi98_go-ecommerce-api_api_dto_ProductImageResponse:
     properties:
       hasNextPage:
         type: boolean
@@ -354,7 +354,7 @@ definitions:
       totalRows:
         type: integer
     type: object
-  github_com_alielmi98_go-ecommerce-api_domin_filter.PagedList-github_com_alielmi98_go-ecommerce-api_api_dto_ProductResponse:
+  github_com_alielmi98_go-ecommerce-api_domain_filter.PagedList-github_com_alielmi98_go-ecommerce-api_api_dto_ProductResponse:
     properties:
       hasNextPage:
         type: boolean
@@ -373,8 +373,8 @@ definitions:
       totalRows:
         type: integer
     type: object
-  github_com_alielmi98_go-ecommerce-api_domin_filter.PagedList-github_com_alielmi98_go-ecommerce-api_api_dto_ProductReviewResponse:
-    properties:
+  ? github_com_alielmi98_go-ecommerce-api_domain_filter.PagedList-github_com_alielmi98_go-ecommerce-api_api_dto_ProductReviewResponse
+  : properties:
       hasNextPage:
         type: boolean
       hasPreviousPage:
@@ -392,11 +392,11 @@ definitions:
       totalRows:
         type: integer
     type: object
-  github_com_alielmi98_go-ecommerce-api_domin_filter.PaginationInputWithFilter:
+  github_com_alielmi98_go-ecommerce-api_domain_filter.PaginationInputWithFilter:
     properties:
       filter:
         additionalProperties:
-          $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_domin_filter.Filter'
+          $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_domain_filter.Filter'
         type: object
       pageNumber:
         type: integer
@@ -404,10 +404,10 @@ definitions:
         type: integer
       sort:
         items:
-          $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_domin_filter.Sort'
+          $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_domain_filter.Sort'
         type: array
     type: object
-  github_com_alielmi98_go-ecommerce-api_domin_filter.Sort:
+  github_com_alielmi98_go-ecommerce-api_domain_filter.Sort:
     properties:
       colId:
         type: string
@@ -750,7 +750,7 @@ paths:
         name: Request
         required: true
         schema:
-          $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_domin_filter.PaginationInputWithFilter'
+          $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_domain_filter.PaginationInputWithFilter'
       responses:
         "200":
           description: Category response
@@ -759,7 +759,7 @@ paths:
             - $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
             - properties:
                 result:
-                  $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_domin_filter.PagedList-github_com_alielmi98_go-ecommerce-api_api_dto_CategoryResponse'
+                  $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_domain_filter.PagedList-github_com_alielmi98_go-ecommerce-api_api_dto_CategoryResponse'
               type: object
         "400":
           description: Bad request
@@ -904,7 +904,7 @@ paths:
         name: Request
         required: true
         schema:
-          $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_domin_filter.PaginationInputWithFilter'
+          $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_domain_filter.PaginationInputWithFilter'
       responses:
         "200":
           description: File response
@@ -913,7 +913,7 @@ paths:
             - $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
             - properties:
                 result:
-                  $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_domin_filter.PagedList-github_com_alielmi98_go-ecommerce-api_api_dto_FileResponse'
+                  $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_domain_filter.PagedList-github_com_alielmi98_go-ecommerce-api_api_dto_FileResponse'
               type: object
         "400":
           description: Bad request
@@ -1060,7 +1060,7 @@ paths:
         name: Request
         required: true
         schema:
-          $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_domin_filter.PaginationInputWithFilter'
+          $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_domain_filter.PaginationInputWithFilter'
       responses:
         "200":
           description: ProductImage response
@@ -1069,7 +1069,7 @@ paths:
             - $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
             - properties:
                 result:
-                  $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_domin_filter.PagedList-github_com_alielmi98_go-ecommerce-api_api_dto_ProductImageResponse'
+                  $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_domain_filter.PagedList-github_com_alielmi98_go-ecommerce-api_api_dto_ProductImageResponse'
               type: object
         "400":
           description: Bad request
@@ -1216,7 +1216,7 @@ paths:
         name: Request
         required: true
         schema:
-          $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_domin_filter.PaginationInputWithFilter'
+          $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_domain_filter.PaginationInputWithFilter'
       responses:
         "200":
           description: ProductReview response
@@ -1225,7 +1225,7 @@ paths:
             - $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
             - properties:
                 result:
-                  $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_domin_filter.PagedList-github_com_alielmi98_go-ecommerce-api_api_dto_ProductReviewResponse'
+                  $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_domain_filter.PagedList-github_com_alielmi98_go-ecommerce-api_api_dto_ProductReviewResponse'
               type: object
         "400":
           description: Bad request
@@ -1372,7 +1372,7 @@ paths:
         name: Request
         required: true
         schema:
-          $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_domin_filter.PaginationInputWithFilter'
+          $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_domain_filter.PaginationInputWithFilter'
       responses:
         "200":
           description: Product response
@@ -1381,7 +1381,7 @@ paths:
             - $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
             - properties:
                 result:
-                  $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_domin_filter.PagedList-github_com_alielmi98_go-ecommerce-api_api_dto_ProductResponse'
+                  $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_domain_filter.PagedList-github_com_alielmi98_go-ecommerce-api_api_dto_ProductResponse'
               type: object
         "400":
           description: Bad request

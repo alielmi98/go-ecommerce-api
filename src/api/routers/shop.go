@@ -4,6 +4,7 @@ import (
 	handlers "github.com/alielmi98/go-ecommerce-api/api/handlers"
 	"github.com/alielmi98/go-ecommerce-api/api/middlewares"
 	"github.com/alielmi98/go-ecommerce-api/config"
+	"github.com/alielmi98/go-ecommerce-api/events"
 	"github.com/gin-gonic/gin"
 )
 
@@ -18,8 +19,8 @@ func Category(r *gin.RouterGroup, cfg *config.Config) {
 
 }
 
-func Product(r *gin.RouterGroup, cfg *config.Config) {
-	h := handlers.NewProductHandler(cfg)
+func Product(r *gin.RouterGroup, cfg *config.Config, dispatcher *events.EventDispatcher) {
+	h := handlers.NewProductHandler(cfg, dispatcher)
 
 	r.POST("/", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}), h.Create)
 	r.PUT("/:id", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}), h.Update)
