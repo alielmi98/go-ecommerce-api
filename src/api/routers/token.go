@@ -10,6 +10,6 @@ import (
 func Token(router *gin.RouterGroup, cfg *config.Config) {
 	h := handlers.NewTokenHandler(cfg)
 
-	router.GET("/refresh-token", h.RefreshToken)
+	router.POST("/refresh-token", h.RefreshToken)
 
 }

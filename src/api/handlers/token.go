@@ -30,7 +30,7 @@ func NewTokenHandler(cfg *config.Config) *TokenHandler {
 // @Success 200 {object} helper.BaseHttpResponse "Success"
 // @Failure 400 {object} helper.BaseHttpResponse "Failed"
 // @Failure 401 {object} helper.BaseHttpResponse "Failed"
-// @Router /v1/token/refresh-token [get]
+// @Router /v1/token/refresh-token [post]
 func (h *TokenHandler) RefreshToken(c *gin.Context) {
 	td, err := h.usecase.RefreshToken(c)
 	if err != nil {
