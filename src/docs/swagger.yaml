@@ -8,12 +8,34 @@ definitions:
       unit_price:
         type: number
     type: object
+  github_com_alielmi98_go-ecommerce-api_api_dto.CartResponse:
+    properties:
+      cart_items:
+        items:
+          $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.CartItemResponse'
+        type: array
+      id:
+        type: integer
+      total_items:
+        type: integer
+      total_price:
+        type: number
+      user_id:
+        type: integer
+    type: object
   github_com_alielmi98_go-ecommerce-api_api_dto.CategoryResponse:
     properties:
       description:
         type: string
       name:
         type: string
+    type: object
+  github_com_alielmi98_go-ecommerce-api_api_dto.CreateCart:
+    properties:
+      user_id:
+        type: integer
+    required:
+    - user_id
     type: object
   github_com_alielmi98_go-ecommerce-api_api_dto.CreateCartItem:
     properties:
@@ -190,6 +212,16 @@ definitions:
     - lastName
     - password
     - username
+    type: object
+  github_com_alielmi98_go-ecommerce-api_api_dto.UpdateCart:
+    properties:
+      total_items:
+        type: integer
+      total_price:
+        type: number
+    required:
+    - total_items
+    - total_price
     type: object
   github_com_alielmi98_go-ecommerce-api_api_dto.UpdateCartItem:
     properties:
@@ -614,6 +646,170 @@ paths:
       summary: Update a CartItem
       tags:
       - CartItem
+  /v1/shop/carts/:
+    get:
+      consumes:
+      - application/json
+      description: Get a User Cart By User ID
+      responses:
+        "200":
+          description: Cart response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.CartResponse'
+              type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+        "404":
+          description: Not found
+          schema:
+            $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Get a User Cart
+      tags:
+      - Cart
+    post:
+      consumes:
+      - application/json
+      description: Create a Category
+      parameters:
+      - description: Create a Cart
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.CreateCart'
+      responses:
+        "201":
+          description: Cart response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.CartResponse'
+              type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Create a Cart
+      tags:
+      - Cart
+  /v1/shop/carts/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a Cart
+      parameters:
+      - description: Cart ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: Cart response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.CartResponse'
+              type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+        "404":
+          description: Not found
+          schema:
+            $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Delete a Cart
+      tags:
+      - Cart
+    get:
+      consumes:
+      - application/json
+      description: Get a Cart by ID
+      parameters:
+      - description: Cart ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: Cart response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.CartResponse'
+              type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+        "404":
+          description: Not found
+          schema:
+            $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Get a Cart by ID
+      tags:
+      - Cart
+    put:
+      consumes:
+      - application/json
+      description: Update a Cart
+      parameters:
+      - description: Cart ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Update a Cart
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.UpdateCart'
+      responses:
+        "200":
+          description: Cart response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.CartResponse'
+              type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+        "404":
+          description: Not found
+          schema:
+            $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Update a Cart
+      tags:
+      - Cart
   /v1/shop/categories/:
     post:
       consumes:
@@ -1393,7 +1589,7 @@ paths:
       tags:
       - Product
   /v1/token/refresh-token:
-    get:
+    post:
       consumes:
       - application/json
       description: RefreshToken

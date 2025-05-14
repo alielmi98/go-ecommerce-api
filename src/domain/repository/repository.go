@@ -37,6 +37,7 @@ type FileRepository interface {
 // Order
 type CartRepository interface {
 	BaseRepository[model.Cart]
+	GetCartByUserId(ctx context.Context, userId int) (*model.Cart, error)
 }
 
 type CartItemRepository interface {

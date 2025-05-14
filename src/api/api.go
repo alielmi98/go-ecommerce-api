@@ -63,6 +63,9 @@ func RegisterRoutes(r *gin.Engine, cfg *config.Config, dispatcher *events.EventD
 			//cartItem
 			cartItem := shop.Group("/cart-items")
 			routers.CartItem(cartItem, cfg, dispatcher)
+			//cart
+			cart := shop.Group("/carts")
+			routers.Cart(cart, cfg)
 
 		}
 

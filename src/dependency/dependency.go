@@ -37,8 +37,8 @@ func GetProductReviewRepository(cfg *config.Config) contractRepository.ProductRe
 }
 
 func GetCartRepository(cfg *config.Config) contractRepository.CartRepository {
-	var preloads []db.PreloadEntity = []db.PreloadEntity{{Entity: "Items"}}
-	return infraRepository.NewBaseRepository[model.Cart](preloads)
+	var preloads []db.PreloadEntity = []db.PreloadEntity{{Entity: "CartItems"}}
+	return infraRepository.NewCartRepository(preloads)
 }
 
 func GetCartItemRepository(cfg *config.Config) contractRepository.CartItemRepository {

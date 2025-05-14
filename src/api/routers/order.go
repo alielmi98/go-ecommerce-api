@@ -17,3 +17,15 @@ func CartItem(r *gin.RouterGroup, cfg *config.Config, dispatcher *events.EventDi
 	r.DELETE("/:id", middlewares.Authentication(cfg), h.Delete)
 	r.GET("/:id", h.GetById)
 }
+
+func Cart(r *gin.RouterGroup, cfg *config.Config) {
+	h := handlers.NewCartHandler(cfg)
+	// Admin
+	r.POST("/", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}), h.Create)
+	r.PUT("/:id", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}), h.Update)
+	r.DELETE("/:id", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}), h.Delete)
+	r.GET("/:id", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}), h.GetById)
+	// Customer
+	r.GET("/", middlewares.Authentication(cfg), h.GetByUserId)
+
+}

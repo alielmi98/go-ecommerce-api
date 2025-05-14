@@ -6,20 +6,20 @@ import (
 
 	"github.com/alielmi98/go-ecommerce-api/config"
 	"github.com/alielmi98/go-ecommerce-api/constants"
-	"github.com/alielmi98/go-ecommerce-api/domain/models"
+	model "github.com/alielmi98/go-ecommerce-api/domain/models"
 	"github.com/alielmi98/go-ecommerce-api/domain/repository"
 	"github.com/alielmi98/go-ecommerce-api/usecase/dto"
 )
 
 type CartItemUsecase struct {
-	base *BaseUsecase[models.CartItem, dto.CreateCartItem, dto.UpdateCartItem, dto.ResponseCartItem]
+	base *BaseUsecase[model.CartItem, dto.CreateCartItem, dto.UpdateCartItem, dto.ResponseCartItem]
 	repo repository.CartItemRepository
 	cfg  *config.Config
 }
 
 func NewCartItemUsecase(cfg *config.Config, repository repository.CartItemRepository) *CartItemUsecase {
 	return &CartItemUsecase{
-		base: NewBaseUsecase[models.CartItem, dto.CreateCartItem, dto.UpdateCartItem, dto.ResponseCartItem](cfg, repository),
+		base: NewBaseUsecase[model.CartItem, dto.CreateCartItem, dto.UpdateCartItem, dto.ResponseCartItem](cfg, repository),
 		repo: repository,
 		cfg:  cfg,
 	}
