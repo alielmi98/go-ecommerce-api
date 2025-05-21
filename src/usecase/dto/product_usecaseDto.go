@@ -37,3 +37,63 @@ type UpdateProduct struct {
 	Slug        string
 	Status      string
 }
+
+// Product Category
+type CreateCategory struct {
+	Name        string
+	Description string
+}
+
+type UpdateCategory struct {
+	Name        string
+	Description string
+}
+
+type ResponseCategory struct {
+	Name        string
+	Description string
+}
+
+// Product Image
+type ResponseProductImage struct {
+	Id        int
+	ImageId   int
+	ProductId int
+	ImageUrl  string
+	IsMain    bool
+}
+
+type CreateProductImage struct {
+	ProductId int
+	ImageId   int
+	IsMain    bool
+}
+
+type UpdateProductImage struct {
+	ProductId int
+	ImageId   int
+	IsMain    bool
+}
+
+// Product Review
+type ResponseProductReview struct {
+	Id        int
+	ProductId int
+	UserId    int
+	Rating    int
+	Comment   string
+}
+
+type CreateProductReview struct {
+	ProductId int
+	Rating    int
+	Comment   string
+	UserId    int
+}
+
+type UpdateProductReview struct {
+	ProductId int
+	Rating    int
+	Comment   string
+	UserId    int
+}

@@ -105,3 +105,130 @@ func ToUpdateProduct(from UpdateProductRequest) dto.UpdateProduct {
 		Slug:        from.Slug,
 	}
 }
+
+// Product Category
+type CreateCategoryRequest struct {
+	Name        string `json:"name" binding:"required"`
+	Description string `json:"description"`
+}
+
+type UpdateCategoryRequest struct {
+	Name        string `json:"name"`
+	Description string `json:"description"`
+}
+
+type CategoryResponse struct {
+	Name        string `json:"name"`
+	Description string `json:"description"`
+}
+
+func ToCategoryResponse(from dto.ResponseCategory) CategoryResponse {
+	return CategoryResponse{
+		Name:        from.Name,
+		Description: from.Description,
+	}
+}
+
+func ToCreateCategory(from dto.CreateCategory) dto.CreateCategory {
+	return dto.CreateCategory{
+		Name:        from.Name,
+		Description: from.Description,
+	}
+}
+
+func ToUpdateCategory(from dto.UpdateCategory) dto.UpdateCategory {
+	return dto.UpdateCategory{
+		Name:        from.Name,
+		Description: from.Description,
+	}
+}
+
+// Product Image
+type CreateProductImageRequest struct {
+	ProductId int  `json:"product_id" binding:"required"`
+	ImageId   int  `json:"image_id" binding:"required"`
+	IsMain    bool `json:"is_main"`
+}
+
+type UpdateProductImageRequest struct {
+	ProductId int  `json:"product_id" binding:"required"`
+	ImageId   int  `json:"image_id"`
+	IsMain    bool `json:"is_main" binding:"required"`
+}
+
+type ProductImageResponse struct {
+	Id        int  `json:"id"` // This field is not used in the request, but it's included for consistency with the response
+	ProductId int  `json:"product_id"`
+	ImageId   int  `json:"image_id"`
+	IsMain    bool `json:"is_main"`
+}
+
+func ToProductImageResponse(from dto.ResponseProductImage) ProductImageResponse {
+	return ProductImageResponse{
+		Id:        from.Id,
+		ProductId: from.ProductId,
+		ImageId:   from.ImageId,
+		IsMain:    from.IsMain,
+	}
+}
+func ToCreateProductImage(from CreateProductImageRequest) dto.CreateProductImage {
+	return dto.CreateProductImage{
+		ProductId: from.ProductId,
+		ImageId:   from.ImageId,
+		IsMain:    from.IsMain,
+	}
+}
+func ToUpdateProductImage(from UpdateProductImageRequest) dto.UpdateProductImage {
+	return dto.UpdateProductImage{
+		ProductId: from.ProductId,
+		ImageId:   from.ImageId,
+		IsMain:    from.IsMain,
+	}
+}
+
+// Product Review
+type CreateProductReviewRequest struct {
+	ProductId int    `json:"product_id" binding:"required"`
+	Rating    int    `json:"rating" binding:"required"`
+	Comment   string `json:"comment"`
+	UserId    int    `json:"user_id" binding:"required"`
+}
+
+type UpdateProductReviewRequest struct {
+	ProductId int    `json:"product_id"`
+	Rating    int    `json:"rating"`
+	Comment   string `json:"comment"`
+	UserId    int    `json:"user_id"`
+}
+
+type ProductReviewResponse struct {
+	ProductId int    `json:"product_id"`
+	Rating    int    `json:"rating"`
+	Comment   string `json:"comment"`
+	UserId    int    `json:"user_id"`
+}
+
+func ToProductReviewResponse(from dto.ResponseProductReview) ProductReviewResponse {
+	return ProductReviewResponse{
+		ProductId: from.ProductId,
+		Rating:    from.Rating,
+		Comment:   from.Comment,
+		UserId:    from.UserId,
+	}
+}
+func ToCreateProductReview(from CreateProductReviewRequest) dto.CreateProductReview {
+	return dto.CreateProductReview{
+		ProductId: from.ProductId,
+		Rating:    from.Rating,
+		Comment:   from.Comment,
+		UserId:    from.UserId,
+	}
+}
+func ToUpdateProductReview(from UpdateProductReviewRequest) dto.UpdateProductReview {
+	return dto.UpdateProductReview{
+		ProductId: from.ProductId,
+		Rating:    from.Rating,
+		Comment:   from.Comment,
+		UserId:    from.UserId,
+	}
+}
