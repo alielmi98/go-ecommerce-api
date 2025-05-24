@@ -67,6 +67,13 @@ func RegisterRoutes(r *gin.Engine, cfg *config.Config, dispatcher *events.EventD
 			cart := shop.Group("/carts")
 			routers.Cart(cart, cfg)
 
+			//orderItem
+			orderItem := shop.Group("/order-items")
+			routers.OrderItem(orderItem, cfg)
+			//order
+			order := shop.Group("/orders")
+			routers.Order(order, cfg)
+
 		}
 
 	}

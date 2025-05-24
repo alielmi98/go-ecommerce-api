@@ -35,7 +35,7 @@ type ResponseOrder struct {
 	Status     string
 	Address    string
 	PaymentId  int
-	Products   []ResponseOrderItem
+	OrderItems []ResponseOrderItem
 }
 
 type CreateOrder struct {
@@ -45,7 +45,6 @@ type CreateOrder struct {
 	Status     string
 	Address    string
 	PaymentId  int
-	Products   []ResponseOrderItem
 }
 
 type UpdateOrder struct {
@@ -55,23 +54,25 @@ type UpdateOrder struct {
 	Status     string
 	Address    string
 	PaymentId  int
-	Products   []ResponseOrderItem
 }
 type ResponseOrderItem struct {
 	ProductId int
 	Quantity  int
+	OrderId   int
 	UnitPrice float64
 }
 
 type CreateOrderItem struct {
 	ProductId int
 	Quantity  int
+	OrderId   int
 	UnitPrice float64
 }
 
 type UpdateOrderItem struct {
 	ProductId int
 	Quantity  int
+	OrderId   int
 	UnitPrice float64
 }
 

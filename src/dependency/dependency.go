@@ -47,7 +47,7 @@ func GetCartItemRepository(cfg *config.Config) contractRepository.CartItemReposi
 }
 
 func GetOrderRepository(cfg *config.Config) contractRepository.OrderRepository {
-	var preloads []db.PreloadEntity = []db.PreloadEntity{{Entity: "Items"}}
+	var preloads []db.PreloadEntity = []db.PreloadEntity{{Entity: "OrderItems"}}
 	return infraRepository.NewBaseRepository[model.Order](preloads)
 }
 

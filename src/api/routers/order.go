@@ -29,3 +29,24 @@ func Cart(r *gin.RouterGroup, cfg *config.Config) {
 	r.GET("/", middlewares.Authentication(cfg), h.GetByUserId)
 
 }
+
+func OrderItem(r *gin.RouterGroup, cfg *config.Config) {
+	h := handlers.NewOrderItemHandler(cfg)
+
+	// Admin
+	r.POST("/", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}), h.Create)
+	r.PUT("/:id", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}), h.Update)
+	r.DELETE("/:id", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}), h.Delete)
+	r.GET("/:id", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}), h.GetById)
+	r.POST("/get-by-filter", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}), h.GetByFilter)
+}
+
+func Order(r *gin.RouterGroup, cfg *config.Config) {
+	h := handlers.NewOrderHandler(cfg)
+
+	// Admin
+	r.POST("/", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}), h.Create)
+	r.PUT("/:id", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}), h.Update)
+	r.DELETE("/:id", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}), h.Delete)
+	r.GET("/:id", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}), h.GetById)
+}

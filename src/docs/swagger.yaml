@@ -56,6 +56,44 @@ definitions:
     required:
     - name
     type: object
+  github_com_alielmi98_go-ecommerce-api_api_dto.CreateOrder:
+    properties:
+      address:
+        type: string
+      payment_id:
+        type: integer
+      status:
+        type: string
+      total_items:
+        type: integer
+      total_price:
+        type: number
+      user_id:
+        type: integer
+    required:
+    - address
+    - payment_id
+    - status
+    - total_items
+    - total_price
+    - user_id
+    type: object
+  github_com_alielmi98_go-ecommerce-api_api_dto.CreateOrderItem:
+    properties:
+      order_id:
+        type: integer
+      product_id:
+        type: integer
+      quantity:
+        type: integer
+      unit_price:
+        type: number
+    required:
+    - order_id
+    - product_id
+    - quantity
+    - unit_price
+    type: object
   github_com_alielmi98_go-ecommerce-api_api_dto.CreateProductImageRequest:
     properties:
       image_id:
@@ -130,6 +168,42 @@ definitions:
     required:
     - password
     - username
+    type: object
+  github_com_alielmi98_go-ecommerce-api_api_dto.OrderItemResponse:
+    properties:
+      order_id:
+        type: integer
+      product_id:
+        type: integer
+      quantity:
+        type: integer
+      unit_price:
+        type: number
+    type: object
+  github_com_alielmi98_go-ecommerce-api_api_dto.OrderResponse:
+    properties:
+      address:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: integer
+      payment_id:
+        type: integer
+      products:
+        items:
+          $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.OrderItemResponse'
+        type: array
+      status:
+        type: string
+      total_items:
+        type: integer
+      total_price:
+        type: number
+      updated_at:
+        type: string
+      user_id:
+        type: integer
     type: object
   github_com_alielmi98_go-ecommerce-api_api_dto.ProductImageResponse:
     properties:
@@ -241,6 +315,44 @@ definitions:
     properties:
       description:
         type: string
+    type: object
+  github_com_alielmi98_go-ecommerce-api_api_dto.UpdateOrder:
+    properties:
+      address:
+        type: string
+      payment_id:
+        type: integer
+      status:
+        type: string
+      total_items:
+        type: integer
+      total_price:
+        type: number
+      user_id:
+        type: integer
+    required:
+    - address
+    - payment_id
+    - status
+    - total_items
+    - total_price
+    - user_id
+    type: object
+  github_com_alielmi98_go-ecommerce-api_api_dto.UpdateOrderItem:
+    properties:
+      order_id:
+        type: integer
+      product_id:
+        type: integer
+      quantity:
+        type: integer
+      unit_price:
+        type: number
+    required:
+    - order_id
+    - product_id
+    - quantity
+    - unit_price
     type: object
   github_com_alielmi98_go-ecommerce-api_api_dto.UpdateProductImageRequest:
     properties:
@@ -1120,6 +1232,350 @@ paths:
       summary: Get Files
       tags:
       - Files
+  /v1/shop/order-items/:
+    post:
+      consumes:
+      - application/json
+      description: Create a Category
+      parameters:
+      - description: Create a OrderItem
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.CreateOrderItem'
+      responses:
+        "201":
+          description: OrderItem response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.OrderItemResponse'
+              type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Create a OrderItem
+      tags:
+      - OrderItem
+  /v1/shop/order-items/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a OrderItem
+      parameters:
+      - description: OrderItem ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OrderItem response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.OrderItemResponse'
+              type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+        "404":
+          description: Not found
+          schema:
+            $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Delete a OrderItem
+      tags:
+      - OrderItem
+    get:
+      consumes:
+      - application/json
+      description: Get a OrderItem
+      parameters:
+      - description: OrderItem ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OrderItem response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.OrderItemResponse'
+              type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+        "404":
+          description: Not found
+          schema:
+            $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Get a OrderItemBy ID
+      tags:
+      - OrderItem
+    put:
+      consumes:
+      - application/json
+      description: Update a OrderItem
+      parameters:
+      - description: OrderItem ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Update a OrderItem
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.UpdateOrderItem'
+      responses:
+        "200":
+          description: OrderItem response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.OrderItemResponse'
+              type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+        "404":
+          description: Not found
+          schema:
+            $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Update a OrderItem
+      tags:
+      - OrderItem
+  /v1/shop/order-items/get-by-filter:
+    post:
+      consumes:
+      - application/json
+      description: Get a OrderItem By Filter
+      parameters:
+      - description: Get a OrderItem By Filter
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_domain_filter.PaginationInputWithFilter'
+      responses:
+        "200":
+          description: OrderItem response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.OrderItemResponse'
+              type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+        "404":
+          description: Not found
+          schema:
+            $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Get a OrderItem By Filter
+      tags:
+      - OrderItem
+  /v1/shop/orders/:
+    post:
+      consumes:
+      - application/json
+      description: Create a Category
+      parameters:
+      - description: Create a Order
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.CreateOrder'
+      responses:
+        "201":
+          description: Order response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.OrderResponse'
+              type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Create a Order
+      tags:
+      - Order
+  /v1/shop/orders/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a Order
+      parameters:
+      - description: Order ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: Order response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.OrderResponse'
+              type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+        "404":
+          description: Not found
+          schema:
+            $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Delete a Order
+      tags:
+      - Order
+    get:
+      consumes:
+      - application/json
+      description: Get a Order
+      parameters:
+      - description: Order ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: Order response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.OrderResponse'
+              type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+        "404":
+          description: Not found
+          schema:
+            $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Get a OrderBy ID
+      tags:
+      - Order
+    put:
+      consumes:
+      - application/json
+      description: Update a Order
+      parameters:
+      - description: Order ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Update a Order
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.UpdateOrder'
+      responses:
+        "200":
+          description: Order response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.OrderResponse'
+              type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+        "404":
+          description: Not found
+          schema:
+            $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Update a Order
+      tags:
+      - Order
+  /v1/shop/orders/get-by-filter:
+    post:
+      consumes:
+      - application/json
+      description: Get a Order By Filter
+      parameters:
+      - description: Get a Order By Filter
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_domain_filter.PaginationInputWithFilter'
+      responses:
+        "200":
+          description: Order response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.OrderResponse'
+              type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+        "404":
+          description: Not found
+          schema:
+            $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Get a Order By Filter
+      tags:
+      - Order
   /v1/shop/product-images/:
     post:
       consumes:
