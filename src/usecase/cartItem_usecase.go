@@ -12,16 +12,18 @@ import (
 )
 
 type CartItemUsecase struct {
-	base *BaseUsecase[model.CartItem, dto.CreateCartItem, dto.UpdateCartItem, dto.ResponseCartItem]
-	repo repository.CartItemRepository
-	cfg  *config.Config
+	base         *BaseUsecase[model.CartItem, dto.CreateCartItem, dto.UpdateCartItem, dto.ResponseCartItem]
+	cartItemRepo repository.CartItemRepository
+	cartRepo     repository.CartRepository
+	cfg          *config.Config
 }
 
-func NewCartItemUsecase(cfg *config.Config, repository repository.CartItemRepository) *CartItemUsecase {
+func NewCartItemUsecase(cfg *config.Config, cartItemRepository repository.CartItemRepository, cartRepository repository.CartRepository) *CartItemUsecase {
 	return &CartItemUsecase{
-		base: NewBaseUsecase[model.CartItem, dto.CreateCartItem, dto.UpdateCartItem, dto.ResponseCartItem](cfg, repository),
-		repo: repository,
-		cfg:  cfg,
+		base:         NewBaseUsecase[model.CartItem, dto.CreateCartItem, dto.UpdateCartItem, dto.ResponseCartItem](cfg, cartItemRepository),
+		cartItemRepo: cartItemRepository,
+		cartRepo:     cartRepository,
+		cfg:          cfg,
 	}
 }
 
@@ -29,7 +31,7 @@ func NewCartItemUsecase(cfg *config.Config, repository repository.CartItemReposi
 func (u *CartItemUsecase) Create(ctx context.Context, req dto.CreateCartItem) (dto.ResponseCartItem, error) {
 	// Extract the User ID from the request
 	userId := int(ctx.Value(constants.UserIdKey).(float64))
-	cart, err := u.repo.GetCartByUserId(ctx, userId)
+	cart, err := u.cartRepo.GetCartByUserId(ctx, userId)
 	if err != nil {
 		return dto.ResponseCartItem{}, err
 	}
@@ -38,7 +40,7 @@ func (u *CartItemUsecase) Create(ctx context.Context, req dto.CreateCartItem) (d
 		return dto.ResponseCartItem{}, fmt.Errorf("cart not found for user ID: %d", userId)
 	}
 
-	product, err := u.repo.GetCartItemProduct(ctx, req.ProductId)
+	product, err := u.cartItemRepo.GetCartItemProduct(ctx, req.ProductId)
 	if err != nil {
 		return dto.ResponseCartItem{}, err
 	}
@@ -70,5 +72,5 @@ func (u *CartItemUsecase) GetById(ctx context.Context, id int) (dto.ResponseCart
 
 // UpdateCartItemsPrice updates the UnitPrice of CartItems for a specific product.
 func (u *CartItemUsecase) UpdateCartItemsPrice(ctx context.Context, productId int, newPrice float64) error {
-	return u.repo.UpdateCartItemsPrice(ctx, productId, newPrice)
+	return u.cartItemRepo.UpdateCartItemsPrice(ctx, productId, newPrice)
 }
