@@ -13,4 +13,7 @@ const (
 	CustomRecovery    ResultCode = 50001
 	InternalError     ResultCode = 50002
 	InvalidInputError ResultCode = 50003
+	DatabaseError     ResultCode = 50004
+	UnknownError      ResultCode = 50005
+	BadRequest        ResultCode = 40002
 )
