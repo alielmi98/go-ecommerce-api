@@ -16,6 +16,7 @@ type BaseRepository[TEntity any] interface {
 }
 type ProductRepository interface {
 	BaseRepository[model.Product]
+	CheckProductAvailability(productId int, orderQuantity int) bool
 }
 
 type CategoryRepository interface {

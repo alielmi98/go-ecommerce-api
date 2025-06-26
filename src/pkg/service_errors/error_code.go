@@ -17,4 +17,8 @@ const (
 
 	// DB
 	RecordNotFound = "record not found"
+
+	// Order Checkout
+	CartIsEmpty         = "the cart is empty"
+	ErrItemsUnavailable = "Some items in your cart are unavailable."
 )

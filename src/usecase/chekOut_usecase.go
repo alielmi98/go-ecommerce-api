@@ -8,6 +8,7 @@ import (
 	"github.com/alielmi98/go-ecommerce-api/constants"
 	model "github.com/alielmi98/go-ecommerce-api/domain/models"
 	"github.com/alielmi98/go-ecommerce-api/domain/repository"
+	"github.com/alielmi98/go-ecommerce-api/pkg/service_errors"
 	"github.com/alielmi98/go-ecommerce-api/usecase/dto"
 )
 
@@ -15,14 +16,17 @@ type CheckOutUsecase struct {
 	cartRepo      repository.CartRepository
 	orderRepo     repository.OrderRepository
 	orderItemRepo repository.OrderItemRepository
+	productRepo   repository.ProductRepository
 	cfg           *config.Config
 }
 
-func NewCheckOutUsecase(cfg *config.Config, cartRepo repository.CartRepository, orderRepo repository.OrderRepository, orderItemRepo repository.OrderItemRepository) *CheckOutUsecase {
+func NewCheckOutUsecase(cfg *config.Config, cartRepo repository.CartRepository, orderRepo repository.OrderRepository, orderItemRepo repository.OrderItemRepository,
+	productRepo repository.ProductRepository) *CheckOutUsecase {
 	return &CheckOutUsecase{
 		cartRepo:      cartRepo,
 		orderRepo:     orderRepo,
 		orderItemRepo: orderItemRepo,
+		productRepo:   productRepo,
 		cfg:           cfg,
 	}
 }
@@ -40,6 +44,10 @@ func (u *CheckOutUsecase) CreateOrderFromCart(ctx context.Context) (dto.Response
 		return dto.ResponseOrder{}, nil // No cart found for the user
 	}
 
+	if len(cart.CartItems) == 0 {
+		return dto.ResponseOrder{}, &service_errors.ServiceError{EndUserMessage: service_errors.CartIsEmpty} // Cart is empty
+	}
+
 	// Create a new order from the cart
 	order := model.Order{
 		UserId: userId,
@@ -54,6 +62,10 @@ func (u *CheckOutUsecase) CreateOrderFromCart(ctx context.Context) (dto.Response
 
 	// Create order items from the cart items
 	for _, item := range cart.CartItems {
+		// Check product availability
+		if !u.productRepo.CheckProductAvailability(item.ProductId, item.Quantity) {
+			return dto.ResponseOrder{}, &service_errors.ServiceError{EndUserMessage: service_errors.ErrItemsUnavailable}
+		}
 		orderItem := model.OrderItem{
 			OrderId:   savedOrder.Id,
 			ProductId: item.ProductId,
