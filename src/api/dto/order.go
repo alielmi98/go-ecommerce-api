@@ -138,6 +138,10 @@ type UpdateOrderItem struct {
 	UnitPrice float64 `json:"unit_price" validate:"required"`
 }
 
+type CheckOutRequest struct {
+	Address string `json:"address" validate:"required"`
+}
+
 func ToOrderResponse(from dto.ResponseOrder) OrderResponse {
 
 	return OrderResponse{
@@ -204,5 +208,11 @@ func ToUpdateOrderItem(from UpdateOrderItem) dto.UpdateOrderItem {
 		OrderId:   from.OrderId,
 		Quantity:  from.Quantity,
 		UnitPrice: from.UnitPrice,
+	}
+}
+
+func ToCheckOutRequest(from CheckOutRequest) dto.CheckOutRequest {
+	return dto.CheckOutRequest{
+		Address: from.Address,
 	}
 }

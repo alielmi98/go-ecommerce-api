@@ -30,6 +30,13 @@ definitions:
       name:
         type: string
     type: object
+  github_com_alielmi98_go-ecommerce-api_api_dto.CheckOutRequest:
+    properties:
+      address:
+        type: string
+    required:
+    - address
+    type: object
   github_com_alielmi98_go-ecommerce-api_api_dto.CreateCart:
     properties:
       user_id:
@@ -1089,6 +1096,13 @@ paths:
       consumes:
       - application/json
       description: Create a new order from the items in the user's cart
+      parameters:
+      - description: Check out request
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.CheckOutRequest'
       produces:
       - application/json
       responses:

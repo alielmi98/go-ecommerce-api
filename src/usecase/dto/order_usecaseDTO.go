@@ -111,3 +111,7 @@ type CreateCartItem struct {
 type UpdateCartItem struct {
 	Quantity int
 }
+
+type CheckOutRequest struct {
+	Address string
+}

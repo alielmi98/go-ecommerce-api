@@ -32,7 +32,7 @@ func NewCheckOutUsecase(cfg *config.Config, cartRepo repository.CartRepository, 
 }
 
 // Create a new order from the cart
-func (u *CheckOutUsecase) CheckOut(ctx context.Context) (dto.ResponseOrder, error) {
+func (u *CheckOutUsecase) CheckOut(ctx context.Context, request dto.CheckOutRequest) (dto.ResponseOrder, error) {
 	// Extract the User ID from the request
 	userId := int(ctx.Value(constants.UserIdKey).(float64))
 
@@ -43,7 +43,7 @@ func (u *CheckOutUsecase) CheckOut(ctx context.Context) (dto.ResponseOrder, erro
 	}
 
 	// Create a new order from the cart
-	order, err := u.CreateOrderFromCart(userId, cart)
+	order, err := u.CreateOrderFromCart(userId, request, cart)
 	if err != nil {
 		return dto.ResponseOrder{}, err
 	}
@@ -95,7 +95,7 @@ func (u *CheckOutUsecase) GetCartByUserId(ctx context.Context, userId int) (*mod
 }
 
 // CreateOrderFromCart creates an order from the user's cart
-func (u *CheckOutUsecase) CreateOrderFromCart(userId int, cart *model.Cart) (model.Order, error) {
+func (u *CheckOutUsecase) CreateOrderFromCart(userId int, request dto.CheckOutRequest, cart *model.Cart) (model.Order, error) {
 	// Calculate total items and total price
 	totalItems := 0
 	totalPrice := 0.0
@@ -107,7 +107,8 @@ func (u *CheckOutUsecase) CreateOrderFromCart(userId int, cart *model.Cart) (mod
 	// Create a new order from the cart
 	order := model.Order{
 		UserId:     userId,
-		Status:     "Pending", // Set initial status
+		Status:     "Pending",       // Set initial status
+		Address:    request.Address, // Use the address from the request
 		TotalItems: totalItems,
 		TotalPrice: totalPrice,
 	}

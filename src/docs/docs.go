@@ -907,6 +907,17 @@ const docTemplate = `{
                     "checkout"
                 ],
                 "summary": "Create an order from the cart",
+                "parameters": [
+                    {
+                        "description": "Check out request",
+                        "name": "Request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.CheckOutRequest"
+                        }
+                    }
+                ],
                 "responses": {
                     "201": {
                         "description": "Order response",
@@ -2670,6 +2681,17 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_alielmi98_go-ecommerce-api_api_dto.CheckOutRequest": {
+            "type": "object",
+            "required": [
+                "address"
+            ],
+            "properties": {
+                "address": {
                     "type": "string"
                 }
             }
