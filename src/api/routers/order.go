@@ -54,6 +54,6 @@ func Order(r *gin.RouterGroup, cfg *config.Config) {
 func CheckOutHandler(r *gin.RouterGroup, cfg *config.Config) {
 	h := handlers.NewCheckOutHandler(cfg)
 
-	r.POST("/", middlewares.Authentication(cfg), h.CreateOrderFromCart)
+	r.POST("/", middlewares.Authentication(cfg), h.CheckOut)
 
 }

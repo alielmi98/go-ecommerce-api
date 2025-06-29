@@ -33,8 +33,8 @@ func NewCheckOutHandler(cfg *config.Config) *CheckOutHandler {
 // @Failure 400 {object} helper.BaseHttpResponse "Bad request"
 // @Router /v1/shop/checkout/ [post]
 // @Security AuthBearer
-func (h *CheckOutHandler) CreateOrderFromCart(c *gin.Context) {
-	order, err := h.usecase.CreateOrderFromCart(c)
+func (h *CheckOutHandler) CheckOut(c *gin.Context) {
+	order, err := h.usecase.CheckOut(c)
 	if err != nil {
 		c.AbortWithStatusJSON(helper.TranslateErrorToStatusCode(err),
 			helper.GenerateBaseResponseWithError(nil, false, helper.InternalError, err))
