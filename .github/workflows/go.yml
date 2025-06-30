@@ -19,12 +19,9 @@ jobs:
     - name: Set up Go
       uses: actions/setup-go@v4
       with:
-        go-version: 1.22
+        go-version: 1.22.2
 
     - name: Build
-      run: go build -v ./...
-
-    - name: Test
       run: cd src && go mod download && go build -v cmd/main.go
 
 
