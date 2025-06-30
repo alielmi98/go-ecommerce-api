@@ -10,6 +10,7 @@ import (
 	"github.com/alielmi98/go-ecommerce-api/domain/repository"
 	"github.com/alielmi98/go-ecommerce-api/pkg/service_errors"
 	"github.com/alielmi98/go-ecommerce-api/usecase/dto"
+	"gorm.io/gorm"
 )
 
 type CheckOutUsecase struct {
@@ -42,25 +43,40 @@ func (u *CheckOutUsecase) CheckOut(ctx context.Context, request dto.CheckOutRequ
 		return dto.ResponseOrder{}, err
 	}
 
+	//start transaction
+	tx, _ := u.orderRepo.BeginTransaction(ctx)
+	defer func() {
+		if r := recover(); r != nil {
+			tx.Rollback()
+			panic(r)
+		}
+	}()
+
 	// Create a new order from the cart
 	order, err := u.CreateOrderFromCart(userId, request, cart)
 	if err != nil {
+		tx.Rollback()
 		return dto.ResponseOrder{}, err
 	}
 	// Save the order
-	savedOrder, err := u.orderRepo.Create(nil, order)
+	savedOrder, err := u.orderRepo.CreateTx(tx, order)
 	if err != nil {
+		tx.Rollback()
 		return dto.ResponseOrder{}, err
 	}
 	// Create order items from the cart items
-	if err := u.createOrderItems(savedOrder.Id, cart.CartItems); err != nil {
+	if err := u.createOrderItems(tx, savedOrder.Id, cart.CartItems); err != nil {
+		tx.Rollback()
 		return dto.ResponseOrder{}, err
 	}
+
+	// Commit the transaction
+	tx.Commit()
 
 	return common.TypeConverter[dto.ResponseOrder](savedOrder)
 }
 
-func (u *CheckOutUsecase) createOrderItems(orderId int, cartItems []model.CartItem) error {
+func (u *CheckOutUsecase) createOrderItems(tx *gorm.DB, orderId int, cartItems []model.CartItem) error {
 	for _, item := range cartItems {
 		// Check product availability
 		if !u.productRepo.CheckProductAvailability(item.ProductId, item.Quantity) {
@@ -72,7 +88,7 @@ func (u *CheckOutUsecase) createOrderItems(orderId int, cartItems []model.CartIt
 			Quantity:  item.Quantity,
 			UnitPrice: item.UnitPrice,
 		}
-		if _, err := u.orderItemRepo.Create(nil, orderItem); err != nil {
+		if _, err := u.orderItemRepo.CreateTx(tx, orderItem); err != nil {
 			return err
 		}
 	}

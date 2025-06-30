@@ -130,3 +130,23 @@ func (r BaseRepository[TEntity]) GetByFilter(ctx context.Context, req filter.Pag
 	return totalRows, items, err
 
 }
+
+func (r *BaseRepository[TEntity]) BeginTransaction(ctx context.Context) (*gorm.DB, error) {
+	tx := r.database.WithContext(ctx).Begin()
+	if err := tx.Error; err != nil {
+		return nil, err
+	}
+	return tx, nil
+}
+
+func (r BaseRepository[TEntity]) CreateTx(tx *gorm.DB, entity TEntity) (TEntity, error) {
+	err := tx.
+		Create(&entity).
+		Error
+	if err != nil {
+		tx.Rollback()
+		log.Printf("Caller:%s Level:%s Msg:%s", constants.Postgres, constants.Insert, err.Error())
+		return entity, err
+	}
+	return entity, nil
+}

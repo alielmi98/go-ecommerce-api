@@ -5,6 +5,7 @@ import (
 
 	"github.com/alielmi98/go-ecommerce-api/domain/filter"
 	model "github.com/alielmi98/go-ecommerce-api/domain/models"
+	"gorm.io/gorm"
 )
 
 type BaseRepository[TEntity any] interface {
@@ -13,6 +14,8 @@ type BaseRepository[TEntity any] interface {
 	Delete(ctx context.Context, id int) error
 	GetById(ctx context.Context, id int) (TEntity, error)
 	GetByFilter(ctx context.Context, req filter.PaginationInputWithFilter) (int64, *[]TEntity, error)
+	BeginTransaction(ctx context.Context) (*gorm.DB, error)
+	CreateTx(tx *gorm.DB, entity TEntity) (TEntity, error)
 }
 type ProductRepository interface {
 	BaseRepository[model.Product]

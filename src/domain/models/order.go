@@ -57,4 +57,3 @@ type OrderItem struct {
 	Quantity  int     `gorm:"type:int;default:1"`
 	UnitPrice float64 `gorm:"type:float;default:0"`
 }
-

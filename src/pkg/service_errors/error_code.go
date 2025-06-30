@@ -19,6 +19,7 @@ const (
 	RecordNotFound = "record not found"
 
 	// Order Checkout
-	CartIsEmpty         = "the cart is empty"
-	ErrItemsUnavailable = "Some items in your cart are unavailable."
+	CartIsEmpty          = "the cart is empty"
+	ErrItemsUnavailable  = "Some items in your cart are unavailable."
+	ErrTransactionFailed = "transaction failed, please try again later"
 )
