@@ -30,6 +30,13 @@ definitions:
       name:
         type: string
     type: object
+  github_com_alielmi98_go-ecommerce-api_api_dto.CheckOutRequest:
+    properties:
+      address:
+        type: string
+    required:
+    - address
+    type: object
   github_com_alielmi98_go-ecommerce-api_api_dto.CreateCart:
     properties:
       user_id:
@@ -415,6 +422,9 @@ definitions:
     - 50001
     - 50002
     - 50003
+    - 50004
+    - 50005
+    - 40002
     type: integer
     x-enum-varnames:
     - Success
@@ -427,6 +437,9 @@ definitions:
     - CustomRecovery
     - InternalError
     - InvalidInputError
+    - DatabaseError
+    - UnknownError
+    - BadRequest
   github_com_alielmi98_go-ecommerce-api_domain_filter.Filter:
     properties:
       filterType:
@@ -1078,6 +1091,39 @@ paths:
       summary: Get Categories
       tags:
       - Category
+  /v1/shop/checkout/:
+    post:
+      consumes:
+      - application/json
+      description: Create a new order from the items in the user's cart
+      parameters:
+      - description: Check out request
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.CheckOutRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Order response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.OrderResponse'
+              type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Create an order from the cart
+      tags:
+      - checkout
   /v1/shop/files/:
     post:
       consumes:

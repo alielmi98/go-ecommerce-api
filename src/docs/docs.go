@@ -889,6 +889,63 @@ const docTemplate = `{
                 }
             }
         },
+        "/v1/shop/checkout/": {
+            "post": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Create a new order from the items in the user's cart",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "checkout"
+                ],
+                "summary": "Create an order from the cart",
+                "parameters": [
+                    {
+                        "description": "Check out request",
+                        "name": "Request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.CheckOutRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Order response",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.OrderResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/v1/shop/files/": {
             "post": {
                 "security": [
@@ -2628,6 +2685,17 @@ const docTemplate = `{
                 }
             }
         },
+        "github_com_alielmi98_go-ecommerce-api_api_dto.CheckOutRequest": {
+            "type": "object",
+            "required": [
+                "address"
+            ],
+            "properties": {
+                "address": {
+                    "type": "string"
+                }
+            }
+        },
         "github_com_alielmi98_go-ecommerce-api_api_dto.CreateCart": {
             "type": "object",
             "required": [
@@ -3191,7 +3259,10 @@ const docTemplate = `{
                 42902,
                 50001,
                 50002,
-                50003
+                50003,
+                50004,
+                50005,
+                40002
             ],
             "x-enum-varnames": [
                 "Success",
@@ -3203,7 +3274,10 @@ const docTemplate = `{
                 "OtpLimiterError",
                 "CustomRecovery",
                 "InternalError",
-                "InvalidInputError"
+                "InvalidInputError",
+                "DatabaseError",
+                "UnknownError",
+                "BadRequest"
             ]
         },
         "github_com_alielmi98_go-ecommerce-api_domain_filter.Filter": {
