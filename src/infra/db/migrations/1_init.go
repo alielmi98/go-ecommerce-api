@@ -43,11 +43,11 @@ func createTables(database *gorm.DB) {
 	// Cart
 	tables = addNewTable(database, models.Cart{}, tables)
 	tables = addNewTable(database, models.CartItem{}, tables)
+	// Payment
+	tables = addNewTable(database, models.Payment{}, tables)
 	// Order
 	tables = addNewTable(database, models.Order{}, tables)
 	tables = addNewTable(database, models.OrderItem{}, tables)
-	// Payment
-	tables = addNewTable(database, models.Payment{}, tables)
 
 	err := database.Migrator().CreateTable(tables...)
 	if err != nil {

@@ -36,6 +36,44 @@ type CartResponse struct {
 	CartItems  []CartItemResponse `json:"cart_items"`
 }
 
+type CreatePayment struct {
+	OrderId int `json:"order_id" validate:"required"`
+}
+
+type PaymentResponse struct {
+	PaymentUrl string `json:"payment_url"`
+}
+
+type UpdatePayment struct {
+	Amount      float64 `json:"amount" validate:"required"`
+	Status      string  `json:"status" validate:"required"`
+	AuthorityId string  `json:"authority_id" validate:"required"`
+	RefId       int     `json:"ref_id" validate:"required"`
+	UserId      int     `json:"user_id" validate:"required"`
+	OrderId     int     `json:"order_id" validate:"required"`
+}
+
+func ToPaymentResponse(from dto.ResponsePayment) PaymentResponse {
+	return PaymentResponse{
+		PaymentUrl: from.PaymentUrl,
+	}
+}
+func ToCreatePayment(from CreatePayment) dto.CreatePayment {
+	return dto.CreatePayment{
+		OrderId: from.OrderId,
+	}
+}
+func ToUpdatePayment(from UpdatePayment) dto.UpdatePayment {
+	return dto.UpdatePayment{
+		Amount:      from.Amount,
+		Status:      from.Status,
+		AuthorityId: from.AuthorityId,
+		RefId:       from.RefId,
+		UserId:      from.UserId,
+		OrderId:     from.OrderId,
+	}
+}
+
 func ToCartResponse(from dto.ResponseCart) CartResponse {
 	return CartResponse{
 		Id:         from.Id,
