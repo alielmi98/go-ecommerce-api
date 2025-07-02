@@ -3,6 +3,7 @@ package payment
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"io"
 	"net/http"
 
@@ -11,13 +12,16 @@ import (
 )
 
 // Zarinpal is a struct that implements the PaymentGateway interface
+type ZarinpalResponse struct {
+	Data   PaymentRequestResponse `json:"data"`
+	Errors []string               `json:"errors,omitempty"`
+}
 
 // Payment Request Response Dto
 type PaymentRequestResponse struct {
-	Code      int      `json:"code"`
-	Message   string   `json:"message"`
-	Authority string   `json:"authority"`
-	Errors    []string `json:"errors,omitempty"`
+	Code      int    `json:"code"`
+	Message   string `json:"message"`
+	Authority string `json:"authority"`
 }
 
 type Zarinpal struct {
@@ -30,9 +34,17 @@ func NewZarinpalGateway(cfg *config.Config) *Zarinpal {
 	}
 }
 
-func (z *Zarinpal) PaymentRequest(amount int, description string) (string, error) {
+func (z *Zarinpal) PaymentRequest(amount float64, description string) (string, error) {
 	// Construct the payment request URL
-	paymentRequestUrl := z.cfg.Zarinpal.PaymentRequestUrl
+	var paymentRequestUrl string
+	var paymentPageUrl string
+	if z.cfg.Zarinpal.Sandbox {
+		paymentRequestUrl = z.cfg.Zarinpal.SandboxPaymentRequestUrl
+		paymentPageUrl = z.cfg.Zarinpal.SandboxPaymentPageUrl
+	} else {
+		paymentRequestUrl = z.cfg.Zarinpal.PaymentRequestUrl
+		paymentPageUrl = z.cfg.Zarinpal.PaymentPageUrl
+	}
 
 	// Create the request body
 	requestBody := map[string]interface{}{
@@ -43,18 +55,31 @@ func (z *Zarinpal) PaymentRequest(amount int, description string) (string, error
 	}
 
 	// Make the HTTP POST request to Zarinpal's payment request endpoint
-	response, err := makeHttpPostRequest(paymentRequestUrl, requestBody)
+	zarinPalResponse, err := makeHttpPostRequest(paymentRequestUrl, requestBody)
+	if err != nil {
+		return "", err
+	}
+
+	// Unmarshal the response body into a map
+	var response map[string]interface{}
+	err = json.Unmarshal(zarinPalResponse, &response)
 	if err != nil {
 		return "", err
 	}
 
 	// Parse the response and return the authority
-	responseDto, err := common.TypeConverter[PaymentRequestResponse](response)
+	responseDto, err := common.TypeConverter[ZarinpalResponse](response)
 	if err != nil {
 		return "", err
 	}
 
-	return (z.cfg.Zarinpal.PaymentPageUrl + responseDto.Authority), nil
+	if responseDto.Errors != nil {
+		return "", errors.New(responseDto.Errors[0])
+	}
+	if responseDto.Data.Code != 100 {
+		return "", errors.New(responseDto.Data.Message)
+	}
+	return (paymentPageUrl + responseDto.Data.Authority), nil
 
 }
 

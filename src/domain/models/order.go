@@ -44,8 +44,6 @@ type Order struct {
 	TotalItems int         `gorm:"type:int;default:0"`
 	Status     string      `gorm:"type:string;size:50;not null"`
 	Address    string      `gorm:"type:string;size:255;not null"`
-	PaymentId  int         `gorm:"type:int;not null"`
-	Payment    Payment     `gorm:"foreignKey:PaymentId;constraint:OnUpdate:NO ACTION;OnDelete:NO ACTION"`
 }
 
 // OrderItem represents an item in an order.

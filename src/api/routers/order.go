@@ -57,3 +57,9 @@ func CheckOutHandler(r *gin.RouterGroup, cfg *config.Config) {
 	r.POST("/", middlewares.Authentication(cfg), h.CheckOut)
 
 }
+
+func Payment(r *gin.RouterGroup, cfg *config.Config) {
+	h := handlers.NewPaymentHandler(cfg)
+
+	r.POST("/", middlewares.Authentication(cfg), h.CreatePaymentUrl)
+}

@@ -101,6 +101,13 @@ definitions:
     - quantity
     - unit_price
     type: object
+  github_com_alielmi98_go-ecommerce-api_api_dto.CreatePayment:
+    properties:
+      order_id:
+        type: integer
+    required:
+    - order_id
+    type: object
   github_com_alielmi98_go-ecommerce-api_api_dto.CreateProductImageRequest:
     properties:
       image_id:
@@ -211,6 +218,11 @@ definitions:
         type: string
       user_id:
         type: integer
+    type: object
+  github_com_alielmi98_go-ecommerce-api_api_dto.PaymentResponse:
+    properties:
+      payment_url:
+        type: string
     type: object
   github_com_alielmi98_go-ecommerce-api_api_dto.ProductImageResponse:
     properties:
@@ -1622,6 +1634,39 @@ paths:
       summary: Get a Order By Filter
       tags:
       - Order
+  /v1/shop/payments/:
+    post:
+      consumes:
+      - application/json
+      description: Create a Payment URL for a specific order
+      parameters:
+      - description: CreatePaymentRequest
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.CreatePayment'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Order response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.PaymentResponse'
+              type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Create a Payment URL
+      tags:
+      - Payment
   /v1/shop/product-images/:
     post:
       consumes:

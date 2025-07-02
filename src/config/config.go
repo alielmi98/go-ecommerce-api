@@ -72,12 +72,15 @@ type JWTConfig struct {
 }
 
 type ZarinpalConfig struct {
-	MerchantId        string
-	PaymentRequestUrl string
-	PaymentVerifyUrl  string
-	PaymentPageUrl    string
-	CallbackUrl       string
-	Sandbox           bool
+	MerchantId               string
+	PaymentRequestUrl        string
+	PaymentVerifyUrl         string
+	PaymentPageUrl           string
+	SandboxPaymentRequestUrl string
+	SandboxPaymentVerifyUrl  string
+	SandboxPaymentPageUrl    string
+	CallbackUrl              string
+	Sandbox                  bool
 }
 
 func GetConfig() *Config {

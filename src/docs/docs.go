@@ -1793,6 +1793,63 @@ const docTemplate = `{
                 }
             }
         },
+        "/v1/shop/payments/": {
+            "post": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Create a Payment URL for a specific order",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Payment"
+                ],
+                "summary": "Create a Payment URL",
+                "parameters": [
+                    {
+                        "description": "CreatePaymentRequest",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.CreatePayment"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Order response",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.PaymentResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/v1/shop/product-images/": {
             "post": {
                 "security": [
@@ -2790,6 +2847,17 @@ const docTemplate = `{
                 }
             }
         },
+        "github_com_alielmi98_go-ecommerce-api_api_dto.CreatePayment": {
+            "type": "object",
+            "required": [
+                "order_id"
+            ],
+            "properties": {
+                "order_id": {
+                    "type": "integer"
+                }
+            }
+        },
         "github_com_alielmi98_go-ecommerce-api_api_dto.CreateProductImageRequest": {
             "type": "object",
             "required": [
@@ -2952,6 +3020,14 @@ const docTemplate = `{
                 },
                 "user_id": {
                     "type": "integer"
+                }
+            }
+        },
+        "github_com_alielmi98_go-ecommerce-api_api_dto.PaymentResponse": {
+            "type": "object",
+            "properties": {
+                "payment_url": {
+                    "type": "string"
                 }
             }
         },
