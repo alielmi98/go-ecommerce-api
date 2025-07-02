@@ -38,3 +38,12 @@ jwt:
   refreshSecret: "mySecretKey"
   accessTokenExpireDuration: 1440
   refreshTokenExpireDuration: 1440
+
+zarinpal:
+  merchant_id: "your_merchant_id_here"
+  # Replace with your actual Zarinpal merchant ID
+  payment_request_url: "https://payment.zarinpal.com/pg/v4/payment/request.json"
+  payment_verify_url : "https://payment.zarinpal.com/pg/v4/payment/verify.json"
+  payment_page_url: "https://payment.zarinpal.com/pg/StartPay/"
+  callback_url : "localhost:5010/payment/verify"
+  sandbox: true
