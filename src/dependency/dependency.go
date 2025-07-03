@@ -6,6 +6,7 @@ import (
 	contractRepository "github.com/alielmi98/go-ecommerce-api/domain/repository"
 	"github.com/alielmi98/go-ecommerce-api/infra/db"
 	infraRepository "github.com/alielmi98/go-ecommerce-api/infra/db/repository"
+	"github.com/alielmi98/go-ecommerce-api/infra/payment"
 )
 
 func GetUserRepository(cfg *config.Config) contractRepository.UserRepository {
@@ -81,4 +82,15 @@ func GetCheckOutRepository(cfg *config.Config) (contractRepository.CartRepositor
 
 	return cartRepo, orderRepo, orderItemRepo, productRepo, cartItemRepo
 
+}
+
+func GetPaymentRepository(cfg *config.Config) (contractRepository.PaymentRepository, contractRepository.OrderRepository, contractRepository.ProductRepository) {
+	var preloads []db.PreloadEntity = []db.PreloadEntity{}
+	var orderPreloads []db.PreloadEntity = []db.PreloadEntity{{Entity: "OrderItems"}}
+	var productPreloads []db.PreloadEntity = []db.PreloadEntity{}
+	return infraRepository.NewPaymentRepository(preloads), infraRepository.NewBaseRepository[model.Order](orderPreloads), infraRepository.NewProductRepository(productPreloads)
+}
+
+func GetPaymentGateway(cfg *config.Config) *payment.Zarinpal {
+	return payment.NewZarinpalGateway(cfg)
 }

@@ -2,28 +2,44 @@ package dto
 
 // Payment
 type ResponsePayment struct {
-	Id        int
-	Amount    float64
-	Status    string
-	PaymentId string
-	UserId    int
-	OrderId   int
+	Id          int
+	Amount      float64
+	Status      string
+	AuthorityId string
+	RefId       int
+	UserId      int
+	OrderId     int
+}
+type ResponsePaymentUrl struct {
+	PaymentUrl string
 }
 
+type PaymentVerificationResponse struct {
+	RefId     int
+	PaymentId int
+	Status    string
+}
+
+type CreatePaymentUrl struct {
+	OrderId int
+}
+
+// CreatePayment is used to create a new payment
 type CreatePayment struct {
-	Amount    float64
-	Status    string
-	PaymentId string
-	UserId    int
-	OrderId   int
+	Amount      float64
+	Status      string
+	AuthorityId string
+	RefId       int
+	UserId      int
+	OrderId     int
 }
-
 type UpdatePayment struct {
-	Amount    float64
-	Status    string
-	PaymentId string
-	UserId    int
-	OrderId   int
+	Amount      float64
+	Status      string
+	AuthorityId string
+	RefId       int
+	UserId      int
+	OrderId     int
 }
 
 // Order

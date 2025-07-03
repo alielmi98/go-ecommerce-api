@@ -78,6 +78,10 @@ func RegisterRoutes(r *gin.Engine, cfg *config.Config, dispatcher *events.EventD
 			checkout := shop.Group("/checkout")
 			routers.CheckOutHandler(checkout, cfg)
 
+			//payment
+			payment := shop.Group("/payments")
+			routers.Payment(payment, cfg)
+
 		}
 
 	}
