@@ -26,12 +26,12 @@ type Payment struct {
 	BaseModel
 	Amount      float64 `gorm:"type:float;not null"`
 	Status      string  `gorm:"type:string;size:50;not null"`
-	AuthorityId string  `gorm:"type:string;size:100;not null"`
+	AuthorityId string  `gorm:"type:string;size:100;not null,uniqueIndex"`
 	RefId       int     `gorm:"type:int;not null"`
 	UserId      int     `gorm:"type:int;not null"`
 	User        User    `gorm:"foreignKey:UserId;constraint:OnUpdate:NO ACTION;OnDelete:NO ACTION"`
 	OrderId     int     `gorm:"type:int;not null"`
-	Order       Cart    `gorm:"foreignKey:OrderId;constraint:OnUpdate:NO ACTION;OnDelete:NO ACTION"`
+	Order       Order   `gorm:"foreignKey:OrderId;constraint:OnUpdate:NO ACTION;OnDelete:NO ACTION"`
 }
 
 // Order represents an order in the system.

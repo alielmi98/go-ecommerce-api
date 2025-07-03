@@ -101,7 +101,7 @@ definitions:
     - quantity
     - unit_price
     type: object
-  github_com_alielmi98_go-ecommerce-api_api_dto.CreatePayment:
+  github_com_alielmi98_go-ecommerce-api_api_dto.CreatePaymentUrl:
     properties:
       order_id:
         type: integer
@@ -223,6 +223,19 @@ definitions:
     properties:
       payment_url:
         type: string
+    type: object
+  github_com_alielmi98_go-ecommerce-api_api_dto.PaymentVerificationResponse:
+    properties:
+      payment_id:
+        type: integer
+      ref_id:
+        type: integer
+      status:
+        type: string
+    required:
+    - payment_id
+    - ref_id
+    - status
     type: object
   github_com_alielmi98_go-ecommerce-api_api_dto.ProductImageResponse:
     properties:
@@ -1645,7 +1658,7 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.CreatePayment'
+          $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.CreatePaymentUrl'
       produces:
       - application/json
       responses:
@@ -1665,6 +1678,36 @@ paths:
       security:
       - AuthBearer: []
       summary: Create a Payment URL
+      tags:
+      - Payment
+  /v1/shop/payments/verify:
+    get:
+      consumes:
+      - application/json
+      description: Verify a Payment using the authority from Zarinpal
+      parameters:
+      - description: Authority
+        in: query
+        name: Authority
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.PaymentVerificationResponse'
+              type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+      summary: Verify a Payment
       tags:
       - Payment
   /v1/shop/product-images/:

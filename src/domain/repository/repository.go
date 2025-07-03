@@ -20,6 +20,7 @@ type BaseRepository[TEntity any] interface {
 type ProductRepository interface {
 	BaseRepository[model.Product]
 	CheckProductAvailability(productId int, orderQuantity int) bool
+	DeductProductStock(productId int, quantity int) error
 }
 
 type CategoryRepository interface {
@@ -61,6 +62,7 @@ type OrderItemRepository interface {
 
 type PaymentRepository interface {
 	BaseRepository[model.Payment]
+	GetByAuthority(ctx context.Context, authority string) (*model.Payment, error)
 }
 
 // Account

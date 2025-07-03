@@ -81,10 +81,11 @@ func GetCheckOutRepository(cfg *config.Config) (contractRepository.CartRepositor
 
 }
 
-func GetPaymentRepository(cfg *config.Config) (contractRepository.PaymentRepository, contractRepository.OrderRepository) {
+func GetPaymentRepository(cfg *config.Config) (contractRepository.PaymentRepository, contractRepository.OrderRepository, contractRepository.ProductRepository) {
 	var preloads []db.PreloadEntity = []db.PreloadEntity{}
-	var orderPreloads []db.PreloadEntity = []db.PreloadEntity{}
-	return infraRepository.NewBaseRepository[model.Payment](preloads), infraRepository.NewBaseRepository[model.Order](orderPreloads)
+	var orderPreloads []db.PreloadEntity = []db.PreloadEntity{{Entity: "OrderItems"}}
+	var productPreloads []db.PreloadEntity = []db.PreloadEntity{}
+	return infraRepository.NewPaymentRepository(preloads), infraRepository.NewBaseRepository[model.Order](orderPreloads), infraRepository.NewProductRepository(productPreloads)
 }
 
 func GetPaymentGateway(cfg *config.Config) *payment.Zarinpal {

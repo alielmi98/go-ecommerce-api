@@ -1818,7 +1818,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.CreatePayment"
+                            "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.CreatePaymentUrl"
                         }
                     }
                 ],
@@ -1835,6 +1835,56 @@ const docTemplate = `{
                                     "properties": {
                                         "result": {
                                             "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.PaymentResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/shop/payments/verify": {
+            "get": {
+                "description": "Verify a Payment using the authority from Zarinpal",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Payment"
+                ],
+                "summary": "Verify a Payment",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Authority",
+                        "name": "Authority",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "$ref": "#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.PaymentVerificationResponse"
                                         }
                                     }
                                 }
@@ -2847,7 +2897,7 @@ const docTemplate = `{
                 }
             }
         },
-        "github_com_alielmi98_go-ecommerce-api_api_dto.CreatePayment": {
+        "github_com_alielmi98_go-ecommerce-api_api_dto.CreatePaymentUrl": {
             "type": "object",
             "required": [
                 "order_id"
@@ -3027,6 +3077,25 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "payment_url": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_alielmi98_go-ecommerce-api_api_dto.PaymentVerificationResponse": {
+            "type": "object",
+            "required": [
+                "payment_id",
+                "ref_id",
+                "status"
+            ],
+            "properties": {
+                "payment_id": {
+                    "type": "integer"
+                },
+                "ref_id": {
+                    "type": "integer"
+                },
+                "status": {
                     "type": "string"
                 }
             }

@@ -51,5 +51,5 @@ zarinpal:
   sandboxPaymentVerifyUrl: "https://sandbox.zarinpal.com/pg/v4/payment/verify.json"
   sandboxPaymentPageUrl: "https://sandbox.zarinpal.com/pg/StartPay/"
   # Callback URL for payment verification
-  callbackUrl: "localhost:5000/payment/verify"
+  callbackUrl: "/api/v1/shop/payments/verify"
   sandbox: true

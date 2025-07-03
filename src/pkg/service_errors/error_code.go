@@ -17,9 +17,12 @@ const (
 
 	// DB
 	RecordNotFound = "record not found"
+	UnknownError   = "unknown error"
 
 	// Order Checkout
 	CartIsEmpty          = "the cart is empty"
 	ErrItemsUnavailable  = "Some items in your cart are unavailable."
 	ErrTransactionFailed = "transaction failed, please try again later"
+	// Product
+	InsufficientStock = "insufficient stock for the requested product"
 )
