@@ -101,6 +101,28 @@ definitions:
     - quantity
     - unit_price
     type: object
+  github_com_alielmi98_go-ecommerce-api_api_dto.CreatePayment:
+    properties:
+      amount:
+        type: number
+      authority_id:
+        type: string
+      order_id:
+        type: integer
+      ref_id:
+        type: integer
+      status:
+        type: string
+      user_id:
+        type: integer
+    required:
+    - amount
+    - authority_id
+    - order_id
+    - ref_id
+    - status
+    - user_id
+    type: object
   github_com_alielmi98_go-ecommerce-api_api_dto.CreatePaymentUrl:
     properties:
       order_id:
@@ -218,11 +240,6 @@ definitions:
         type: string
       user_id:
         type: integer
-    type: object
-  github_com_alielmi98_go-ecommerce-api_api_dto.PaymentResponse:
-    properties:
-      payment_url:
-        type: string
     type: object
   github_com_alielmi98_go-ecommerce-api_api_dto.PaymentVerificationResponse:
     properties:
@@ -1703,7 +1720,158 @@ paths:
       summary: Get a Order By Filter
       tags:
       - Order
-  /v1/shop/payments/:
+  /v1/shop/payments:
+    get:
+      consumes:
+      - application/json
+      description: Get a list of payment records based on filter criteria
+      parameters:
+      - description: Filter criteria
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_domain_filter.PaginationInputWithFilter'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Payments response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_domain_filter.PagedList-github_com_alielmi98_go-ecommerce-api_api_dto_ResponsePayment'
+              type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+      summary: Get Payments by Filter
+      tags:
+      - Payment
+  /v1/shop/payments/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete an existing payment record
+      parameters:
+      - description: Payment ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+          schema:
+            $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+      summary: Delete a Payment
+      tags:
+      - Payment
+    get:
+      consumes:
+      - application/json
+      description: Get an existing payment record by ID
+      parameters:
+      - description: Payment ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Payment response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.ResponsePayment'
+              type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+      summary: Get a Payment by ID
+      tags:
+      - Payment
+    put:
+      consumes:
+      - application/json
+      description: Update an existing payment record
+      parameters:
+      - description: Payment ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: UpdatePaymentRequest
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.UpdatePayment'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.ResponsePayment'
+              type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+      summary: Update a Payment
+      tags:
+      - Payment
+  /v1/shop/payments/create:
+    post:
+      consumes:
+      - application/json
+      description: Create a new payment record
+      parameters:
+      - description: CreatePaymentRequest
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.CreatePayment'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.PaymentVerificationResponse'
+              type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
+      summary: Create a Payment
+      tags:
+      - Payment
+  /v1/shop/payments/create-url:
     post:
       consumes:
       - application/json
@@ -1725,7 +1893,7 @@ paths:
             - $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
             - properties:
                 result:
-                  $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.PaymentResponse'
+                  $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.ResponsePaymentUrl'
               type: object
         "400":
           description: Bad request
@@ -1734,36 +1902,6 @@ paths:
       security:
       - AuthBearer: []
       summary: Create a Payment URL
-      tags:
-      - Payment
-  /v1/shop/payments/verify:
-    get:
-      consumes:
-      - application/json
-      description: Verify a Payment using the authority from Zarinpal
-      parameters:
-      - description: Authority
-        in: query
-        name: Authority
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
-            - properties:
-                result:
-                  $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.PaymentVerificationResponse'
-              type: object
-        "400":
-          description: Bad request
-          schema:
-            $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_helper.BaseHttpResponse'
-      summary: Verify a Payment
       tags:
       - Payment
   /v1/shop/product-images/:
