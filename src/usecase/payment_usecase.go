@@ -40,10 +40,11 @@ func (u *PaymentUsecase) CreatePaymentUrl(ctx context.Context, req dto.CreatePay
 	if err != nil {
 		return dto.ResponsePaymentUrl{}, err
 	}
-	if order.Status == "paid" {
-		return dto.ResponsePaymentUrl{}, fmt.Errorf("order is already paid")
+	// Validate the order before proceeding with payment
+	// This function checks if the order is valid for payment
+	if err := validateOrderForPayment(order, u.ProductRepo); err != nil {
+		return dto.ResponsePaymentUrl{}, err
 	}
-
 	paymentUrl, authorityId, err := u.paymentGateway.PaymentRequest(order.TotalPrice, ("Payment for Order " + fmt.Sprint(order.Id)))
 	if err != nil {
 		return dto.ResponsePaymentUrl{}, err
@@ -142,6 +143,24 @@ func (u *PaymentUsecase) DeductProductStock(orderId int) error {
 		}
 	}
 
+	return nil
+}
+
+func validateOrderForPayment(order model.Order, productRepo repository.ProductRepository) error {
+	if order.Status == "paid" {
+		return fmt.Errorf("order is already paid")
+	}
+	if order.Status == "canceled" || order.Status == "expired" {
+		return fmt.Errorf("order is not active")
+	}
+	if order.TotalPrice <= 0 {
+		return fmt.Errorf("invalid order total")
+	}
+	for _, item := range order.OrderItems {
+		if !productRepo.CheckProductAvailability(item.ProductId, item.Quantity) {
+			return fmt.Errorf("insufficient stock for product %d", item.ProductId)
+		}
+	}
 	return nil
 }
 
