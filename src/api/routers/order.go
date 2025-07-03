@@ -57,3 +57,15 @@ func CheckOutHandler(r *gin.RouterGroup, cfg *config.Config) {
 	r.POST("/", middlewares.Authentication(cfg), h.CheckOut)
 
 }
+
+func Payment(r *gin.RouterGroup, cfg *config.Config) {
+	h := handlers.NewPaymentHandler(cfg)
+
+	r.POST("/create-url", middlewares.Authentication(cfg), h.CreatePaymentUrl)
+	r.GET("/verify", h.VerifyPayment)
+	r.POST("/", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}), h.Create)
+	r.GET("/:id", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}), h.GetById)
+	r.PUT("/:id", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}), h.Update)
+	r.DELETE("/:id", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}), h.Delete)
+	r.POST("/get-by-filter", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}), h.GetByFilter)
+}

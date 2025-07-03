@@ -16,6 +16,7 @@ type Config struct {
 	Password PasswordConfig
 	Cors     CorsConfig
 	JWT      JWTConfig
+	Zarinpal ZarinpalConfig
 }
 
 type ServerConfig struct {
@@ -68,6 +69,18 @@ type JWTConfig struct {
 	RefreshTokenExpireDuration time.Duration
 	Secret                     string
 	RefreshSecret              string
+}
+
+type ZarinpalConfig struct {
+	MerchantId               string
+	PaymentRequestUrl        string
+	PaymentVerifyUrl         string
+	PaymentPageUrl           string
+	SandboxPaymentRequestUrl string
+	SandboxPaymentVerifyUrl  string
+	SandboxPaymentPageUrl    string
+	CallbackUrl              string
+	Sandbox                  bool
 }
 
 func GetConfig() *Config {

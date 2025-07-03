@@ -36,6 +36,98 @@ type CartResponse struct {
 	CartItems  []CartItemResponse `json:"cart_items"`
 }
 
+type CreatePaymentUrl struct {
+	OrderId int `json:"order_id" validate:"required"`
+}
+
+type CreatePayment struct {
+	OrderId     int     `json:"order_id" validate:"required"`
+	Status      string  `json:"status" validate:"required"`
+	Amount      float64 `json:"amount" validate:"required"`
+	AuthorityId string  `json:"authority_id" validate:"required"`
+	RefId       int     `json:"ref_id" validate:"required"`
+	UserId      int     `json:"user_id" validate:"required"`
+}
+
+type ResponsePayment struct {
+	Id          int     `json:"id"`
+	Amount      float64 `json:"amount"`
+	Status      string  `json:"status"`
+	AuthorityId string  `json:"authority_id"`
+	RefId       int     `json:"ref_id"`
+	UserId      int     `json:"user_id"`
+	OrderId     int     `json:"order_id"`
+}
+
+type ResponsePaymentUrl struct {
+	PaymentUrl string `json:"payment_url"`
+}
+
+type PaymentVerificationResponse struct {
+	RefId     int    `json:"ref_id" validate:"required"`
+	PaymentId int    `json:"payment_id" validate:"required"`
+	Status    string `json:"status" validate:"required"`
+}
+
+type UpdatePayment struct {
+	Amount      float64 `json:"amount"`
+	Status      string  `json:"status"`
+	AuthorityId string  `json:"authority_id"`
+	RefId       int     `json:"ref_id"`
+	UserId      int     `json:"user_id"`
+	OrderId     int     `json:"order_id"`
+}
+
+func ToResponsePayment(from dto.ResponsePayment) ResponsePayment {
+	return ResponsePayment{
+		Id:          from.Id,
+		Amount:      from.Amount,
+		Status:      from.Status,
+		AuthorityId: from.AuthorityId,
+		RefId:       from.RefId,
+		UserId:      from.UserId,
+		OrderId:     from.OrderId,
+	}
+}
+func ToCreatePayment(from CreatePayment) dto.CreatePayment {
+	return dto.CreatePayment{
+		OrderId:     from.OrderId,
+		Status:      from.Status,
+		Amount:      from.Amount,
+		AuthorityId: from.AuthorityId,
+		RefId:       from.RefId,
+		UserId:      from.UserId,
+	}
+}
+func ToResponsePaymentUrl(from dto.ResponsePaymentUrl) ResponsePaymentUrl {
+	return ResponsePaymentUrl{
+		PaymentUrl: from.PaymentUrl,
+	}
+}
+func ToCreatePaymentUrl(from CreatePaymentUrl) dto.CreatePaymentUrl {
+	return dto.CreatePaymentUrl{
+		OrderId: from.OrderId,
+	}
+}
+func ToUpdatePayment(from UpdatePayment) dto.UpdatePayment {
+	return dto.UpdatePayment{
+		Amount:      from.Amount,
+		Status:      from.Status,
+		AuthorityId: from.AuthorityId,
+		RefId:       from.RefId,
+		UserId:      from.UserId,
+		OrderId:     from.OrderId,
+	}
+}
+
+func ToPaymentVerificationResponse(from dto.PaymentVerificationResponse) PaymentVerificationResponse {
+	return PaymentVerificationResponse{
+		RefId:     from.RefId,
+		PaymentId: from.PaymentId,
+		Status:    from.Status,
+	}
+}
+
 func ToCartResponse(from dto.ResponseCart) CartResponse {
 	return CartResponse{
 		Id:         from.Id,
