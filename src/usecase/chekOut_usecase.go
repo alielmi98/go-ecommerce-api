@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"context"
+	"log"
 
 	"github.com/alielmi98/go-ecommerce-api/common"
 	"github.com/alielmi98/go-ecommerce-api/config"
@@ -18,16 +19,18 @@ type CheckOutUsecase struct {
 	orderRepo     repository.OrderRepository
 	orderItemRepo repository.OrderItemRepository
 	productRepo   repository.ProductRepository
+	cartItemRepo  repository.CartItemRepository
 	cfg           *config.Config
 }
 
 func NewCheckOutUsecase(cfg *config.Config, cartRepo repository.CartRepository, orderRepo repository.OrderRepository, orderItemRepo repository.OrderItemRepository,
-	productRepo repository.ProductRepository) *CheckOutUsecase {
+	productRepo repository.ProductRepository, cartItemRepo repository.CartItemRepository) *CheckOutUsecase {
 	return &CheckOutUsecase{
 		cartRepo:      cartRepo,
 		orderRepo:     orderRepo,
 		orderItemRepo: orderItemRepo,
 		productRepo:   productRepo,
+		cartItemRepo:  cartItemRepo,
 		cfg:           cfg,
 	}
 }
@@ -72,6 +75,11 @@ func (u *CheckOutUsecase) CheckOut(ctx context.Context, request dto.CheckOutRequ
 
 	// Commit the transaction
 	tx.Commit()
+
+	// Empty the cart after checkout
+	if err := u.EmptyCartAfterCheckout(ctx, cart); err != nil {
+		log.Printf("caller:%s  Level:%s Msg:%v", constants.Postgres, constants.Update, err)
+	}
 
 	return common.TypeConverter[dto.ResponseOrder](savedOrder)
 }
@@ -130,4 +138,16 @@ func (u *CheckOutUsecase) CreateOrderFromCart(userId int, request dto.CheckOutRe
 	}
 	return order, nil
 
+}
+
+// empties the user's cart after checkout
+func (u *CheckOutUsecase) EmptyCartAfterCheckout(ctx context.Context, cart *model.Cart) error {
+
+	for _, item := range cart.CartItems {
+		if err := u.cartItemRepo.Delete(ctx, item.Id); err != nil {
+			return err
+		}
+	}
+
+	return nil
 }
