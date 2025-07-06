@@ -25,15 +25,12 @@ type CreateCart struct {
 }
 
 type UpdateCart struct {
-	TotalPrice float64 `json:"total_price" validate:"required"`
-	TotalItems int     `json:"total_items" validate:"required"`
+	UserId int `json:"user_id" validate:"required"`
 }
 type CartResponse struct {
-	Id         int                `json:"id"`
-	UserId     int                `json:"user_id"`
-	TotalPrice float64            `json:"total_price"`
-	TotalItems int                `json:"total_items"`
-	CartItems  []CartItemResponse `json:"cart_items"`
+	Id        int                `json:"id"`
+	UserId    int                `json:"user_id"`
+	CartItems []CartItemResponse `json:"cart_items"`
 }
 
 type CreatePaymentUrl struct {
@@ -130,11 +127,9 @@ func ToPaymentVerificationResponse(from dto.PaymentVerificationResponse) Payment
 
 func ToCartResponse(from dto.ResponseCart) CartResponse {
 	return CartResponse{
-		Id:         from.Id,
-		UserId:     from.UserId,
-		TotalPrice: from.TotalPrice,
-		TotalItems: from.TotalItems,
-		CartItems:  ToCartItemResponseList(from.CartItems),
+		Id:        from.Id,
+		UserId:    from.UserId,
+		CartItems: ToCartItemResponseList(from.CartItems),
 	}
 }
 func ToCartItemResponseList(from []dto.ResponseCartItem) []CartItemResponse {
@@ -155,8 +150,7 @@ func ToCreateCart(from CreateCart) dto.CreateCart {
 }
 func ToUpdateCart(from UpdateCart) dto.UpdateCart {
 	return dto.UpdateCart{
-		TotalPrice: from.TotalPrice,
-		TotalItems: from.TotalItems,
+		UserId: from.UserId,
 	}
 }
 
