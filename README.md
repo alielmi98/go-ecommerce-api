@@ -6,7 +6,7 @@ A robust, modular e-commerce RESTful API built with Go. This project demonstrate
 
 ## Database Design Diagram
 
-<p align="center"><img src='/docs/files/database_diagram.png' alt='Golang Web API System Design Diagram' /></p>
+<p align="center"><img src='/src/docs/files/database_diagram.png' alt='Golang Web API System Design Diagram' /></p>
 
 ## Features
 
