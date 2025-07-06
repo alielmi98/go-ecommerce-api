@@ -68,7 +68,7 @@ func (u *CheckOutUsecase) CheckOut(ctx context.Context, request dto.CheckOutRequ
 		return dto.ResponseOrder{}, err
 	}
 	// Create order items from the cart items
-	if err := u.createOrderItems(tx, savedOrder.Id, cart.CartItems); err != nil {
+	if err := u.createOrderItems(ctx, tx, savedOrder.Id, cart.CartItems); err != nil {
 		tx.Rollback()
 		return dto.ResponseOrder{}, err
 	}
@@ -84,10 +84,10 @@ func (u *CheckOutUsecase) CheckOut(ctx context.Context, request dto.CheckOutRequ
 	return common.TypeConverter[dto.ResponseOrder](savedOrder)
 }
 
-func (u *CheckOutUsecase) createOrderItems(tx *gorm.DB, orderId int, cartItems []model.CartItem) error {
+func (u *CheckOutUsecase) createOrderItems(ctx context.Context, tx *gorm.DB, orderId int, cartItems []model.CartItem) error {
 	for _, item := range cartItems {
 		// Check product availability
-		if !u.productRepo.CheckProductAvailability(item.ProductId, item.Quantity) {
+		if !u.productRepo.CheckProductAvailability(ctx, item.ProductId, item.Quantity) {
 			return &service_errors.ServiceError{EndUserMessage: service_errors.ErrItemsUnavailable}
 		}
 		orderItem := model.OrderItem{

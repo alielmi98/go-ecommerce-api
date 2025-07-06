@@ -42,7 +42,7 @@ func (u *PaymentUsecase) CreatePaymentUrl(ctx context.Context, req dto.CreatePay
 	}
 	// Validate the order before proceeding with payment
 	// This function checks if the order is valid for payment
-	if err := validateOrderForPayment(order, u.ProductRepo); err != nil {
+	if err := validateOrderForPayment(ctx, order, u.ProductRepo); err != nil {
 		return dto.ResponsePaymentUrl{}, err
 	}
 	paymentUrl, authorityId, err := u.paymentGateway.PaymentRequest(order.TotalPrice, ("Payment for Order " + fmt.Sprint(order.Id)))
@@ -116,7 +116,7 @@ func (u *PaymentUsecase) VerifyPayment(ctx context.Context, authority string) (d
 
 	// Deduct the product stock asynchronously
 	go func() {
-		if err := u.DeductProductStock(payment.OrderId); err != nil {
+		if err := u.DeductProductStock(ctx, payment.OrderId); err != nil {
 			log.Printf("caller:%s  Level:%s Msg:%v", constants.Postgres, constants.UseCase, err)
 		}
 	}()
@@ -130,14 +130,14 @@ func (u *PaymentUsecase) VerifyPayment(ctx context.Context, authority string) (d
 }
 
 // Deduct the product stock after payment verification
-func (u *PaymentUsecase) DeductProductStock(orderId int) error {
+func (u *PaymentUsecase) DeductProductStock(ctx context.Context, orderId int) error {
 	order, err := u.OrderRepo.GetById(context.Background(), orderId)
 	if err != nil {
 		return err
 	}
 
 	for _, item := range order.OrderItems {
-		err := u.ProductRepo.DeductProductStock(item.ProductId, item.Quantity)
+		err := u.ProductRepo.DeductProductStock(ctx, item.ProductId, item.Quantity)
 		if err != nil {
 			return err
 		}
@@ -146,7 +146,7 @@ func (u *PaymentUsecase) DeductProductStock(orderId int) error {
 	return nil
 }
 
-func validateOrderForPayment(order model.Order, productRepo repository.ProductRepository) error {
+func validateOrderForPayment(ctx context.Context, order model.Order, productRepo repository.ProductRepository) error {
 	if order.Status == "paid" {
 		return fmt.Errorf("order is already paid")
 	}
@@ -157,7 +157,7 @@ func validateOrderForPayment(order model.Order, productRepo repository.ProductRe
 		return fmt.Errorf("invalid order total")
 	}
 	for _, item := range order.OrderItems {
-		if !productRepo.CheckProductAvailability(item.ProductId, item.Quantity) {
+		if !productRepo.CheckProductAvailability(ctx, item.ProductId, item.Quantity) {
 			return fmt.Errorf("insufficient stock for product %d", item.ProductId)
 		}
 	}

@@ -16,7 +16,7 @@ func NewProductRepository(preloads []db.PreloadEntity) *PostgresProductRepositor
 	return &PostgresProductRepository{BaseRepository: NewBaseRepository[models.Product](preloads)}
 }
 
-func (r *PostgresProductRepository) CheckProductAvailability(productId int, orderQuantity int) bool {
+func (r *PostgresProductRepository) CheckProductAvailability(ctx context.Context, productId int, orderQuantity int) bool {
 	var product models.Product
 	err := r.database.Where("id = ?", productId).First(&product).Error
 	if err != nil {
@@ -26,7 +26,7 @@ func (r *PostgresProductRepository) CheckProductAvailability(productId int, orde
 }
 
 // Deducts the stock of a product by the specified quantity.
-func (r *PostgresProductRepository) DeductProductStock(productId int, quantity int) error {
+func (r *PostgresProductRepository) DeductProductStock(ctx context.Context, productId int, quantity int) error {
 	var product models.Product
 	tx := r.database.Begin()
 	err := tx.Where("id = ?", productId).First(&product).Error
@@ -49,7 +49,7 @@ func (r *PostgresProductRepository) DeductProductStock(productId int, quantity i
 }
 
 // Increaments the view count of a product by 1.
-func (r *PostgresProductRepository) IncrementProductViewCount(productId int) error {
+func (r *PostgresProductRepository) IncrementProductViewCount(ctx context.Context, productId int) error {
 	var product models.Product
 	tx := r.database.Begin()
 	err := tx.Where("id = ?", productId).First(&product).Error

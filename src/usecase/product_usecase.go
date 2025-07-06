@@ -67,7 +67,7 @@ func (u *ProductUsecase) Delete(ctx context.Context, id int) error {
 func (u *ProductUsecase) GetById(ctx context.Context, id int) (dto.ResponseProduct, error) {
 	// Increment the view count of the product
 	go func() {
-		err := u.repository.IncrementProductViewCount(id)
+		err := u.repository.IncrementProductViewCount(context.Background(), id)
 		if err != nil {
 			log.Printf("caller:%s  Level:%s Msg:%v", constants.Postgres, constants.UseCase, err)
 		}

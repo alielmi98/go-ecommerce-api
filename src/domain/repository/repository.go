@@ -19,9 +19,9 @@ type BaseRepository[TEntity any] interface {
 }
 type ProductRepository interface {
 	BaseRepository[model.Product]
-	CheckProductAvailability(productId int, orderQuantity int) bool
-	DeductProductStock(productId int, quantity int) error
-	IncrementProductViewCount(productId int) error
+	CheckProductAvailability(ctx context.Context, productId int, orderQuantity int) bool
+	DeductProductStock(ctx context.Context, productId int, quantity int) error
+	IncrementProductViewCount(ctx context.Context, productId int) error
 	UpdateAverageRating(ctx context.Context, productId int, avg float64) error
 }
 
