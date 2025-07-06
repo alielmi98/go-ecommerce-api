@@ -3341,7 +3341,7 @@ const docTemplate = `{
         "github_com_alielmi98_go-ecommerce-api_api_dto.ProductResponse": {
             "type": "object",
             "properties": {
-                "avrage_rating": {
+                "average_rating": {
                     "type": "number"
                 },
                 "category": {

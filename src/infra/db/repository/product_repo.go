@@ -1,6 +1,8 @@
 package repository
 
 import (
+	"context"
+
 	"github.com/alielmi98/go-ecommerce-api/domain/models"
 	"github.com/alielmi98/go-ecommerce-api/infra/db"
 	"github.com/alielmi98/go-ecommerce-api/pkg/service_errors"
@@ -63,4 +65,9 @@ func (r *PostgresProductRepository) IncrementProductViewCount(productId int) err
 	}
 	tx.Commit()
 	return nil
+}
+func (r *PostgresProductRepository) UpdateAverageRating(ctx context.Context, productId int, avg float64) error {
+	return r.database.Model(&models.Product{}).
+		Where("id = ?", productId).
+		Update("average_rating", avg).Error
 }

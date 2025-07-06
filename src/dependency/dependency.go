@@ -32,9 +32,10 @@ func GetProductImageRepository(cfg *config.Config) contractRepository.ProductIma
 	return infraRepository.NewBaseRepository[model.ProductImage](preloads)
 }
 
-func GetProductReviewRepository(cfg *config.Config) contractRepository.ProductReviewRepository {
-	var preloads []db.PreloadEntity = []db.PreloadEntity{{Entity: "Product"}}
-	return infraRepository.NewBaseRepository[model.ProductReview](preloads)
+func GetProductReviewRepository(cfg *config.Config) (contractRepository.ProductReviewRepository, contractRepository.ProductRepository) {
+	var productReviewPreloads []db.PreloadEntity = []db.PreloadEntity{{Entity: "Product"}}
+	var productRepoPreloads []db.PreloadEntity = []db.PreloadEntity{{Entity: "Images"}, {Entity: "Reviews"}, {Entity: "Category"}}
+	return infraRepository.NewBaseRepository[model.ProductReview](productReviewPreloads), infraRepository.NewProductRepository(productRepoPreloads)
 }
 
 func GetCartRepository(cfg *config.Config) contractRepository.CartRepository {

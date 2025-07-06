@@ -269,7 +269,7 @@ definitions:
     type: object
   github_com_alielmi98_go-ecommerce-api_api_dto.ProductResponse:
     properties:
-      avrage_rating:
+      average_rating:
         type: number
       category:
         $ref: '#/definitions/github_com_alielmi98_go-ecommerce-api_api_dto.CategoryResponse'

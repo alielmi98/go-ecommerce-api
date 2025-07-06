@@ -27,20 +27,20 @@ type UpdateProductRequest struct {
 }
 
 type ProductResponse struct {
-	Name         string                  `json:"name"`
-	Description  string                  `json:"description"`
-	Price        float64                 `json:"price"`
-	Stock        int                     `json:"stock"`
-	CategoryId   int                     `json:"category_id"`
-	Status       string                  `json:"status"`
-	Slug         string                  `json:"slug"`
-	AvrageRating float64                 `json:"avrage_rating"`
-	CountViews   int                     `json:"count_views"`
-	Images       []ProductImageResponse  `json:"images"`
-	Reviews      []ProductReviewResponse `json:"reviews"`
-	Category     CategoryResponse        `json:"category"`
-	CreatedAt    string                  `json:"created_at"`
-	UpdatedAt    string                  `json:"updated_at"`
+	Name          string                  `json:"name"`
+	Description   string                  `json:"description"`
+	Price         float64                 `json:"price"`
+	Stock         int                     `json:"stock"`
+	CategoryId    int                     `json:"category_id"`
+	Status        string                  `json:"status"`
+	Slug          string                  `json:"slug"`
+	AverageRating float64                 `json:"average_rating"`
+	CountViews    int                     `json:"count_views"`
+	Images        []ProductImageResponse  `json:"images"`
+	Reviews       []ProductReviewResponse `json:"reviews"`
+	Category      CategoryResponse        `json:"category"`
+	CreatedAt     string                  `json:"created_at"`
+	UpdatedAt     string                  `json:"updated_at"`
 }
 
 func ToProductResponse(from dto.ResponseProduct) ProductResponse {
@@ -67,18 +67,18 @@ func ToProductResponse(from dto.ResponseProduct) ProductResponse {
 	wg.Wait()
 
 	return ProductResponse{
-		Name:         from.Name,
-		Description:  from.Description,
-		Price:        from.Price,
-		Stock:        from.Stock,
-		CategoryId:   from.CategoryId,
-		Status:       from.Status,
-		Slug:         from.Slug,
-		AvrageRating: from.AvrageRating,
-		CountViews:   from.CountViews,
-		Images:       images,
-		Reviews:      reviews,
-		Category:     ToCategoryResponse(from.Category),
+		Name:          from.Name,
+		Description:   from.Description,
+		Price:         from.Price,
+		Stock:         from.Stock,
+		CategoryId:    from.CategoryId,
+		Status:        from.Status,
+		Slug:          from.Slug,
+		AverageRating: from.AverageRating,
+		CountViews:    from.CountViews,
+		Images:        images,
+		Reviews:       reviews,
+		Category:      ToCategoryResponse(from.Category),
 	}
 }
 

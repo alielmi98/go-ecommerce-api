@@ -17,18 +17,18 @@ const (
 
 type Product struct {
 	BaseModel
-	Name         string            `gorm:"type:string;size:100;not null"`
-	Description  string            `gorm:"type:string;size:255;null"`
-	Price        float64           `gorm:"type:float;not null"`
-	Stock        int               `gorm:"type:int;not null"`
-	CategoryId   int               `gorm:"type:int;not null"`
-	Status       ProductStatusType `gorm:"type:string;size:10;not null"`
-	Slug         string            `gorm:"type:string;size:100;not null"`
-	Category     Category          `gorm:"foreignKey:CategoryId;constraint:OnUpdate:NO ACTION;OnDelete:NO ACTION"`
-	AvrageRating float64           `gorm:"type:float;default:0"`
-	CountViews   int               `gorm:"type:int;default:0"`
-	Images       []ProductImage    `gorm:"foreignKey:ProductId;constraint:OnUpdate:NO ACTION;OnDelete:NO ACTION"`
-	Reviews      []ProductReview   `gorm:"foreignKey:ProductId;constraint:OnUpdate:NO ACTION;OnDelete:NO ACTION"`
+	Name          string            `gorm:"type:string;size:100;not null"`
+	Description   string            `gorm:"type:string;size:255;null"`
+	Price         float64           `gorm:"type:float;not null"`
+	Stock         int               `gorm:"type:int;not null"`
+	CategoryId    int               `gorm:"type:int;not null"`
+	Status        ProductStatusType `gorm:"type:string;size:10;not null"`
+	Slug          string            `gorm:"type:string;size:100;not null"`
+	Category      Category          `gorm:"foreignKey:CategoryId;constraint:OnUpdate:NO ACTION;OnDelete:NO ACTION"`
+	AverageRating float64           `gorm:"type:float;default:0"`
+	CountViews    int               `gorm:"type:int;default:0"`
+	Images        []ProductImage    `gorm:"foreignKey:ProductId;constraint:OnUpdate:NO ACTION;OnDelete:NO ACTION"`
+	Reviews       []ProductReview   `gorm:"foreignKey:ProductId;constraint:OnUpdate:NO ACTION;OnDelete:NO ACTION"`
 }
 type Category struct {
 	BaseModel

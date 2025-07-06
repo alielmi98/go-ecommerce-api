@@ -22,6 +22,7 @@ type ProductRepository interface {
 	CheckProductAvailability(productId int, orderQuantity int) bool
 	DeductProductStock(productId int, quantity int) error
 	IncrementProductViewCount(productId int) error
+	UpdateAverageRating(ctx context.Context, productId int, avg float64) error
 }
 
 type CategoryRepository interface {
