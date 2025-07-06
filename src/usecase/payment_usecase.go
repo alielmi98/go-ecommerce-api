@@ -117,7 +117,7 @@ func (u *PaymentUsecase) VerifyPayment(ctx context.Context, authority string) (d
 	// Deduct the product stock asynchronously
 	go func() {
 		if err := u.DeductProductStock(payment.OrderId); err != nil {
-			log.Printf("caller:%s  Level:%s Msg:%v", constants.Postgres, constants.General, err)
+			log.Printf("caller:%s  Level:%s Msg:%v", constants.Postgres, constants.UseCase, err)
 		}
 	}()
 

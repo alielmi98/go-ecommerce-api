@@ -45,3 +45,22 @@ func (r *PostgresProductRepository) DeductProductStock(productId int, quantity i
 	tx.Commit()
 	return nil
 }
+
+// Increaments the view count of a product by 1.
+func (r *PostgresProductRepository) IncrementProductViewCount(productId int) error {
+	var product models.Product
+	tx := r.database.Begin()
+	err := tx.Where("id = ?", productId).First(&product).Error
+	if err != nil {
+		tx.Rollback()
+		return &service_errors.ServiceError{EndUserMessage: service_errors.RecordNotFound}
+	}
+	product.CountViews++
+	err = tx.Save(&product).Error
+	if err != nil {
+		tx.Rollback()
+		return &service_errors.ServiceError{EndUserMessage: service_errors.UnExpectedError}
+	}
+	tx.Commit()
+	return nil
+}

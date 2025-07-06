@@ -2,8 +2,10 @@ package usecase
 
 import (
 	"context"
+	"log"
 
 	"github.com/alielmi98/go-ecommerce-api/config"
+	"github.com/alielmi98/go-ecommerce-api/constants"
 	"github.com/alielmi98/go-ecommerce-api/domain/filter"
 	model "github.com/alielmi98/go-ecommerce-api/domain/models"
 	"github.com/alielmi98/go-ecommerce-api/domain/repository"
@@ -14,12 +16,14 @@ import (
 type ProductUsecase struct {
 	base       *BaseUsecase[model.Product, dto.CreateProduct, dto.UpdateProduct, dto.ResponseProduct]
 	dispatcher *events.EventDispatcher
+	repository repository.ProductRepository
 }
 
 func NewProductUsecase(cfg *config.Config, repository repository.ProductRepository, dispatcher *events.EventDispatcher) *ProductUsecase {
 	return &ProductUsecase{
 		base:       NewBaseUsecase[model.Product, dto.CreateProduct, dto.UpdateProduct, dto.ResponseProduct](cfg, repository),
 		dispatcher: dispatcher,
+		repository: repository,
 	}
 }
 
@@ -61,6 +65,13 @@ func (u *ProductUsecase) Delete(ctx context.Context, id int) error {
 
 // GetById
 func (u *ProductUsecase) GetById(ctx context.Context, id int) (dto.ResponseProduct, error) {
+	// Increment the view count of the product
+	go func() {
+		err := u.repository.IncrementProductViewCount(id)
+		if err != nil {
+			log.Printf("caller:%s  Level:%s Msg:%v", constants.Postgres, constants.UseCase, err)
+		}
+	}()
 	return u.base.GetById(ctx, id)
 }
 

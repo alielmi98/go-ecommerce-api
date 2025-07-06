@@ -21,6 +21,7 @@ type ProductRepository interface {
 	BaseRepository[model.Product]
 	CheckProductAvailability(productId int, orderQuantity int) bool
 	DeductProductStock(productId int, quantity int) error
+	IncrementProductViewCount(productId int) error
 }
 
 type CategoryRepository interface {

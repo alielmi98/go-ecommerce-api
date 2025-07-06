@@ -30,6 +30,7 @@ const (
 	// Internal
 	Api          SubCategory = "Api"
 	HashPassword SubCategory = "HashPassword"
+	UseCase      SubCategory = "UseCase"
 
 	// Validation
 	PasswordValidation SubCategory = "PasswordValidation"
