@@ -2967,12 +2967,6 @@ const docTemplate = `{
                 "id": {
                     "type": "integer"
                 },
-                "total_items": {
-                    "type": "integer"
-                },
-                "total_price": {
-                    "type": "number"
-                },
                 "user_id": {
                     "type": "integer"
                 }
@@ -3476,15 +3470,11 @@ const docTemplate = `{
         "github_com_alielmi98_go-ecommerce-api_api_dto.UpdateCart": {
             "type": "object",
             "required": [
-                "total_items",
-                "total_price"
+                "user_id"
             ],
             "properties": {
-                "total_items": {
+                "user_id": {
                     "type": "integer"
-                },
-                "total_price": {
-                    "type": "number"
                 }
             }
         },

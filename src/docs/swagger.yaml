@@ -16,10 +16,6 @@ definitions:
         type: array
       id:
         type: integer
-      total_items:
-        type: integer
-      total_price:
-        type: number
       user_id:
         type: integer
     type: object
@@ -360,13 +356,10 @@ definitions:
     type: object
   github_com_alielmi98_go-ecommerce-api_api_dto.UpdateCart:
     properties:
-      total_items:
+      user_id:
         type: integer
-      total_price:
-        type: number
     required:
-    - total_items
-    - total_price
+    - user_id
     type: object
   github_com_alielmi98_go-ecommerce-api_api_dto.UpdateCartItem:
     properties:

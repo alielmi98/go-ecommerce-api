@@ -51,8 +51,21 @@ func (u *CartItemUsecase) Create(ctx context.Context, req dto.CreateCartItem) (d
 	req.UnitPrice = product.Price
 	// Set the User ID in the request
 	req.CartId = cart.Id
-	// Call the base Create method to create the cart item
 
+	// Check if the product already exists in the cart
+	for item := range cart.CartItems {
+		if cart.CartItems[item].ProductId == req.ProductId {
+			cart.CartItems[item].Quantity += req.Quantity
+			// Update the existing cart item with the new quantity
+			updatedItem, err := u.base.Update(ctx, cart.CartItems[item].Id, dto.UpdateCartItem{Quantity: cart.CartItems[item].Quantity})
+			if err != nil {
+				return dto.ResponseCartItem{}, err
+			}
+			return updatedItem, nil
+		}
+	}
+
+	// Call the base Create method to create the cart item
 	return u.base.Create(ctx, req)
 
 }
