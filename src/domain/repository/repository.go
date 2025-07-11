@@ -49,8 +49,6 @@ type CartRepository interface {
 
 type CartItemRepository interface {
 	BaseRepository[model.CartItem]
-
-	GetCartItemProduct(ctx context.Context, productId int) (*model.Product, error)
 	UpdateCartItemsPrice(ctx context.Context, productId int, newPrice float64) error
 }
 

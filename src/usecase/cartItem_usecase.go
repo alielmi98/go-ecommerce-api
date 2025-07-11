@@ -15,14 +15,16 @@ type CartItemUsecase struct {
 	base         *BaseUsecase[model.CartItem, dto.CreateCartItem, dto.UpdateCartItem, dto.ResponseCartItem]
 	cartItemRepo repository.CartItemRepository
 	cartRepo     repository.CartRepository
+	productRepo  repository.ProductRepository
 	cfg          *config.Config
 }
 
-func NewCartItemUsecase(cfg *config.Config, cartItemRepository repository.CartItemRepository, cartRepository repository.CartRepository) *CartItemUsecase {
+func NewCartItemUsecase(cfg *config.Config, cartItemRepository repository.CartItemRepository, cartRepository repository.CartRepository, productRepository repository.ProductRepository) *CartItemUsecase {
 	return &CartItemUsecase{
 		base:         NewBaseUsecase[model.CartItem, dto.CreateCartItem, dto.UpdateCartItem, dto.ResponseCartItem](cfg, cartItemRepository),
 		cartItemRepo: cartItemRepository,
 		cartRepo:     cartRepository,
+		productRepo:  productRepository,
 		cfg:          cfg,
 	}
 }
@@ -40,7 +42,7 @@ func (u *CartItemUsecase) Create(ctx context.Context, req dto.CreateCartItem) (d
 		return dto.ResponseCartItem{}, fmt.Errorf("cart not found for user ID: %d", userId)
 	}
 
-	product, err := u.cartItemRepo.GetCartItemProduct(ctx, req.ProductId)
+	product, err := u.productRepo.GetById(ctx, req.ProductId)
 	if err != nil {
 		return dto.ResponseCartItem{}, err
 	}

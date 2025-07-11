@@ -43,14 +43,17 @@ func GetCartRepository(cfg *config.Config) contractRepository.CartRepository {
 	return infraRepository.NewCartRepository(preloads)
 }
 
-func GetCartItemRepository(cfg *config.Config) (contractRepository.CartItemRepository, contractRepository.CartRepository) {
+func GetCartItemRepository(cfg *config.Config) (contractRepository.CartItemRepository, contractRepository.CartRepository, contractRepository.ProductRepository) {
 	// Preloads for CartItemRepository
 	var preloads []db.PreloadEntity = []db.PreloadEntity{{Entity: "Product"}}
 	cartItemRepo := infraRepository.NewCartItemRepository(preloads)
 	// Preloads for CartRepository
 	var cartPreloads []db.PreloadEntity = []db.PreloadEntity{{Entity: "CartItems"}}
 	cartRepo := infraRepository.NewCartRepository(cartPreloads)
-	return cartItemRepo, cartRepo
+	// Preloads for ProductRepository
+	var productPreloads []db.PreloadEntity = []db.PreloadEntity{{Entity: "Images"}, {Entity: "Reviews"}, {Entity: "Category"}}
+	productRepo := infraRepository.NewProductRepository(productPreloads)
+	return cartItemRepo, cartRepo, productRepo
 }
 
 func GetOrderRepository(cfg *config.Config) contractRepository.OrderRepository {
