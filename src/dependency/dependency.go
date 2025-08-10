@@ -32,10 +32,9 @@ func GetProductImageRepository(cfg *config.Config) contractRepository.ProductIma
 	return infraRepository.NewBaseRepository[model.ProductImage](preloads)
 }
 
-func GetProductReviewRepository(cfg *config.Config) (contractRepository.ProductReviewRepository, contractRepository.ProductRepository) {
-	var productReviewPreloads []db.PreloadEntity = []db.PreloadEntity{{Entity: "Product"}}
-	var productRepoPreloads []db.PreloadEntity = []db.PreloadEntity{{Entity: "Images"}, {Entity: "Reviews"}, {Entity: "Category"}}
-	return infraRepository.NewBaseRepository[model.ProductReview](productReviewPreloads), infraRepository.NewProductRepository(productRepoPreloads)
+func GetProductReviewRepository(cfg *config.Config) contractRepository.ProductReviewRepository {
+	var preloads []db.PreloadEntity = []db.PreloadEntity{{Entity: "Product"}}
+	return infraRepository.NewBaseRepository[model.ProductReview](preloads)
 }
 
 func GetCartRepository(cfg *config.Config) contractRepository.CartRepository {
@@ -43,17 +42,9 @@ func GetCartRepository(cfg *config.Config) contractRepository.CartRepository {
 	return infraRepository.NewCartRepository(preloads)
 }
 
-func GetCartItemRepository(cfg *config.Config) (contractRepository.CartItemRepository, contractRepository.CartRepository, contractRepository.ProductRepository) {
-	// Preloads for CartItemRepository
+func GetCartItemRepository(cfg *config.Config) contractRepository.CartItemRepository {
 	var preloads []db.PreloadEntity = []db.PreloadEntity{{Entity: "Product"}}
-	cartItemRepo := infraRepository.NewCartItemRepository(preloads)
-	// Preloads for CartRepository
-	var cartPreloads []db.PreloadEntity = []db.PreloadEntity{{Entity: "CartItems"}}
-	cartRepo := infraRepository.NewCartRepository(cartPreloads)
-	// Preloads for ProductRepository
-	var productPreloads []db.PreloadEntity = []db.PreloadEntity{{Entity: "Images"}, {Entity: "Reviews"}, {Entity: "Category"}}
-	productRepo := infraRepository.NewProductRepository(productPreloads)
-	return cartItemRepo, cartRepo, productRepo
+	return infraRepository.NewCartItemRepository(preloads)
 }
 
 func GetOrderRepository(cfg *config.Config) contractRepository.OrderRepository {
@@ -66,33 +57,9 @@ func GetOrderItemRepository(cfg *config.Config) contractRepository.OrderItemRepo
 	return infraRepository.NewBaseRepository[model.OrderItem](preloads)
 }
 
-func GetCheckOutRepository(cfg *config.Config) (contractRepository.CartRepository, contractRepository.OrderRepository, contractRepository.OrderItemRepository,
-	contractRepository.ProductRepository, contractRepository.CartItemRepository) {
-	// Preloads for CartRepository
-	var cartPreloads []db.PreloadEntity = []db.PreloadEntity{{Entity: "CartItems"}}
-	cartRepo := infraRepository.NewCartRepository(cartPreloads)
-	// Preloads for CartItemRepository
-	var cartItemPreloads []db.PreloadEntity = []db.PreloadEntity{{Entity: "Product"}}
-	cartItemRepo := infraRepository.NewCartItemRepository(cartItemPreloads)
-	// Preloads for OrderRepository
-	var orderPreloads []db.PreloadEntity = []db.PreloadEntity{{Entity: "OrderItems"}}
-	orderRepo := infraRepository.NewBaseRepository[model.Order](orderPreloads)
-	// Preloads for OrderItemRepository
-	var orderItemPreloads []db.PreloadEntity = []db.PreloadEntity{{Entity: "Product"}}
-	orderItemRepo := infraRepository.NewBaseRepository[model.OrderItem](orderItemPreloads)
-	// Preloads for ProductRepository
-	var productPreloads []db.PreloadEntity = []db.PreloadEntity{{Entity: "Images"}, {Entity: "Reviews"}, {Entity: "Category"}}
-	productRepo := infraRepository.NewProductRepository(productPreloads)
-
-	return cartRepo, orderRepo, orderItemRepo, productRepo, cartItemRepo
-
-}
-
-func GetPaymentRepository(cfg *config.Config) (contractRepository.PaymentRepository, contractRepository.OrderRepository, contractRepository.ProductRepository) {
+func GetPaymentRepository(cfg *config.Config) contractRepository.PaymentRepository {
 	var preloads []db.PreloadEntity = []db.PreloadEntity{}
-	var orderPreloads []db.PreloadEntity = []db.PreloadEntity{{Entity: "OrderItems"}}
-	var productPreloads []db.PreloadEntity = []db.PreloadEntity{}
-	return infraRepository.NewPaymentRepository(preloads), infraRepository.NewBaseRepository[model.Order](orderPreloads), infraRepository.NewProductRepository(productPreloads)
+	return infraRepository.NewPaymentRepository(preloads)
 }
 
 func GetPaymentGateway(cfg *config.Config) *payment.Zarinpal {

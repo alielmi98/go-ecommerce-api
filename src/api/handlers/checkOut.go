@@ -17,7 +17,11 @@ type CheckOutHandler struct {
 }
 
 func NewCheckOutHandler(cfg *config.Config) *CheckOutHandler {
-	cartRepo, orderRepo, orderItemRepo, productRepo, cartItemRepo := dependency.GetCheckOutRepository(cfg)
+	orderRepo := dependency.GetOrderRepository(cfg)
+	cartItemRepo := dependency.GetCartItemRepository(cfg)
+	cartRepo := dependency.GetCartRepository(cfg)
+	productRepo := dependency.GetProductRepository(cfg)
+	orderItemRepo := dependency.GetOrderItemRepository(cfg)
 	return &CheckOutHandler{
 		usecase: usecase.NewCheckOutUsecase(cfg, cartRepo, orderRepo, orderItemRepo, productRepo, cartItemRepo),
 	}

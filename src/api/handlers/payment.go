@@ -19,7 +19,10 @@ type PaymentHandler struct {
 }
 
 func NewPaymentHandler(cfg *config.Config) *PaymentHandler {
-	paymentRepo, orderRepo, productRepo := dependency.GetPaymentRepository(cfg)
+	paymentRepo := dependency.GetPaymentRepository(cfg)
+	orderRepo := dependency.GetOrderRepository(cfg)
+	productRepo := dependency.GetProductRepository(cfg)
+
 	paymentGateway := dependency.GetPaymentGateway(cfg)
 	return &PaymentHandler{
 		usecase: usecase.NewPaymentUsecase(cfg, paymentRepo, orderRepo, productRepo, paymentGateway),

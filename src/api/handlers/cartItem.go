@@ -15,7 +15,10 @@ type CartItemHandler struct {
 }
 
 func NewCartItemHandler(cfg *config.Config) *CartItemHandler {
-	cartItemRepo, cartRepo, productRepo := dependency.GetCartItemRepository(cfg)
+	cartItemRepo := dependency.GetCartItemRepository(cfg)
+	cartRepo := dependency.GetCartRepository(cfg)
+	productRepo := dependency.GetProductRepository(cfg)
+
 	return &CartItemHandler{
 		// Initialize the CartItemUsecase with the necessary dependencies
 		usecase: usecase.NewCartItemUsecase(cfg, cartItemRepo, cartRepo, productRepo),

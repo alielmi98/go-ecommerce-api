@@ -16,7 +16,9 @@ type ProductReviewHandler struct {
 }
 
 func NewProductReviewHandler(cfg *config.Config) *ProductReviewHandler {
-	productReviewRepo, productRepo := dependency.GetProductReviewRepository(cfg)
+	productReviewRepo := dependency.GetProductReviewRepository(cfg)
+	productRepo := dependency.GetProductRepository(cfg)
+
 	return &ProductReviewHandler{
 		usecase: usecase.NewProductReviewUsecase(cfg, productReviewRepo, productRepo),
 	}
