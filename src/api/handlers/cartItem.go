@@ -1,10 +1,15 @@
 package handlers
 
 import (
+	"context"
+	"log"
+
 	"github.com/alielmi98/go-ecommerce-api/api/dto"
 	_ "github.com/alielmi98/go-ecommerce-api/api/helper"
 	"github.com/alielmi98/go-ecommerce-api/config"
+	"github.com/alielmi98/go-ecommerce-api/constants"
 	"github.com/alielmi98/go-ecommerce-api/dependency"
+	"github.com/alielmi98/go-ecommerce-api/events"
 	"github.com/alielmi98/go-ecommerce-api/usecase"
 
 	"github.com/gin-gonic/gin"
@@ -87,4 +92,17 @@ func (h *CartItemHandler) Delete(c *gin.Context) {
 // @Security AuthBearer
 func (h *CartItemHandler) GetById(c *gin.Context) {
 	GetById(c, dto.ToCartItemResponse, h.usecase.GetById)
+}
+func (h *CartItemHandler) HandleProductPriceChanged(event interface{}) {
+	priceChangedEvent, ok := event.(events.ProductPriceChangedEvent)
+	if !ok {
+		return
+	}
+
+	err := h.usecase.UpdateCartItemsPrice(context.Background(), priceChangedEvent.ProductID, priceChangedEvent.NewPrice)
+	if err != nil {
+		log.Printf("Caller:%s Level:%s Msg:%s", constants.Internal, constants.ErrorMessage, err.Error())
+		return
+	}
+
 }
