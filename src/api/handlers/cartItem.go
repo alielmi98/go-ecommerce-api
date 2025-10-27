@@ -93,6 +93,8 @@ func (h *CartItemHandler) Delete(c *gin.Context) {
 func (h *CartItemHandler) GetById(c *gin.Context) {
 	GetById(c, dto.ToCartItemResponse, h.usecase.GetById)
 }
+
+// HandleProductPriceChanged handles the ProductPriceChangedEvent to update cart item prices
 func (h *CartItemHandler) HandleProductPriceChanged(event interface{}) {
 	priceChangedEvent, ok := event.(events.ProductPriceChangedEvent)
 	if !ok {

@@ -11,6 +11,7 @@ import (
 func CartItem(r *gin.RouterGroup, cfg *config.Config, dispatcher *events.EventDispatcher) {
 	h := handlers.NewCartItemHandler(cfg)
 
+	// Register the event handler for ProductPriceChangedEvent
 	dispatcher.Register("ProductPriceChanged", h.HandleProductPriceChanged)
 	r.POST("/", middlewares.Authentication(cfg), h.Create)
 	r.PUT("/:id", middlewares.Authentication(cfg), h.Update)

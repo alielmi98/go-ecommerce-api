@@ -20,6 +20,7 @@ func InitServer(cfg *config.Config) {
 	r := gin.New()
 
 	r.Use(middlewares.Cors(cfg))
+	// Create a new EventDispatcher instance
 	dispatcher := events.NewEventDispatcher()
 	RegisterRoutes(r, cfg, dispatcher)
 	RegisterSwagger(r, cfg)
